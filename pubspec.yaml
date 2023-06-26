@@ -1,0 +1,43 @@
+name: food_app
+description: A Food App project.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.5 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  domain:
+    path: ./domain
+  core:
+    path: ./core
+  core_ui:
+    path: ./core_ui
+  navigation:
+    path: ./navigation
+  home:
+    path: ./features/home
+
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - core_ui/assets/images/
+
+  fonts:
+    - family: Dosis
+      fonts:
+        - asset: core_ui/assets/fonts/Dosis-Regular.ttf
+        - asset: core_ui/assets/fonts/Dosis-Bold.ttf
