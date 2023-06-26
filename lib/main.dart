@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core/core.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  firebaseDI.initDependencies();
   runApp(const MyApp());
 }
 
