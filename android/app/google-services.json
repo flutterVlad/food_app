@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "415019838765",
+    "firebase_url": "https://products-cfc8b-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "products-cfc8b",
+    "storage_bucket": "products-cfc8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415019838765:android:14c71107a33b0d204077a4",
+        "android_client_info": {
+          "package_name": "com.example.food_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "415019838765-6m4mvvkvd51tnbeq6l6tok9p47p1o5qc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjutjKRWKoiZzI8U-PSztV5W5Z7xfAoWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "415019838765-6m4mvvkvd51tnbeq6l6tok9p47p1o5qc.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "415019838765-dqudm8g6svhrg914g9oo0abpsh7piicd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.architecture"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

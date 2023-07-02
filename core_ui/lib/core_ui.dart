@@ -1,7 +1,5 @@
 library core_ui;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/theme/app_theme.dart';
+export 'src/colors/app_colors.dart';
+export 'src/widgets/widgets.dart';
