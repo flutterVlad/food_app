@@ -16,11 +16,16 @@ dependencies:
     path: ../domain
 
   dio: ^4.0.6
+  freezed_annotation: ^2.2.0
+  json_annotation: ^4.8.1
+  firebase_database: ^10.2.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  json_serializable: ^6.7.0
+  freezed: ^2.3.5
   build_runner: ^2.4.5
 
 flutter:

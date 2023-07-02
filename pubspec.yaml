@@ -33,9 +33,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - core_ui/assets/images/
-
   fonts:
     - family: Dosis
       fonts:

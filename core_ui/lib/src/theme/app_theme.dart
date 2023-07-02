@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:core_ui/src/colors/app_colors.dart';
 
 class AppTheme {
   static ThemeData getThemeData() {
@@ -9,15 +10,14 @@ class AppTheme {
           fontSize: 30,
         ),
       ),
-      primarySwatch: Colors.orange,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: Colors.black54,
+        backgroundColor: AppDarkThemeColors.primaryColor,
         showUnselectedLabels: false,
         selectedItemColor: Colors.amber[800],
         unselectedItemColor: Colors.grey[50],
       ),
       appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.black54,
+        backgroundColor: AppDarkThemeColors.primaryColor,
       ),
       fontFamily: 'Dosis',
       useMaterial3: true,

@@ -5,7 +5,9 @@ import 'package:core/core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  firebaseDI.initDependencies();
+
+  await dataDI.initDependencies();
+
   runApp(const MyApp());
 }
 

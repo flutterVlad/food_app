@@ -1,3 +1,11 @@
-abstract class HomeEvent {}
+part of 'bloc.dart';
 
-class InitEvent extends HomeEvent {}
+abstract class ProductEvent {}
+
+class InitEvent extends ProductEvent {}
+
+class ChangeIndexEvent extends ProductEvent {
+  final int newIndex;
+
+  ChangeIndexEvent(this.newIndex);
+}

@@ -1,147 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:domain/usecases/export_usecases.dart';
+import 'package:home/src/widgets/widgets.dart';
+import 'package:home/src/bloc/bloc.dart';
+import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:home/home.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreen> createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
-
+class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[900],
-      appBar: AppBar(
-        title: const Text('Hello, <name>!'),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              icon: const Icon(Icons.man),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: ListView(
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.only(top: 15),
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: const Center(
-                child: Text(
-                  'Welcome in my app! This is the first version.',
-                  style: TextStyle(
-                    fontSize: 30,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Text(
-                  'Popular Items',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'View all',
-                    style: TextStyle(
-                      color: Colors.orange,
-                      fontSize: 18,
-                    ),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 15),
-            Container(
-              margin: const EdgeInsets.only(bottom: 15),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      HomeCard(
-                        name: 'Milk dessert',
-                        imageUrl: 'core_ui/assets/images/milk_dessert.png',
-                        price: '15.00',
-                      ),
-                      HomeCard(
-                        name: 'Milk Dessert',
-                        imageUrl: 'core_ui/assets/images/milk_dessert.png',
-                        price: '12.00',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      HomeCard(
-                        name: 'Milk dessert',
-                        imageUrl: 'core_ui/assets/images/milk_dessert.png',
-                        price: '20.00',
-                      ),
-                      HomeCard(
-                        name: 'Milk Dessert',
-                        imageUrl: 'core_ui/assets/images/milk_dessert.png',
-                        price: '8.00',
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            )
-          ],
+    return BlocProvider<ProductBloc>(
+      create: (BuildContext context) => ProductBloc(
+        getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
+      )..add(
+          InitEvent(),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: 'Order history',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_rounded),
-            label: 'Cart',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
+      child: Scaffold(
+        backgroundColor: AppDarkThemeColors.backgroundColor,
+        appBar: const HomeAppBar(),
+        body: BlocBuilder<ProductBloc, ProductState>(
+          builder: (BuildContext context, ProductState state) {
+            final products = state.getProducts;
+            if (state is EmptyState) {
+              BlocProvider.of<ProductBloc>(context).add(InitEvent());
+            }
+            if (state is LoadingState) {
+              return const AppCenterLoader();
+            }
+            if (state is LoadedState) {
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                itemCount: products.length ~/ 2,
+                itemBuilder: (BuildContext context, int index) {
+                  if (index == 0) {
+                    return Column(
+                      children: <Widget>[
+                        const AdvertisementBlock(),
+                        const SizedBox(height: 15),
+                        const FilterBar(),
+                        const SizedBox(height: 15),
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 15),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  HomeCard(
+                                    name: products[index * 2].name,
+                                    imageUrl: products[index * 2].imageUrl,
+                                    price: products[index * 2].price,
+                                  ),
+                                  HomeCard(
+                                    name: products[index * 2 + 1].name,
+                                    imageUrl: products[index * 2 + 1].imageUrl,
+                                    price: products[index * 2 + 1].price,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 15),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              HomeCard(
+                                name: products[index * 2].name,
+                                imageUrl: products[index * 2].imageUrl,
+                                price: products[index * 2].price,
+                              ),
+                              HomeCard(
+                                name: products[index * 2 + 1].name,
+                                imageUrl: products[index * 2 + 1].imageUrl,
+                                price: products[index * 2 + 1].price,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  }
+                },
+              );
+            } else {
+              return const Text('Error');
+            }
+          },
+        ),
+        bottomNavigationBar: const BottomBar(),
       ),
     );
   }
