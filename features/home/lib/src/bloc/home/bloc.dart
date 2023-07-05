@@ -18,21 +18,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   })  : _getAllProductsUseCase = getAllProductsUseCase,
         super(EmptyState()) {
     on<InitEvent>(_init);
-    on<ChangeIndexEvent>(_changeIndex);
   }
 
   void _init(InitEvent event, Emitter<ProductState> emit) {
     _loadProductList();
   }
 
-  void _changeIndex(ChangeIndexEvent event, Emitter<ProductState> emit) {
-    currentIndex = event.newIndex;
-    emit(LoadedState(products: products, currentIndex: currentIndex));
-  }
-
   void _loadProductList() async {
     emit(LoadingState());
     products = await _getAllProductsUseCase.execute(const NoParams());
-    emit(LoadedState(products: products, currentIndex: currentIndex));
+    emit(LoadedState(products: products));
   }
 }

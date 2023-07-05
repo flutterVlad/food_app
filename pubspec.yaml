@@ -21,6 +21,14 @@ dependencies:
     path: ./navigation
   home:
     path: ./features/home
+  cart:
+    path: ./features/cart
+  order_history:
+    path: ./features/order_history
+  product_detailed_view:
+    path: ./features/product_detailed_view
+  settings:
+    path: ./features/settings
 
   cupertino_icons: ^1.0.2
 

@@ -6,8 +6,6 @@ abstract class ProductState extends Equatable {
   List<Object> get props => [];
 
   List<ProductModel> get getProducts => [];
-
-  int get getIndex => 0;
 }
 
 class LoadingState extends ProductState {}
@@ -16,15 +14,12 @@ class EmptyState extends ProductState {}
 
 class LoadedState extends ProductState {
   final List<ProductModel> products;
-  final int currentIndex;
 
-  LoadedState({required this.products, required this.currentIndex});
-
-  @override
-  List<Object> get props => [products, currentIndex];
+  LoadedState({required this.products});
 
   @override
-  int get getIndex => currentIndex;
+  List<Object> get props => [products];
+
 
   @override
   List<ProductModel> get getProducts => products;
