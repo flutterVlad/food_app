@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home/home.dart';
 import 'package:navigation/navigation.dart';
 
 class BottomBar extends StatefulWidget {
@@ -24,7 +22,7 @@ class _BottomBarState extends State<BottomBar> {
         return Scaffold(
           appBar: AppBar(
             title: Text(context.topRoute.name),
-            leading: AutoLeadingButton(),
+            leading: const AutoLeadingButton(),
           ),
           body: child,
           bottomNavigationBar: BottomNavigationBar(

@@ -9,4 +9,3 @@ class CartScreen extends StatelessWidget {
     return const Placeholder();
   }
 }
-

@@ -13,4 +13,3 @@ class AppCenterLoader extends StatelessWidget {
     );
   }
 }
-
