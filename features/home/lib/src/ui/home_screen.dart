@@ -22,89 +22,48 @@ class HomeScreenState extends State<HomeScreen> {
       )..add(
           InitEvent(),
         ),
-      child: Scaffold(
-        backgroundColor: AppDarkThemeColors.backgroundColor,
-        appBar: const HomeAppBar(),
-        body: BlocBuilder<ProductBloc, ProductState>(
-          builder: (BuildContext context, ProductState state) {
-            final products = state.getProducts;
-            if (state is EmptyState) {
-              BlocProvider.of<ProductBloc>(context).add(InitEvent());
-            }
-            if (state is LoadingState) {
-              return const AppCenterLoader();
-            }
-            if (state is LoadedState) {
-              return ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                itemCount: products.length ~/ 2,
-                itemBuilder: (BuildContext context, int index) {
-                  if (index == 0) {
-                    return Column(
-                      children: <Widget>[
-                        const AdvertisementBlock(),
-                        const SizedBox(height: 15),
-                        const FilterBar(),
-                        const SizedBox(height: 15),
-                        Container(
-                          margin: const EdgeInsets.only(bottom: 15),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  HomeCard(
-                                    name: products[index * 2].name,
-                                    imageUrl: products[index * 2].imageUrl,
-                                    price: products[index * 2].price,
-                                  ),
-                                  HomeCard(
-                                    name: products[index * 2 + 1].name,
-                                    imageUrl: products[index * 2 + 1].imageUrl,
-                                    price: products[index * 2 + 1].price,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 15),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              HomeCard(
-                                name: products[index * 2].name,
-                                imageUrl: products[index * 2].imageUrl,
-                                price: products[index * 2].price,
-                              ),
-                              HomeCard(
-                                name: products[index * 2 + 1].name,
-                                imageUrl: products[index * 2 + 1].imageUrl,
-                                price: products[index * 2 + 1].price,
-                              ),
-                            ],
-                          ),
-                        ],
+      child: BlocBuilder<ProductBloc, ProductState>(
+        builder: (BuildContext context, ProductState state) {
+          if (state is EmptyState) {
+            BlocProvider.of<ProductBloc>(context).add(InitEvent());
+          }
+          if (state is LoadingState) {
+            return const AppCenterLoader();
+          }
+          if (state is LoadedState) {
+            return SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(15),
+                child: Column(
+                  children: <Widget>[
+                    const AdvertisementBlock(),
+                    const SizedBox(height: 15),
+                    const FilterBar(),
+                    const SizedBox(height: 15),
+                    GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15,
+                        mainAxisSpacing: 15,
+                            childAspectRatio: 0.73,
                       ),
-                    );
-                  }
-                },
-              );
-            } else {
-              return const Text('Error');
-            }
-          },
-        ),
-        bottomNavigationBar: const BottomBar(),
+                      clipBehavior: Clip.none,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.getProducts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return HomeCard(model: state.getProducts[index]);
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            );
+          } else {
+            return const Text('Error');
+          }
+        },
       ),
     );
   }

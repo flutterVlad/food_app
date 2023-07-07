@@ -18,12 +18,13 @@ class FilterBar extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {},
-          child: const Text(
+          child: Text(
             'View all',
             style: TextStyle(
-              color: AppDarkThemeColors.secondaryColor,
-              fontSize: 18,
+              color: Theme.of(context).secondaryHeaderColor,
+              fontSize: 25,
             ),
+
           ),
         )
       ],

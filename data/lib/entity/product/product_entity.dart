@@ -10,6 +10,8 @@ class ProductEntity with _$ProductEntity {
     required String name,
     required String price,
     required String imageUrl,
+    required String description,
+    required List<String> ingredients,
 }) = _ProductEntity;
 
   factory ProductEntity.fromJson(Map<String, Object?> json) =>

@@ -7,6 +7,8 @@ abstract class ProductMapper {
         name: model.name,
         price: model.price,
         imageUrl: model.imageUrl,
+        description: model.description,
+        ingredients: model.ingredients,
       );
 
   static ProductModel toModel(ProductEntity entity) => ProductModel(
@@ -14,5 +16,7 @@ abstract class ProductMapper {
         name: entity.name,
         price: entity.price,
         imageUrl: entity.imageUrl,
+        description: entity.description,
+        ingredients: entity.ingredients,
       );
 }

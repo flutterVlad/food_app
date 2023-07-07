@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home/home.dart';
+import '../../navigation.dart';
+import 'package:core_ui/core_ui.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+class EntryPointScreen extends StatelessWidget {
+  const EntryPointScreen({super.key});
 
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductBloc, ProductState>(
-      builder: (context, state) {
-        int currentIndex = state.getIndex;
+    return AutoTabsScaffold(
+      routes: const [
+        ProductsRoute(),
+        OrderHistoryRoute(),
+        CartRoute(),
+        SettingsRoute(),
+      ],
+      appBarBuilder: (_, tabsRouter) {
+        return const HomeAppBar();
+      },
+      bottomNavigationBuilder: (_, tabsRouter) {
         return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
@@ -35,13 +38,8 @@ class _BottomBarState extends State<BottomBar> {
               label: 'Settings',
             ),
           ],
-          currentIndex: currentIndex,
-          onTap: (index) {
-            context.read<ProductBloc>().add(ChangeIndexEvent(index));
-            setState(() {
-              currentIndex = index;
-            });
-          },
+          currentIndex: tabsRouter.activeIndex,
+          onTap: tabsRouter.setActiveIndex,
         );
       },
     );

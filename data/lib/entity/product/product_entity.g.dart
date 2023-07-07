@@ -12,6 +12,10 @@ _$_ProductEntity _$$_ProductEntityFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       price: json['price'] as String,
       imageUrl: json['imageUrl'] as String,
+      description: json['description'] as String,
+      ingredients: (json['ingredients'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ProductEntityToJson(_$_ProductEntity instance) =>
@@ -20,4 +24,6 @@ Map<String, dynamic> _$$_ProductEntityToJson(_$_ProductEntity instance) =>
       'name': instance.name,
       'price': instance.price,
       'imageUrl': instance.imageUrl,
+      'description': instance.description,
+      'ingredients': instance.ingredients,
     };

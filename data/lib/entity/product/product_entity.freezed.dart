@@ -24,6 +24,8 @@ mixin _$ProductEntity {
   String get name => throw _privateConstructorUsedError;
   String get price => throw _privateConstructorUsedError;
   String get imageUrl => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  List<String> get ingredients => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +39,13 @@ abstract class $ProductEntityCopyWith<$Res> {
           ProductEntity value, $Res Function(ProductEntity) then) =
       _$ProductEntityCopyWithImpl<$Res, ProductEntity>;
   @useResult
-  $Res call({int id, String name, String price, String imageUrl});
+  $Res call(
+      {int id,
+      String name,
+      String price,
+      String imageUrl,
+      String description,
+      List<String> ingredients});
 }
 
 /// @nodoc
@@ -57,6 +65,8 @@ class _$ProductEntityCopyWithImpl<$Res, $Val extends ProductEntity>
     Object? name = null,
     Object? price = null,
     Object? imageUrl = null,
+    Object? description = null,
+    Object? ingredients = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +85,14 @@ class _$ProductEntityCopyWithImpl<$Res, $Val extends ProductEntity>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      ingredients: null == ingredients
+          ? _value.ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -87,7 +105,13 @@ abstract class _$$_ProductEntityCopyWith<$Res>
       __$$_ProductEntityCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String name, String price, String imageUrl});
+  $Res call(
+      {int id,
+      String name,
+      String price,
+      String imageUrl,
+      String description,
+      List<String> ingredients});
 }
 
 /// @nodoc
@@ -105,6 +129,8 @@ class __$$_ProductEntityCopyWithImpl<$Res>
     Object? name = null,
     Object? price = null,
     Object? imageUrl = null,
+    Object? description = null,
+    Object? ingredients = null,
   }) {
     return _then(_$_ProductEntity(
       id: null == id
@@ -123,6 +149,14 @@ class __$$_ProductEntityCopyWithImpl<$Res>
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      ingredients: null == ingredients
+          ? _value._ingredients
+          : ingredients // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -134,7 +168,10 @@ class _$_ProductEntity implements _ProductEntity {
       {required this.id,
       required this.name,
       required this.price,
-      required this.imageUrl});
+      required this.imageUrl,
+      required this.description,
+      required final List<String> ingredients})
+      : _ingredients = ingredients;
 
   factory _$_ProductEntity.fromJson(Map<String, dynamic> json) =>
       _$$_ProductEntityFromJson(json);
@@ -147,10 +184,19 @@ class _$_ProductEntity implements _ProductEntity {
   final String price;
   @override
   final String imageUrl;
+  @override
+  final String description;
+  final List<String> _ingredients;
+  @override
+  List<String> get ingredients {
+    if (_ingredients is EqualUnmodifiableListView) return _ingredients;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ingredients);
+  }
 
   @override
   String toString() {
-    return 'ProductEntity(id: $id, name: $name, price: $price, imageUrl: $imageUrl)';
+    return 'ProductEntity(id: $id, name: $name, price: $price, imageUrl: $imageUrl, description: $description, ingredients: $ingredients)';
   }
 
   @override
@@ -162,12 +208,17 @@ class _$_ProductEntity implements _ProductEntity {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl));
+                other.imageUrl == imageUrl) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            const DeepCollectionEquality()
+                .equals(other._ingredients, _ingredients));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, price, imageUrl);
+  int get hashCode => Object.hash(runtimeType, id, name, price, imageUrl,
+      description, const DeepCollectionEquality().hash(_ingredients));
 
   @JsonKey(ignore: true)
   @override
@@ -188,7 +239,9 @@ abstract class _ProductEntity implements ProductEntity {
       {required final int id,
       required final String name,
       required final String price,
-      required final String imageUrl}) = _$_ProductEntity;
+      required final String imageUrl,
+      required final String description,
+      required final List<String> ingredients}) = _$_ProductEntity;
 
   factory _ProductEntity.fromJson(Map<String, dynamic> json) =
       _$_ProductEntity.fromJson;
@@ -201,6 +254,10 @@ abstract class _ProductEntity implements ProductEntity {
   String get price;
   @override
   String get imageUrl;
+  @override
+  String get description;
+  @override
+  List<String> get ingredients;
   @override
   @JsonKey(ignore: true)
   _$$_ProductEntityCopyWith<_$_ProductEntity> get copyWith =>
