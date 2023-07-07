@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class GradientWidget extends StatelessWidget {
-  const GradientWidget({
+class GradientBlock extends StatelessWidget {
+  final Widget child;
+  final LinearGradient gradient;
+
+  const GradientBlock({
     Key? key,
     required this.gradient,
     required this.child,
   }) : super(key: key);
-
-  final Widget child;
-  final LinearGradient gradient;
 
   @override
   Widget build(BuildContext context) {

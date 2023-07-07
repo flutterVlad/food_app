@@ -20,7 +20,6 @@ class LoadedState extends ProductState {
   @override
   List<Object> get props => [products];
 
-
   @override
   List<ProductModel> get getProducts => products;
 }

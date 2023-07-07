@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_ui/src/colors/app_colors.dart';
 
 class AppTheme {
-  static  ThemeData getDarkThemeData() {
+  static ThemeData getDarkThemeData() {
     return ThemeData(
       brightness: Brightness.dark,
       textTheme: const TextTheme(
@@ -61,7 +61,8 @@ class AppTheme {
       primaryColor: AppLightThemeColors.primaryColor,
       switchTheme: const SwitchThemeData(
         thumbIcon: MaterialStatePropertyAll<Icon>(Icon(Icons.sunny)),
-        trackColor: MaterialStatePropertyAll<Color>(AppLightThemeColors.secondaryColor),
+        trackColor:
+            MaterialStatePropertyAll<Color>(AppLightThemeColors.secondaryColor),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppLightThemeColors.primaryColor,
@@ -70,12 +71,13 @@ class AppTheme {
         unselectedItemColor: AppLightThemeColors.unSelectedItem,
       ),
       appBarTheme: const AppBarTheme(
-          backgroundColor: AppLightThemeColors.primaryColor,
-          titleTextStyle: TextStyle(
-            fontSize: 30,
-            color: Colors.black,
-            fontFamily: 'Dosis',
-          )),
+        backgroundColor: AppLightThemeColors.primaryColor,
+        titleTextStyle: TextStyle(
+          fontSize: 30,
+          color: Colors.black,
+          fontFamily: 'Dosis',
+        ),
+      ),
       fontFamily: 'Dosis',
       useMaterial3: true,
     );

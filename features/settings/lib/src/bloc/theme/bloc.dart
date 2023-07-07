@@ -1,30 +1,40 @@
+import 'package:domain/usecases/usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:domain/usecases/export_usecases.dart';
 
 part 'event.dart';
-part 'theme_helper.dart';
 
-class ThemeBloc extends Bloc<ThemeEvent, ThemeData> {
-  ThemeBloc() : super(AppTheme.getDarkThemeData()) {
+part 'state.dart';
+
+class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
+  final SetThemeDataUseCase _setThemeDataUseCase;
+  final CheckThemeDataUseCase _checkThemeDataUseCase;
+
+  ThemeBloc({
+    required SetThemeDataUseCase setThemeDataUseCase,
+    required CheckThemeDataUseCase checkThemeDataUseCase,
+  })  : _setThemeDataUseCase = setThemeDataUseCase,
+        _checkThemeDataUseCase = checkThemeDataUseCase,
+        super(DarkThemeState()) {
     on<InitialThemeSetEvent>(_init);
     on<ThemeSwitchEvent>(_switchTheme);
   }
 
-  void _init(InitialThemeSetEvent event, Emitter emit) async {
-    final bool hasDarkTheme = await isDark();
+  Future<void> _init(InitialThemeSetEvent event, Emitter emit) async {
+    final bool hasDarkTheme =
+        await _checkThemeDataUseCase.execute(const NoParams());
     if (hasDarkTheme) {
-      emit(AppTheme.getDarkThemeData());
+      emit(DarkThemeState());
     } else {
-      emit(AppTheme.getLightThemeData());
+      emit(LightThemeState());
     }
   }
 
   void _switchTheme(ThemeSwitchEvent event, Emitter emit) {
-    final isDark = state == AppTheme.getDarkThemeData();
-    emit(isDark ? AppTheme.getLightThemeData() : AppTheme.getDarkThemeData());
-    setTheme(isDark);
+    final bool isDark = state is DarkThemeState;
+    emit(isDark ? LightThemeState() : DarkThemeState());
+    _setThemeDataUseCase.execute(isDark);
   }
-
 }

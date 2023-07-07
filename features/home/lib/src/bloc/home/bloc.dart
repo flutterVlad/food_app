@@ -10,9 +10,6 @@ part 'state.dart';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final FetchAllProductsUseCase _getAllProductsUseCase;
 
-  List<ProductModel> products = <ProductModel>[];
-  int currentIndex = 0;
-
   ProductBloc({
     required FetchAllProductsUseCase getAllProductsUseCase,
   })  : _getAllProductsUseCase = getAllProductsUseCase,
@@ -26,7 +23,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   void _loadProductList() async {
     emit(LoadingState());
-    products = await _getAllProductsUseCase.execute(const NoParams());
+    List<ProductModel> products = await _getAllProductsUseCase.execute(const NoParams());
     emit(LoadedState(products: products));
   }
 }

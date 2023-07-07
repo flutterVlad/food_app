@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:settings/settings.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -9,22 +11,18 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
-  static const Map<String, String> appBarTitle = {
-    'HomeRoute': 'Products',
-    'OrderHistoryRoute': 'Order History',
-    'CartRoute': 'Your Cart',
-    'SettingsRoute': 'Settings',
-    'ProductDetailRoute': 'Details'
-  };
-
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(appBarTitle[context.topRoute.name] ?? ''),
-      centerTitle: true,
-      leading: AutoLeadingButton(
-        color: Theme.of(context).secondaryHeaderColor,
-      ),
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (context, state) {
+        return AppBar(
+          title: Text(ThemeState.appBarTitle[context.topRoute.name] ?? ''),
+          centerTitle: true,
+          leading: AutoLeadingButton(
+            color: Theme.of(context).secondaryHeaderColor,
+          ),
+        );
+      },
     );
   }
 }

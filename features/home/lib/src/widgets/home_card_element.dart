@@ -1,6 +1,5 @@
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:navigation/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
@@ -20,7 +19,7 @@ class HomeCard extends StatelessWidget {
       },
       child: Container(
         padding: const EdgeInsets.all(12),
-        width: int.parse("${MediaQuery.of(context).size.width.round()}") * 0.43,
+        // width: MediaQuery.of(context).size.width * 0.43,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Theme.of(context).primaryColor,
@@ -56,19 +55,13 @@ class HomeCard extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
-                BlocBuilder<ThemeBloc, ThemeData>(
+                BlocBuilder<ThemeBloc, ThemeState>(
                   builder: (context, state) {
                     return Container(
-                      width: int.parse(
-                              '${MediaQuery.of(context).size.width.round()}') *
-                          0.08,
-                      height: int.parse(
-                              '${MediaQuery.of(context).size.width.round()}') *
-                          0.08,
+                      width: MediaQuery.of(context).size.width * 0.08,
+                      height: MediaQuery.of(context).size.width * 0.08,
                       decoration: BoxDecoration(
-                        gradient: state == AppTheme.getLightThemeData()
-                            ? AppLightThemeColors.gradient
-                            : AppDarkThemeColors.gradient,
+                        gradient: state.gradient,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: IconButton(

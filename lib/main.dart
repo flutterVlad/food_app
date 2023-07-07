@@ -1,3 +1,4 @@
+import 'package:domain/usecases/export_usecases.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
@@ -16,20 +17,21 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ThemeBloc>(
-      create: (BuildContext context) =>
-          ThemeBloc()..add(InitialThemeSetEvent()),
-      child: BlocBuilder<ThemeBloc, ThemeData>(
-        builder: (BuildContext context, ThemeData theme) {
+      create: (BuildContext context) => ThemeBloc(
+        setThemeDataUseCase: appLocator.get<SetThemeDataUseCase>(),
+        checkThemeDataUseCase: appLocator.get<CheckThemeDataUseCase>(),
+      ),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (BuildContext context, ThemeState state) {
           return MaterialApp.router(
             routerDelegate: appLocator.get<AppRouter>().delegate(),
             routeInformationParser:
                 appLocator.get<AppRouter>().defaultRouteParser(),
             title: 'Food App',
-            theme: theme,
+            theme: state.appTheme,
           );
         },
       ),
