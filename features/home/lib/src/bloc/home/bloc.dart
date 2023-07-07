@@ -21,7 +21,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     _loadProductList();
   }
 
-  void _loadProductList() async {
+  Future<void> _loadProductList() async {
     emit(LoadingState());
     List<ProductModel> products = await _getAllProductsUseCase.execute(const NoParams());
     emit(LoadedState(products: products));
