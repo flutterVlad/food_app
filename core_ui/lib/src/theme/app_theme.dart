@@ -46,7 +46,6 @@ class AppTheme {
       brightness: Brightness.light,
       textTheme: const TextTheme(
         titleLarge: TextStyle(
-          color: Colors.black,
           fontSize: 30,
         ),
         titleMedium: TextStyle(
