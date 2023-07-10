@@ -25,7 +25,7 @@ class _AdvertisementBlockState extends State<AdvertisementBlock> {
           ),
           child: const Center(
             child: Text(
-              'Version: PT-2/theme-and-navigation',
+              'Version: PT-3/cart-page',
               style: TextStyle(
                 fontSize: 30,
                 color: Colors.black,

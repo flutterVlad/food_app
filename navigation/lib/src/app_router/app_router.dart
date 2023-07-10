@@ -43,8 +43,21 @@ part 'app_router.gr.dart';
         ),
         AutoRoute(
           path: 'cart',
-          name: 'CartRoute',
-          page: CartScreen,
+          name: 'EmptyCartRoute',
+          page: EmptyRouterPage,
+          children: <AutoRoute>[
+            AutoRoute(
+              path: '',
+              name: 'CartRoute',
+              page: CartScreen,
+            ),
+            CustomRoute(
+              path: ':model',
+              name: 'ProductDetailRoute',
+              page: ProductDetailsScreen,
+              transitionsBuilder: TransitionsBuilders.slideRightWithFade,
+            ),
+          ],
         ),
         AutoRoute(
           path: 'settings',

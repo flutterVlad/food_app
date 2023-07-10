@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
+import 'package:cart/cart.dart';
 
 class HomeCard extends StatelessWidget {
   final ProductModel model;
@@ -66,7 +67,11 @@ class HomeCard extends StatelessWidget {
                       ),
                       child: IconButton(
                         padding: EdgeInsets.zero,
-                        onPressed: () {},
+                        onPressed: () {
+                          BlocProvider.of<CartBloc>(context).add(
+                            AddProductEvent(model: model),
+                          );
+                        },
                         icon: const Icon(
                           Icons.add,
                           size: 18,
