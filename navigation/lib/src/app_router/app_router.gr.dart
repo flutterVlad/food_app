@@ -35,10 +35,10 @@ class _$AppRouter extends RootStackRouter {
         child: const OrderHistoryScreen(),
       );
     },
-    CartRoute.name: (routeData) {
+    EmptyCartRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const CartScreen(),
+        child: const EmptyRouterPage(),
       );
     },
     SettingsRoute.name: (routeData) {
@@ -66,6 +66,12 @@ class _$AppRouter extends RootStackRouter {
         transitionsBuilder: TransitionsBuilders.slideRightWithFade,
         opaque: true,
         barrierDismissible: false,
+      );
+    },
+    CartRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CartScreen(),
       );
     },
   };
@@ -99,9 +105,21 @@ class _$AppRouter extends RootStackRouter {
               parent: EntryPointRoute.name,
             ),
             RouteConfig(
-              CartRoute.name,
+              EmptyCartRoute.name,
               path: 'cart',
               parent: EntryPointRoute.name,
+              children: [
+                RouteConfig(
+                  CartRoute.name,
+                  path: '',
+                  parent: EmptyCartRoute.name,
+                ),
+                RouteConfig(
+                  ProductDetailRoute.name,
+                  path: ':model',
+                  parent: EmptyCartRoute.name,
+                ),
+              ],
             ),
             RouteConfig(
               SettingsRoute.name,
@@ -152,15 +170,16 @@ class OrderHistoryRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [CartScreen]
-class CartRoute extends PageRouteInfo<void> {
-  const CartRoute()
+/// [EmptyRouterPage]
+class EmptyCartRoute extends PageRouteInfo<void> {
+  const EmptyCartRoute({List<PageRouteInfo>? children})
       : super(
-          CartRoute.name,
+          EmptyCartRoute.name,
           path: 'cart',
+          initialChildren: children,
         );
 
-  static const String name = 'CartRoute';
+  static const String name = 'EmptyCartRoute';
 }
 
 /// generated route for
@@ -220,4 +239,16 @@ class ProductDetailRouteArgs {
   String toString() {
     return 'ProductDetailRouteArgs{key: $key, model: $model}';
   }
+}
+
+/// generated route for
+/// [CartScreen]
+class CartRoute extends PageRouteInfo<void> {
+  const CartRoute()
+      : super(
+          CartRoute.name,
+          path: '',
+        );
+
+  static const String name = 'CartRoute';
 }

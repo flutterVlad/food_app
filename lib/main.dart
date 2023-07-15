@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
+import 'package:cart/cart.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +20,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeBloc>(
-      create: (BuildContext context) => ThemeBloc(
-        setThemeDataUseCase: appLocator.get<SetThemeDataUseCase>(),
-        checkThemeDataUseCase: appLocator.get<CheckThemeDataUseCase>(),
-      ),
+    return MultiBlocProvider(
+      providers: <BlocProvider>[
+        BlocProvider<ThemeBloc>(
+          create: (BuildContext context) => ThemeBloc(
+            setThemeDataUseCase: appLocator.get<SetThemeDataUseCase>(),
+            checkThemeDataUseCase: appLocator.get<CheckThemeDataUseCase>(),
+          ),
+        ),
+        BlocProvider<CartBloc>(
+          create: (BuildContext context) => CartBloc(),
+        ),
+      ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {
           return MaterialApp.router(

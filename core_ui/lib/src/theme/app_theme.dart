@@ -8,13 +8,12 @@ class AppTheme {
       textTheme: const TextTheme(
         titleLarge: TextStyle(
           fontSize: 30,
-          color: Colors.white,
         ),
         titleMedium: TextStyle(
-          fontSize: 24,
+          fontSize: 25,
         ),
         titleSmall: TextStyle(
-          fontSize: 18,
+          fontSize: 15,
         ),
       ),
       scaffoldBackgroundColor: AppDarkThemeColors.backgroundColor,
@@ -50,10 +49,10 @@ class AppTheme {
           fontSize: 30,
         ),
         titleMedium: TextStyle(
-          fontSize: 24,
+          fontSize: 25,
         ),
         titleSmall: TextStyle(
-          fontSize: 18,
+          fontSize: 15,
         ),
       ),
       scaffoldBackgroundColor: AppLightThemeColors.backgroundColor,

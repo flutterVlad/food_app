@@ -1,4 +1,4 @@
-part of 'bloc.dart';
+part of 'theme_bloc.dart';
 
 abstract class ThemeState {
   late final ThemeData appTheme;

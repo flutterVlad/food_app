@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:domain/usecases/export_usecases.dart';
 import 'package:home/src/widgets/widgets.dart';
-import 'package:home/src/bloc/bloc.dart';
+import 'package:home/src/bloc/home_bloc.dart';
 import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,14 +46,24 @@ class HomeScreenState extends State<HomeScreen> {
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
-                            childAspectRatio: 0.73,
+                        childAspectRatio: 0.73,
                       ),
                       clipBehavior: Clip.none,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.getProducts.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return HomeCard(model: state.getProducts[index]);
+                        return HomeCard(
+                          model: state.getProducts[index],
+                          onTap: () {
+                            BlocProvider.of<ProductBloc>(context).add(
+                              NavigateToDetailPageEvent(
+                                context: context,
+                                model: state.getProducts[index],
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                   ],

@@ -1,11 +1,14 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:domain/usecases/export_usecases.dart';
 import 'package:domain/usecases/usecase.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:navigation/navigation.dart';
 
-part 'event.dart';
-part 'state.dart';
+part 'home_event.dart';
+
+part 'home_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final FetchAllProductsUseCase _getAllProductsUseCase;
@@ -15,6 +18,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   })  : _getAllProductsUseCase = getAllProductsUseCase,
         super(EmptyState()) {
     on<InitEvent>(_init);
+    on<NavigateToDetailPageEvent>(_navigateToDetailPage);
   }
 
   void _init(InitEvent event, Emitter<ProductState> emit) {
@@ -23,7 +27,15 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
   Future<void> _loadProductList() async {
     emit(LoadingState());
-    List<ProductModel> products = await _getAllProductsUseCase.execute(const NoParams());
+    List<ProductModel> products = await _getAllProductsUseCase.execute(
+      const NoParams(),
+    );
     emit(LoadedState(products: products));
+  }
+
+  void _navigateToDetailPage(NavigateToDetailPageEvent event, Emitter<ProductState> emit) {
+    event.context.router.push(
+      ProductDetailRoute(model: event.model),
+    );
   }
 }
