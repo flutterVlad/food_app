@@ -1,23 +1,23 @@
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:navigation/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:cart/cart.dart';
 
 class HomeCard extends StatelessWidget {
   final ProductModel model;
+  final VoidCallback onTap;
 
-  const HomeCard({Key? key, required this.model}) : super(key: key);
+  const HomeCard({
+    Key? key,
+    required this.model,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.router.push(
-          ProductDetailRoute(model: model),
-        );
-      },
+      onTap: onTap,
       child: Container(
         padding: const EdgeInsets.all(12),
         // width: MediaQuery.of(context).size.width * 0.43,

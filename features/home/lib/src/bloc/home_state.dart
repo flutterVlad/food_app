@@ -1,4 +1,4 @@
-part of 'bloc.dart';
+part of 'home_bloc.dart';
 
 abstract class ProductState extends Equatable {
 

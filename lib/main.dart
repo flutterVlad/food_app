@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
-        )
+        ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {

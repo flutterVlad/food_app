@@ -27,10 +27,10 @@ class ProductDetailsScreen extends StatelessWidget {
                   margin: const EdgeInsets.fromLTRB(15, 25, 15, 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
-                    color: Theme.of(context).primaryColor,
+                    color: state.appTheme.primaryColor,
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: Theme.of(context).primaryColor.withOpacity(0.5),
+                        color: state.appTheme.primaryColor.withOpacity(0.5),
                         spreadRadius: 7,
                         blurRadius: 7,
                       ),
@@ -40,13 +40,13 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
                 Text(
                   model.name,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: state.appTheme.textTheme.titleLarge,
                 ),
                 GradientBlock(
                   gradient: state.gradient,
                   child: Text(
                     '\$${model.price}',
-                    style: Theme.of(context).textTheme.titleLarge,
+                    style: state.appTheme.textTheme.titleLarge,
                   ),
                 ),
                 const Divider(),
@@ -54,7 +54,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   decoration: const BoxDecoration(),
                   child: Text(
                     model.description,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: state.appTheme.textTheme.titleSmall,
                   ),
                 ),
                 const Divider(),
@@ -74,7 +74,7 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                       title: Text(
                         ingredients[index],
-                        style: Theme.of(context).textTheme.titleSmall,
+                        style: state.appTheme.textTheme.titleSmall,
                       ),
                     );
                   },

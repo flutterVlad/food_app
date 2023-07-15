@@ -21,7 +21,7 @@ class EntryPointScreen extends StatelessWidget {
       },
       bottomNavigationBuilder: (_, tabsRouter) {
         return BlocBuilder<CartBloc, CartState>(
-          builder: (context, state) {
+          builder: (BuildContext context, CartState state) {
             return BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
               items: <BottomNavigationBarItem>[

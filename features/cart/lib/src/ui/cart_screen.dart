@@ -1,7 +1,7 @@
 import 'package:cart/src/widgets/list_tile_element.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cart/src/bloc/bloc.dart';
+import 'package:cart/src/bloc/cart_bloc.dart';
 import 'package:settings/settings.dart';
 
 class CartScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (BuildContext context, CartState state) {
-        if (state is EmptyState) {
+        if (state.countCartProducts == 0) {
           return Center(
             child: Text(
               'Cart is empty.',
@@ -19,13 +19,13 @@ class CartScreen extends StatelessWidget {
             ),
           );
         }
-        if (state is LoadedState) {
+        if (state.countCartProducts > 0) {
           return SingleChildScrollView(
             child: Column(
               children: <Widget>[
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: state.productList.length,
+                  itemCount: state.products.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -37,13 +37,23 @@ class CartScreen extends StatelessWidget {
                       child: ListTileElement(
                         model: state.products[index],
                         quantity: state.quantity[index],
+                        onTap: () {
+                          BlocProvider.of<CartBloc>(context).add(
+                            RouteToDetailPageEvent(
+                              context: context,
+                              model: state.products[index],
+                            ),
+                          );
+                        },
                       ),
                     );
                   },
                 ),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 25,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
