@@ -5,6 +5,7 @@ import 'package:settings/settings.dart';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
 import 'package:cart/cart.dart';
+import 'package:home/home.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),
+        ),
+        BlocProvider<ProductBloc>(
+          create: (BuildContext context) => ProductBloc(
+            getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
+          ),
         ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(

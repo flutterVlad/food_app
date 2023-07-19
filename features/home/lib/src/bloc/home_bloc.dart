@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:domain/usecases/export_usecases.dart';
@@ -26,8 +27,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _loadProductList() async {
-    emit(LoadingState());
-    List<ProductModel> products = await _getAllProductsUseCase.execute(
+    emit(LoadingState(await dataDI.checkInternet()));
+    final List<ProductModel> products = await _getAllProductsUseCase.execute(
       const NoParams(),
     );
     emit(LoadedState(products: products));

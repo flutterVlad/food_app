@@ -8,7 +8,11 @@ abstract class ProductState extends Equatable {
   List<ProductModel> get getProducts => [];
 }
 
-class LoadingState extends ProductState {}
+class LoadingState extends ProductState {
+  final bool connectionSuccess;
+
+  LoadingState(this.connectionSuccess);
+}
 
 class EmptyState extends ProductState {}
 

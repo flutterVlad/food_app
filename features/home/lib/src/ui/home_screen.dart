@@ -1,3 +1,4 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/usecases/export_usecases.dart';
 import 'package:home/src/widgets/widgets.dart';
@@ -16,12 +17,30 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProductBloc>(
-      create: (BuildContext context) => ProductBloc(
-        getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
-      )..add(
-          InitEvent(),
-        ),
+    final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    SnackBar snackBar = SnackBar(
+      content: Center(child: Text('No network connection!', style: Theme
+          .of(context)
+          .textTheme
+          .titleMedium,)),
+      backgroundColor: Theme
+          .of(context)
+          .secondaryHeaderColor,
+      duration: Duration(seconds: 2),
+    );
+
+    return RefreshIndicator(
+      color: Theme
+          .of(context)
+          .secondaryHeaderColor,
+      onRefresh: () async {
+        if (!(await dataDI.checkInternet())) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(snackBar);
+        }
+        bloc.add(InitEvent());
+      },
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (BuildContext context, ProductState state) {
           if (state is EmptyState) {
@@ -42,7 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 15),
                     GridView.builder(
                       gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,

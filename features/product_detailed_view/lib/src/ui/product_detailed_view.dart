@@ -4,6 +4,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel model;
@@ -16,6 +17,8 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<String> ingredients = model.ingredients;
+    final MediaQueryData media = MediaQuery.of(context);
+
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return SingleChildScrollView(
@@ -36,7 +39,9 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Image.network(model.imageUrl),
+                  child: CachedImage(
+                    imageUrl: model.imageUrl,
+                  ),
                 ),
                 Text(
                   model.name,
