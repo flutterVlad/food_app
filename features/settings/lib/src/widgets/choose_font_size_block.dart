@@ -11,7 +11,7 @@ class ChoiceRow extends StatefulWidget {
 }
 
 class _ChoiceRowState extends State<ChoiceRow> {
-  static const List<String> titles = ['little', 'medium', 'large'];
+  final List<String> titles = ThemeState.cardSize.keys.toList();
   static const List<double> titleSize = [17, 22, 27];
 
   @override

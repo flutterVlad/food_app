@@ -23,7 +23,10 @@ class HomeScreenState extends State<HomeScreen> {
       content: Center(
         child: Text(
           'No network connection!',
-          style: Theme.of(context).textTheme.titleMedium,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: themeBloc.appTheme.textTheme.titleMedium!.fontSize,
+          ),
         ),
       ),
       backgroundColor: Theme.of(context).secondaryHeaderColor,
@@ -59,12 +62,12 @@ class HomeScreenState extends State<HomeScreen> {
                     const FilterBar(),
                     const SizedBox(height: 15),
                     GridView.builder(
-                      gridDelegate:
-                          SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
-                        childAspectRatio: ThemeState.cardSize[themeBloc.sizeData]!,
+                        childAspectRatio:
+                            ThemeState.cardSize[themeBloc.sizeData]!,
                       ),
                       clipBehavior: Clip.none,
                       shrinkWrap: true,
