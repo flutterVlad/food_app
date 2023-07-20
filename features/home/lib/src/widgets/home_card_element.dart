@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:cart/cart.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeCard extends StatelessWidget {
   final ProductModel model;
@@ -42,9 +41,9 @@ class HomeCard extends StatelessWidget {
             ),
             Text(
               model.name,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20.0,
+                fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
               ),
             ),
             Row(
@@ -55,7 +54,7 @@ class HomeCard extends StatelessWidget {
                   style: TextStyle(
                     color: Theme.of(context).secondaryHeaderColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                    fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                   ),
                 ),
                 BlocBuilder<ThemeBloc, ThemeState>(

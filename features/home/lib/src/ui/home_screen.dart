@@ -1,11 +1,10 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
-import 'package:domain/usecases/export_usecases.dart';
 import 'package:home/src/widgets/widgets.dart';
 import 'package:home/src/bloc/home_bloc.dart';
-import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:settings/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,22 +16,22 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final ThemeState themeBloc = BlocProvider.of<ThemeBloc>(context).state;
     final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+
     SnackBar snackBar = SnackBar(
-      content: Center(child: Text('No network connection!', style: Theme
-          .of(context)
-          .textTheme
-          .titleMedium,)),
-      backgroundColor: Theme
-          .of(context)
-          .secondaryHeaderColor,
-      duration: Duration(seconds: 2),
+      content: Center(
+        child: Text(
+          'No network connection!',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+      ),
+      backgroundColor: Theme.of(context).secondaryHeaderColor,
+      duration: const Duration(seconds: 2),
     );
 
     return RefreshIndicator(
-      color: Theme
-          .of(context)
-          .secondaryHeaderColor,
+      color: Theme.of(context).secondaryHeaderColor,
       onRefresh: () async {
         if (!(await dataDI.checkInternet())) {
           ScaffoldMessenger.of(context)
@@ -61,11 +60,11 @@ class HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 15),
                     GridView.builder(
                       gridDelegate:
-                      const SliverGridDelegateWithFixedCrossAxisCount(
+                          SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
-                        childAspectRatio: 0.73,
+                        childAspectRatio: ThemeState.cardSize[themeBloc.sizeData]!,
                       ),
                       clipBehavior: Clip.none,
                       shrinkWrap: true,

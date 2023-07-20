@@ -16,7 +16,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return AppBar(
-          title: Text(ThemeState.appBarTitle[context.topRoute.name] ?? ''),
+          title: Text(
+            ThemeState.appBarTitle[context.topRoute.name] ?? '',
+            style: TextStyle(
+              fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+            ),
+          ),
           centerTitle: true,
           leading: AutoLeadingButton(
             color: Theme.of(context).secondaryHeaderColor,

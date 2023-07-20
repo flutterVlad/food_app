@@ -14,4 +14,12 @@ class PreferencesProvider {
   void setTheme(bool isDark) {
     _preferences.setBool('is_dark', !isDark);
   }
+
+  String getFontSize() {
+    return _preferences.getString('font_size') ?? 'medium';
+  }
+
+  void setFontSize(String fontSize) {
+    _preferences.setString('font_size', fontSize);
+  }
 }

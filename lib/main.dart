@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => ThemeBloc(
             setThemeDataUseCase: appLocator.get<SetThemeDataUseCase>(),
             checkThemeDataUseCase: appLocator.get<CheckThemeDataUseCase>(),
-          ),
+            setFontSizeUseCase:  appLocator.get<SetFontSizeUseCase>(),
+            getFontSizeUseCase: appLocator.get<GetFontSizeUseCase>(),
+          )..add(InitialAllThemeSettingsEvent()),
         ),
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(),

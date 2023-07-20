@@ -79,11 +79,11 @@ class CartScreen extends StatelessWidget {
                           BlocProvider.of<ThemeBloc>(context).state.gradient,
                       borderRadius: BorderRadius.circular(30),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         'Confirm',
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                           color: Colors.black,
                         ),
                       ),

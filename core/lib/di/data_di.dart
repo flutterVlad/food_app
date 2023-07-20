@@ -135,6 +135,18 @@ class DataDI {
         preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
       ),
     );
+
+    appLocator.registerLazySingleton<GetFontSizeUseCase>(
+      () => GetFontSizeUseCase(
+        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<SetFontSizeUseCase>(
+      () => SetFontSizeUseCase(
+        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+      ),
+    );
   }
 
 // -----------------------------------------------------------
