@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/src/bloc/theme_bloc.dart';
 import 'package:settings/src/widgets/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return Padding(
@@ -22,7 +25,7 @@ class SettingsScreen extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Light Mode',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: theme.textTheme.titleMedium,
                   ),
                   BlocBuilder<ThemeBloc, ThemeState>(
                     builder: (BuildContext context, ThemeState state) {
@@ -44,12 +47,26 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   Text(
                     'Font Size',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: theme.textTheme.titleMedium,
                   ),
                   const ChoiceRow(),
                 ],
               ),
               const Divider(),
+              Center(
+                child: InkWell(
+                  onTap: () => launchUrl(Uri.parse('https://innowise-group.com/')),
+                  child: Text(
+                    'Contact Us',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      decorationColor: theme.secondaryHeaderColor,
+                      color: theme.secondaryHeaderColor,
+                      fontSize: theme.textTheme.titleMedium!.fontSize,
+                    ),
+                  ),
+                )
+              ),
             ],
           ),
         );

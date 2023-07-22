@@ -25,7 +25,7 @@ class _AdvertisementBlockState extends State<AdvertisementBlock> {
           ),
           child: Center(
             child: Text(
-              'Version: PT-3/cart-page',
+              'Version: PT-4/local-storage-and-settings',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,

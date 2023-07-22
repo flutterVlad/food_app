@@ -18,12 +18,8 @@ class _ChoiceRowState extends State<ChoiceRow> {
   Widget build(BuildContext context) {
     final ThemeBloc themeBloc = BlocProvider.of<ThemeBloc>(context);
     String dropdownValue = themeBloc.state.sizeData;
-    Color textColor = themeBloc.state.appTheme.secondaryHeaderColor;
 
-    return BlocConsumer<ThemeBloc, ThemeState>(
-      listener: (BuildContext context, ThemeState state) {
-        textColor = themeBloc.state.appTheme.secondaryHeaderColor;
-      },
+    return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (BuildContext context, ThemeState state) {
         return DropdownButton<String>(
           underline: Container(),
@@ -46,7 +42,7 @@ class _ChoiceRowState extends State<ChoiceRow> {
                       titles[index],
                       style: TextStyle(
                         fontSize: titleSize[index],
-                        color: textColor,
+                        color: Theme.of(context).secondaryHeaderColor,
                       ),
                     ),
                   ),

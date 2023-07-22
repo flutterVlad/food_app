@@ -23,9 +23,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           centerTitle: true,
-          leading: AutoLeadingButton(
-            color: Theme.of(context).secondaryHeaderColor,
-          ),
+          leading: context.router.topRoute.name == 'ProductDetailRoute'
+              ? AutoLeadingButton(color: Theme.of(context).secondaryHeaderColor)
+              : null,
         );
       },
     );
