@@ -19,33 +19,34 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     required CheckThemeDataUseCase checkThemeDataUseCase,
     required SetFontSizeUseCase setFontSizeUseCase,
     required GetFontSizeUseCase getFontSizeUseCase,
-  })
-      : _setThemeDataUseCase = setThemeDataUseCase,
+  })  : _setThemeDataUseCase = setThemeDataUseCase,
         _checkThemeDataUseCase = checkThemeDataUseCase,
         _setFontSizeUseCase = setFontSizeUseCase,
         _getFontSizeUseCase = getFontSizeUseCase,
         super(
-        ThemeState(
-          sizeData: 'medium',
-          appTheme: AppTheme.getDarkThemeData('medium'),
-          gradient: AppDarkThemeColors.gradient,
-          switchState: false,
-        ),
-      ) {
+          ThemeState(
+            sizeData: 'medium',
+            appTheme: AppTheme.getDarkThemeData('medium'),
+            gradient: AppDarkThemeColors.gradient,
+            switchState: false,
+          ),
+        ) {
     on<InitialAllThemeSettingsEvent>(_initAllSettings);
     on<ThemeSwitchEvent>(_switchTheme);
     on<SizeSwitchEvent>(_switchFontSize);
   }
 
-  void _initAllSettings(InitialAllThemeSettingsEvent event,
-      Emitter<ThemeState> emit,) async {
+  void _initAllSettings(
+    InitialAllThemeSettingsEvent event,
+    Emitter<ThemeState> emit,
+  ) async {
     _initFontSize();
     _initTheme();
   }
 
   Future<void> _initTheme() async {
     final bool hasDarkTheme =
-    await _checkThemeDataUseCase.execute(const NoParams());
+        await _checkThemeDataUseCase.execute(const NoParams());
     if (hasDarkTheme) {
       emit(
         state.copyWith(
@@ -65,27 +66,31 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     }
   }
 
-  Future<void> _switchTheme(ThemeSwitchEvent event,
-      Emitter<ThemeState> emit,) async {
+  Future<void> _switchTheme(
+    ThemeSwitchEvent event,
+    Emitter<ThemeState> emit,
+  ) async {
     final bool isDark = !state.switchState;
     emit(
       isDark
           ? state.copyWith(
-        appTheme: AppTheme.getLightThemeData(state.sizeData),
-        gradient: AppLightThemeColors.gradient,
-        switchState: true,
-      )
+              appTheme: AppTheme.getLightThemeData(state.sizeData),
+              gradient: AppLightThemeColors.gradient,
+              switchState: true,
+            )
           : state.copyWith(
-        appTheme: AppTheme.getDarkThemeData(state.sizeData),
-        gradient: AppDarkThemeColors.gradient,
-        switchState: false,
-      ),
+              appTheme: AppTheme.getDarkThemeData(state.sizeData),
+              gradient: AppDarkThemeColors.gradient,
+              switchState: false,
+            ),
     );
     await _setThemeDataUseCase.execute(isDark);
   }
 
-  Future<void> _switchFontSize(SizeSwitchEvent event,
-      Emitter<ThemeState> emit,) async {
+  Future<void> _switchFontSize(
+    SizeSwitchEvent event,
+    Emitter<ThemeState> emit,
+  ) async {
     emit(
       state.copyWith(
         sizeData: event.sizeData,
@@ -100,7 +105,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     emit(
       state.copyWith(
         sizeData: fontSize,
-      )
+      ),
     );
   }
 }

@@ -19,19 +19,7 @@ class HomeScreenState extends State<HomeScreen> {
     final ThemeState themeBloc = BlocProvider.of<ThemeBloc>(context).state;
     final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
 
-    SnackBar snackBar = SnackBar(
-      content: Center(
-        child: Text(
-          'No network connection!',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: themeBloc.appTheme.textTheme.titleMedium!.fontSize,
-          ),
-        ),
-      ),
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
-      duration: const Duration(seconds: 2),
-    );
+    final SnackBar snackBar = createSnackBar();
 
     return RefreshIndicator(
       color: Theme.of(context).secondaryHeaderColor,
@@ -46,7 +34,7 @@ class HomeScreenState extends State<HomeScreen> {
       child: BlocBuilder<ProductBloc, ProductState>(
         builder: (BuildContext context, ProductState state) {
           if (state is EmptyState) {
-            BlocProvider.of<ProductBloc>(context).add(InitEvent());
+            bloc.add(InitEvent());
           }
           if (state is LoadingState) {
             return const AppCenterLoader();
@@ -96,6 +84,22 @@ class HomeScreenState extends State<HomeScreen> {
           }
         },
       ),
+    );
+  }
+
+  SnackBar createSnackBar() {
+    return SnackBar(
+      content: Center(
+        child: Text(
+          'No network connection!',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
+          ),
+        ),
+      ),
+      backgroundColor: Theme.of(context).secondaryHeaderColor,
+      duration: const Duration(seconds: 2),
     );
   }
 }

@@ -14,7 +14,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
+      builder: (BuildContext context, ThemeState state) {
         return AppBar(
           title: Text(
             ThemeState.appBarTitle[context.topRoute.name] ?? '',

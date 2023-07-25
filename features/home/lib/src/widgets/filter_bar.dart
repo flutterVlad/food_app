@@ -6,6 +6,7 @@ class FilterBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -21,7 +22,7 @@ class FilterBar extends StatelessWidget {
           child: Text(
             'View all',
             style: TextStyle(
-              color: Theme.of(context).secondaryHeaderColor,
+              color: theme.secondaryHeaderColor,
               fontSize: theme.textTheme.titleMedium!.fontSize,
             ),
           ),
