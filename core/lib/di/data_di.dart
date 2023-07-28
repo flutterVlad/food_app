@@ -13,6 +13,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:data/providers/auth_provider.dart';
+import 'package:data/repositories/users_repository_impl.dart';
+import 'package:domain/usecases/auth_usecases/sign_up_usecase.dart';
+import 'package:domain/usecases/auth_usecases/sign_in_usecase.dart';
+import 'package:domain/usecases/auth_usecases/sign_out_usecase.dart';
 
 import 'app_di.dart';
 
@@ -21,6 +27,7 @@ final DataDI dataDI = DataDI();
 class DataDI {
   late final FirebaseDatabase _realtimeDatabase;
   late final FirebaseStorage _storage;
+  late final FirebaseAuth _firebaseAuth;
   late final SharedPreferences _preferences;
 
   Future<void> initDependencies() async {
@@ -29,7 +36,9 @@ class DataDI {
     _preferences = await _initPreferences();
     _realtimeDatabase = _initDatabase();
     _storage = _initStorage();
+    _firebaseAuth = _initFirebaseAuth();
     _initLocalDatabase();
+    _initAuthResources();
     _initProducts();
     _initTheme();
   }
@@ -53,9 +62,50 @@ class DataDI {
 
   FirebaseDatabase _initDatabase() => FirebaseDatabase.instance;
 
+  FirebaseAuth _initFirebaseAuth() => FirebaseAuth.instance;
+
   FirebaseDatabase get database => _realtimeDatabase;
 
   FirebaseStorage get storage => _storage;
+
+  FirebaseAuth get firebaseAuth => _firebaseAuth;
+
+  // -----------------------------------------------------------
+
+  // initialization auth resources
+  // -----------------------------------------------------------
+  void _initAuthResources() {
+    appLocator.registerLazySingleton<AuthProvider>(
+      () => AuthProvider(
+        firebaseAuth: _firebaseAuth,
+        database: _realtimeDatabase,
+      ),
+    );
+
+    appLocator.registerLazySingleton<UserRepositoryImpl>(
+      () => UserRepositoryImpl(
+        authProvider: appLocator.get<AuthProvider>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<SignUpUseCase>(
+      () => SignUpUseCase(
+        userRepository: appLocator.get<UserRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<SignInUseCase>(
+      () => SignInUseCase(
+        userRepository: appLocator.get<UserRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<SignOutUseCase>(
+      () => SignOutUseCase(
+        userRepository: appLocator.get<UserRepositoryImpl>(),
+      ),
+    );
+  }
 
   // -----------------------------------------------------------
 

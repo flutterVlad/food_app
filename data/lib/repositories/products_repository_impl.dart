@@ -2,7 +2,7 @@ import 'package:core/core.dart';
 import 'package:data/entity/product/product_entity.dart';
 import 'package:data/providers/firebase_provider.dart';
 import 'package:data/providers/hive_provider.dart';
-import 'package:domain/repositories/products_repositories.dart';
+import 'package:domain/repositories/products_repository.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:data/mappers/product_mapper.dart';
 

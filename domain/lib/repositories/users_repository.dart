@@ -1,0 +1,16 @@
+import 'package:domain/models/user/user_model.dart';
+
+abstract class UserRepository {
+  Future<UserModel> signUp({
+    required String userName,
+    required String email,
+    required String password,
+  });
+
+  Future<UserModel> signIn({
+    required String email,
+    required String password,
+  });
+
+  Future<void> signOut();
+}
