@@ -11,6 +11,7 @@ class UserRepositoryImpl implements UserRepository {
     required AuthProvider authProvider,
   }) : _authProvider = authProvider;
 
+  @override
   Future<UserModel> signUp({
     required String userName,
     required String email,
@@ -26,6 +27,7 @@ class UserRepositoryImpl implements UserRepository {
     return UserMapper.toModel(userEntity);
   }
 
+  @override
   Future<UserModel> signIn({
     required String email,
     required String password,
@@ -39,7 +41,21 @@ class UserRepositoryImpl implements UserRepository {
     return UserMapper.toModel(userEntity);
   }
 
+  @override
+  Future<UserModel> signInWithGoogle() async {
+    final UserEntity userEntity = await _authProvider.signInWithGoogle();
+
+    return UserMapper.toModel(userEntity);
+  }
+
+  @override
   Future<void> signOut() async {
     await _authProvider.signOut();
+  }
+
+  @override
+  Future<UserModel> checkAuthentication() async {
+    final UserEntity userEntity = await _authProvider.checkUserAuth();
+    return UserMapper.toModel(userEntity);
   }
 }

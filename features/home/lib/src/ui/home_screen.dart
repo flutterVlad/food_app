@@ -1,9 +1,9 @@
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:home/src/widgets/widgets.dart';
 import 'package:home/src/bloc/home_bloc.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:navigation/navigation.dart';
 import 'package:settings/settings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,30 +16,39 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    final ThemeState themeBloc = BlocProvider.of<ThemeBloc>(context).state;
+    final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
     final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
-
-    final SnackBar snackBar = createSnackBar();
 
     return RefreshIndicator(
       color: Theme.of(context).secondaryHeaderColor,
       onRefresh: () async {
-        if (!(await dataDI.checkInternet())) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(snackBar);
-        }
         bloc.add(InitEvent());
       },
-      child: BlocBuilder<ProductBloc, ProductState>(
+      child: BlocConsumer<ProductBloc, ProductState>(
+        listener: (BuildContext context, ProductState state) {
+          if (!state.internetConnection) {
+            FlushBar.showFlushBar(
+                context: context,
+                icon: Icons.error,
+                message: 'No internet connection',
+                gradient: ThemeState.errorGradient,
+                textColor: Colors.white,
+            );
+          } else {
+            FlushBar.showFlushBar(
+              context: context,
+              icon: Icons.done,
+              message: 'Internet connection success',
+              gradient: ThemeState.successGradient,
+              textColor: Colors.black,
+            );
+          }
+        },
+        listenWhen: (ProductState previous, ProductState current) {
+          return current.internetConnection != previous.internetConnection;
+        },
         builder: (BuildContext context, ProductState state) {
-          if (state is EmptyState) {
-            bloc.add(InitEvent());
-          }
-          if (state is LoadingState) {
-            return const AppCenterLoader();
-          }
-          if (state is LoadedState) {
+          if (state.products.isNotEmpty) {
             return SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.all(15),
@@ -55,21 +64,18 @@ class HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
                         childAspectRatio:
-                            ThemeState.cardSize[themeBloc.sizeData]!,
+                            ThemeState.cardSize[themeState.sizeData]!,
                       ),
                       clipBehavior: Clip.none,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.getProducts.length,
+                      itemCount: state.products.length,
                       itemBuilder: (BuildContext context, int index) {
                         return HomeCard(
-                          model: state.getProducts[index],
+                          model: state.products[index],
                           onTap: () {
-                            BlocProvider.of<ProductBloc>(context).add(
-                              NavigateToDetailPageEvent(
-                                context: context,
-                                model: state.getProducts[index],
-                              ),
+                            context.navigateTo(
+                              ProductDetailRoute(model: state.products[index]),
                             );
                           },
                         );
@@ -80,26 +86,10 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else {
-            return const Text('Error');
+            return const AppCenterLoader();
           }
         },
       ),
-    );
-  }
-
-  SnackBar createSnackBar() {
-    return SnackBar(
-      content: Center(
-        child: Text(
-          'No network connection!',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
-          ),
-        ),
-      ),
-      backgroundColor: Theme.of(context).secondaryHeaderColor,
-      duration: const Duration(seconds: 2),
     );
   }
 }

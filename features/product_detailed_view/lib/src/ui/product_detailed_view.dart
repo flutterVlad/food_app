@@ -1,23 +1,20 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
   final ProductModel model;
 
   const ProductDetailsScreen({
     Key? key,
-    @PathParam('model') required this.model,
+    required this.model,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<String> ingredients = model.ingredients;
-    final MediaQueryData media = MediaQuery.of(context);
 
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
@@ -39,8 +36,11 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: CachedImage(
-                    imageUrl: model.imageUrl,
+                  child: Hero(
+                    tag: model.imageUrl,
+                    child: CachedImage(
+                      imageUrl: model.imageUrl,
+                    ),
                   ),
                 ),
                 Text(

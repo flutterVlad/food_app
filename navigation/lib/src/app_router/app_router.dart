@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:auto_route/empty_router_widgets.dart';
+import 'package:domain/models/product/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:cart/cart.dart';
@@ -7,29 +7,31 @@ import 'package:navigation/src/entry_point/entry_point.dart';
 import 'package:order_history/order_history.dart';
 import 'package:settings/settings.dart';
 import 'package:product_detailed_view/product_detailed_view.dart';
+import 'package:auth/src/ui/sign_in_screen.dart';
+import 'package:auth/auth.dart';
 
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
+    AutoRoute(path: '/signIn', page: SignInScreen, initial: true),
+    AutoRoute(path: '/signUp', page: SignUpScreen),
     AutoRoute(
-      path: '/',
+      path: '',
       page: EntryPointScreen,
-      initial: true,
       children: <AutoRoute>[
-        AutoRoute(
-          path: 'products',
+        CustomRoute(
           name: 'ProductsRoute',
-          page: EmptyRouterPage,
+          page: HeroEmptyRouterPage,
+          initial: true,
           children: <AutoRoute>[
-            AutoRoute(
-              path: '',
+            CustomRoute(
               name: 'HomeRoute',
               page: HomeScreen,
+              initial: true,
             ),
             CustomRoute(
-              path: ':model',
               name: 'ProductDetailRoute',
               page: ProductDetailsScreen,
               transitionsBuilder: TransitionsBuilders.slideRightWithFade,
@@ -37,22 +39,19 @@ part 'app_router.gr.dart';
           ],
         ),
         AutoRoute(
-          path: 'order_history',
           name: 'OrderHistoryRoute',
           page: OrderHistoryScreen,
         ),
-        AutoRoute(
-          path: 'cart',
+        CustomRoute(
           name: 'EmptyCartRoute',
-          page: EmptyRouterPage,
+          page: HeroEmptyRouterPage,
           children: <AutoRoute>[
-            AutoRoute(
-              path: '',
+            CustomRoute(
               name: 'CartRoute',
               page: CartScreen,
+              initial: true,
             ),
             CustomRoute(
-              path: ':model',
               name: 'ProductDetailRoute',
               page: ProductDetailsScreen,
               transitionsBuilder: TransitionsBuilders.slideRightWithFade,
@@ -60,12 +59,23 @@ part 'app_router.gr.dart';
           ],
         ),
         AutoRoute(
-          path: 'settings',
           name: 'SettingsRoute',
           page: SettingsScreen,
-        )
+        ),
       ],
     ),
   ],
 )
 class AppRouter extends _$AppRouter {}
+
+class HeroEmptyRouterPage extends StatelessWidget {
+  const HeroEmptyRouterPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return HeroControllerScope(
+      controller: HeroController(),
+      child: const AutoRouter(),
+    );
+  }
+}

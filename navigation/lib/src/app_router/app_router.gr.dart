@@ -17,6 +17,22 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    SignInRoute.name: (routeData) {
+      final args = routeData.argsAs<SignInRouteArgs>(
+          orElse: () => const SignInRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: SignInScreen(key: args.key),
+      );
+    },
+    SignUpRoute.name: (routeData) {
+      final args = routeData.argsAs<SignUpRouteArgs>(
+          orElse: () => const SignUpRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: SignUpScreen(key: args.key),
+      );
+    },
     EntryPointRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -24,9 +40,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProductsRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
-        child: const EmptyRouterPage(),
+        child: const HeroEmptyRouterPage(),
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     OrderHistoryRoute.name: (routeData) {
@@ -36,9 +54,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     EmptyCartRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
-        child: const EmptyRouterPage(),
+        child: const HeroEmptyRouterPage(),
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     SettingsRoute.name: (routeData) {
@@ -48,15 +68,15 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const HomeScreen(),
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     ProductDetailRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<ProductDetailRouteArgs>(
-          orElse: () => ProductDetailRouteArgs(model: pathParams.get('model')));
+      final args = routeData.argsAs<ProductDetailRouteArgs>();
       return CustomPage<dynamic>(
         routeData: routeData,
         child: ProductDetailsScreen(
@@ -69,9 +89,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CartRoute.name: (routeData) {
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: const CartScreen(),
+        opaque: true,
+        barrierDismissible: false,
       );
     },
   };
@@ -79,12 +101,26 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          EntryPointRoute.name,
+          '/#redirect',
           path: '/',
+          redirectTo: '/signIn',
+          fullMatch: true,
+        ),
+        RouteConfig(
+          SignInRoute.name,
+          path: '/signIn',
+        ),
+        RouteConfig(
+          SignUpRoute.name,
+          path: '/signUp',
+        ),
+        RouteConfig(
+          EntryPointRoute.name,
+          path: '',
           children: [
             RouteConfig(
               ProductsRoute.name,
-              path: 'products',
+              path: '',
               parent: EntryPointRoute.name,
               children: [
                 RouteConfig(
@@ -94,19 +130,19 @@ class _$AppRouter extends RootStackRouter {
                 ),
                 RouteConfig(
                   ProductDetailRoute.name,
-                  path: ':model',
+                  path: 'product-details-screen',
                   parent: ProductsRoute.name,
                 ),
               ],
             ),
             RouteConfig(
               OrderHistoryRoute.name,
-              path: 'order_history',
+              path: 'order-history-screen',
               parent: EntryPointRoute.name,
             ),
             RouteConfig(
               EmptyCartRoute.name,
-              path: 'cart',
+              path: 'hero-empty-router-page',
               parent: EntryPointRoute.name,
               children: [
                 RouteConfig(
@@ -116,19 +152,67 @@ class _$AppRouter extends RootStackRouter {
                 ),
                 RouteConfig(
                   ProductDetailRoute.name,
-                  path: ':model',
+                  path: 'product-details-screen',
                   parent: EmptyCartRoute.name,
                 ),
               ],
             ),
             RouteConfig(
               SettingsRoute.name,
-              path: 'settings',
+              path: 'settings-screen',
               parent: EntryPointRoute.name,
             ),
           ],
-        )
+        ),
       ];
+}
+
+/// generated route for
+/// [SignInScreen]
+class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({Key? key})
+      : super(
+          SignInRoute.name,
+          path: '/signIn',
+          args: SignInRouteArgs(key: key),
+        );
+
+  static const String name = 'SignInRoute';
+}
+
+class SignInRouteArgs {
+  const SignInRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignInRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [SignUpScreen]
+class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
+  SignUpRoute({Key? key})
+      : super(
+          SignUpRoute.name,
+          path: '/signUp',
+          args: SignUpRouteArgs(key: key),
+        );
+
+  static const String name = 'SignUpRoute';
+}
+
+class SignUpRouteArgs {
+  const SignUpRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignUpRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -137,7 +221,7 @@ class EntryPointRoute extends PageRouteInfo<void> {
   const EntryPointRoute({List<PageRouteInfo>? children})
       : super(
           EntryPointRoute.name,
-          path: '/',
+          path: '',
           initialChildren: children,
         );
 
@@ -145,12 +229,12 @@ class EntryPointRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [EmptyRouterPage]
+/// [HeroEmptyRouterPage]
 class ProductsRoute extends PageRouteInfo<void> {
   const ProductsRoute({List<PageRouteInfo>? children})
       : super(
           ProductsRoute.name,
-          path: 'products',
+          path: '',
           initialChildren: children,
         );
 
@@ -163,19 +247,19 @@ class OrderHistoryRoute extends PageRouteInfo<void> {
   const OrderHistoryRoute()
       : super(
           OrderHistoryRoute.name,
-          path: 'order_history',
+          path: 'order-history-screen',
         );
 
   static const String name = 'OrderHistoryRoute';
 }
 
 /// generated route for
-/// [EmptyRouterPage]
+/// [HeroEmptyRouterPage]
 class EmptyCartRoute extends PageRouteInfo<void> {
   const EmptyCartRoute({List<PageRouteInfo>? children})
       : super(
           EmptyCartRoute.name,
-          path: 'cart',
+          path: 'hero-empty-router-page',
           initialChildren: children,
         );
 
@@ -188,7 +272,7 @@ class SettingsRoute extends PageRouteInfo<void> {
   const SettingsRoute()
       : super(
           SettingsRoute.name,
-          path: 'settings',
+          path: 'settings-screen',
         );
 
   static const String name = 'SettingsRoute';
@@ -211,15 +295,14 @@ class HomeRoute extends PageRouteInfo<void> {
 class ProductDetailRoute extends PageRouteInfo<ProductDetailRouteArgs> {
   ProductDetailRoute({
     Key? key,
-    required dynamic model,
+    required ProductModel model,
   }) : super(
           ProductDetailRoute.name,
-          path: ':model',
+          path: 'product-details-screen',
           args: ProductDetailRouteArgs(
             key: key,
             model: model,
           ),
-          rawPathParams: {'model': model},
         );
 
   static const String name = 'ProductDetailRoute';
@@ -233,7 +316,7 @@ class ProductDetailRouteArgs {
 
   final Key? key;
 
-  final dynamic model;
+  final ProductModel model;
 
   @override
   String toString() {

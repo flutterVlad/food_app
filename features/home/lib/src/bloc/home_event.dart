@@ -13,3 +13,5 @@ class NavigateToDetailPageEvent extends ProductEvent {
     required this.model,
   });
 }
+
+class CheckInternetEvent extends ProductEvent {}

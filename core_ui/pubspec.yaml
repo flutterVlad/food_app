@@ -19,6 +19,9 @@ dependencies:
   home:
     path: ../features/home
 
+  flutter_svg: ^2.0.7
+  another_flushbar: ^1.12.30
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

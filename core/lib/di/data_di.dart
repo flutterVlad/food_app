@@ -15,10 +15,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:data/providers/auth_provider.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:data/repositories/users_repository_impl.dart';
 import 'package:domain/usecases/auth_usecases/sign_up_usecase.dart';
 import 'package:domain/usecases/auth_usecases/sign_in_usecase.dart';
 import 'package:domain/usecases/auth_usecases/sign_out_usecase.dart';
+import 'package:domain/usecases/auth_usecases/sign_in_with_google.dart';
 
 import 'app_di.dart';
 
@@ -75,10 +77,17 @@ class DataDI {
   // initialization auth resources
   // -----------------------------------------------------------
   void _initAuthResources() {
+    appLocator.registerLazySingleton<GoogleSignIn>(
+      () => GoogleSignIn(
+          clientId:
+              '415019838765-rp0b59urmfou9pegbig4bb9m857aua5r.apps.googleusercontent.com'),
+    );
+
     appLocator.registerLazySingleton<AuthProvider>(
       () => AuthProvider(
         firebaseAuth: _firebaseAuth,
         database: _realtimeDatabase,
+        googleSignIn: appLocator.get<GoogleSignIn>(),
       ),
     );
 
@@ -102,6 +111,18 @@ class DataDI {
 
     appLocator.registerLazySingleton<SignOutUseCase>(
       () => SignOutUseCase(
+        userRepository: appLocator.get<UserRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<SignInWithGoogleUseCase>(
+      () => SignInWithGoogleUseCase(
+        userRepository: appLocator.get<UserRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<CheckAuthenticationUseCase>(
+      () => CheckAuthenticationUseCase(
         userRepository: appLocator.get<UserRepositoryImpl>(),
       ),
     );

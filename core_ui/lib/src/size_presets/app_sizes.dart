@@ -10,7 +10,7 @@ class AppSizes {
         fontSize: 17,
       ),
       titleSmall: TextStyle(
-        fontSize: 10,
+        fontSize: 12,
       ),
     ),
     'medium': TextTheme(
@@ -21,7 +21,7 @@ class AppSizes {
         fontSize: 22,
       ),
       titleSmall: TextStyle(
-        fontSize: 15,
+        fontSize: 17,
       ),
     ),
     'large': TextTheme(
@@ -32,7 +32,7 @@ class AppSizes {
         fontSize: 27,
       ),
       titleSmall: TextStyle(
-        fontSize: 20,
+        fontSize: 22,
       ),
     ),
   };

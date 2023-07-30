@@ -5,6 +5,7 @@ import 'package:settings/settings.dart';
 import 'package:core/core.dart';
 import 'package:navigation/navigation.dart';
 import 'package:cart/cart.dart';
+import 'package:auth/auth.dart';
 import 'package:home/home.dart';
 
 void main() async {
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => ThemeBloc(
             setThemeDataUseCase: appLocator.get<SetThemeDataUseCase>(),
             checkThemeDataUseCase: appLocator.get<CheckThemeDataUseCase>(),
-            setFontSizeUseCase:  appLocator.get<SetFontSizeUseCase>(),
+            setFontSizeUseCase: appLocator.get<SetFontSizeUseCase>(),
             getFontSizeUseCase: appLocator.get<GetFontSizeUseCase>(),
           )..add(InitialAllThemeSettingsEvent()),
         ),
@@ -39,14 +40,27 @@ class MyApp extends StatelessWidget {
             getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
           ),
         ),
+        BlocProvider<AuthBloc>(
+          create: (BuildContext context) => AuthBloc(
+            signUpUseCase: appLocator.get<SignUpUseCase>(),
+            signInUseCase: appLocator.get<SignInUseCase>(),
+            signInWithGoogleUseCase: appLocator.get<SignInWithGoogleUseCase>(),
+            signOutUseCase: appLocator.get<SignOutUseCase>(),
+            appRouter: appLocator.get<AppRouter>(),
+            checkAuthenticationUseCase:
+                appLocator.get<CheckAuthenticationUseCase>(),
+          ),
+        )
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {
           return MaterialApp.router(
-            routerDelegate: appLocator.get<AppRouter>().delegate(),
+            routerDelegate: appLocator.get<AppRouter>().delegate(
+                  navigatorObservers: () => [HeroController()],
+                ),
             routeInformationParser:
                 appLocator.get<AppRouter>().defaultRouteParser(),
-            title: 'Food App',
+            title: 'Yum Hub',
             theme: state.appTheme,
           );
         },

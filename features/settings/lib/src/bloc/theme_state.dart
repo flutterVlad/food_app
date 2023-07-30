@@ -17,6 +17,8 @@ class ThemeState {
     'medium': 0.72,
     'large': 0.69,
   };
+  static LinearGradient errorGradient = AppGradients.errorGradient;
+  static LinearGradient successGradient = AppGradients.successGradient;
 
   ThemeState({
     required this.sizeData,

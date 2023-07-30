@@ -36,8 +36,11 @@ class HomeCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            CachedImage(
-              imageUrl: model.imageUrl,
+            Hero(
+              tag: model.imageUrl,
+              child: CachedImage(
+                imageUrl: model.imageUrl,
+              ),
             ),
             Text(
               model.name,

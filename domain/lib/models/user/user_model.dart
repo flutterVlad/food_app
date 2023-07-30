@@ -9,4 +9,11 @@ class UserModel {
     required this.uid,
   });
 
+  static UserModel get empty => UserModel(
+        userName: '',
+        email: '',
+        uid: '',
+      );
+
+  bool isEmpty() => this == UserModel.empty;
 }

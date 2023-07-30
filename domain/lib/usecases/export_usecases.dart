@@ -6,3 +6,5 @@ export 'set_font_size_usecase.dart';
 export 'auth_usecases/sign_in_usecase.dart';
 export 'auth_usecases/sign_up_usecase.dart';
 export 'auth_usecases/sign_out_usecase.dart';
+export 'auth_usecases/sign_in_with_google.dart';
+export 'auth_usecases/check_authentication_usecase.dart';

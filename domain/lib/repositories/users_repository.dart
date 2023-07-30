@@ -13,4 +13,8 @@ abstract class UserRepository {
   });
 
   Future<void> signOut();
+
+  Future<UserModel> signInWithGoogle();
+
+  Future<UserModel> checkAuthentication();
 }

@@ -70,8 +70,11 @@ class ListTileElement extends StatelessWidget {
             ),
           ],
         ),
-        leading: CachedImage(
-          imageUrl: model.imageUrl,
+        leading: Hero(
+          tag: model.imageUrl,
+          child: CachedImage(
+            imageUrl: model.imageUrl,
+          ),
         ),
         trailing: GradientBlock(
           gradient: themeState.gradient,
