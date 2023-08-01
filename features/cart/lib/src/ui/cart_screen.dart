@@ -11,6 +11,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CartBloc, CartState>(
       builder: (BuildContext context, CartState state) {
+        final CartBloc productBloc = BlocProvider.of<CartBloc>(context);
+
         if (state.countCartProducts == 0) {
           return Center(
             child: Text(
@@ -38,7 +40,7 @@ class CartScreen extends StatelessWidget {
                         model: state.products[index],
                         quantity: state.quantity[index],
                         onTap: () {
-                          BlocProvider.of<CartBloc>(context).add(
+                          productBloc.add(
                             RouteToDetailPageEvent(
                               context: context,
                               model: state.products[index],

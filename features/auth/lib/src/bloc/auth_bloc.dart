@@ -63,7 +63,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _router.replace(const EntryPointRoute());
       }
     } on FirebaseAuthException catch (error) {
-      print(error);
+      emit(
+        state.copyWith(
+          formState: FailureFormState(
+            error.message,
+          ),
+        ),
+      );
     }
   }
 

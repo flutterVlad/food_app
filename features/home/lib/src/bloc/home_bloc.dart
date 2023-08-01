@@ -22,9 +22,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<NavigateToDetailPageEvent>(_navigateToDetailPage);
     on<CheckInternetEvent>(_checkInternet);
 
-    Connectivity().onConnectivityChanged.listen((
-      ConnectivityResult result,
-    ) {
+    Connectivity().onConnectivityChanged.listen((_) {
       add(CheckInternetEvent());
     });
 

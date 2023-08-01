@@ -111,12 +111,14 @@ class AuthProvider {
     if (snapshot.exists) {
       final Map<dynamic, dynamic> userData =
           snapshot.value as Map<dynamic, dynamic>;
+      
       return UserEntity(
         uid: uid,
         email: userData['email'],
         userName: userData['userName'],
       );
     } else {
+
       return UserEntity.empty;
     }
   }
@@ -128,6 +130,7 @@ class AuthProvider {
       final UserEntity userEntity = await getUserFromDatabase(
         uid: authUser.uid,
       );
+
       return userEntity;
     } else {
       return UserEntity.empty;

@@ -20,6 +20,7 @@ class ListTileElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
+
     return GestureDetector(
       onTap: onTap,
       child: ListTile(

@@ -56,6 +56,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<UserModel> checkAuthentication() async {
     final UserEntity userEntity = await _authProvider.checkUserAuth();
+
     return UserMapper.toModel(userEntity);
   }
 }

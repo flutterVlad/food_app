@@ -3,7 +3,6 @@ import 'package:home/src/widgets/widgets.dart';
 import 'package:home/src/bloc/home_bloc.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:navigation/navigation.dart';
 import 'package:settings/settings.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,11 +27,11 @@ class HomeScreenState extends State<HomeScreen> {
         listener: (BuildContext context, ProductState state) {
           if (!state.internetConnection) {
             FlushBar.showFlushBar(
-                context: context,
-                icon: Icons.error,
-                message: 'No internet connection',
-                gradient: ThemeState.errorGradient,
-                textColor: Colors.white,
+              context: context,
+              icon: Icons.error,
+              message: 'No internet connection',
+              gradient: ThemeState.errorGradient,
+              textColor: Colors.white,
             );
           } else {
             FlushBar.showFlushBar(
@@ -74,8 +73,11 @@ class HomeScreenState extends State<HomeScreen> {
                         return HomeCard(
                           model: state.products[index],
                           onTap: () {
-                            context.navigateTo(
-                              ProductDetailRoute(model: state.products[index]),
+                            bloc.add(
+                              NavigateToDetailPageEvent(
+                                context: context,
+                                model: state.products[index],
+                              ),
                             );
                           },
                         );
