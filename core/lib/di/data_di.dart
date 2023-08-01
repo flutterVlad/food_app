@@ -78,9 +78,7 @@ class DataDI {
   // -----------------------------------------------------------
   void _initAuthResources() {
     appLocator.registerLazySingleton<GoogleSignIn>(
-      () => GoogleSignIn(
-          clientId:
-              '415019838765-rp0b59urmfou9pegbig4bb9m857aua5r.apps.googleusercontent.com'),
+      () => GoogleSignIn(),
     );
 
     appLocator.registerLazySingleton<AuthProvider>(

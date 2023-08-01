@@ -52,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         const NoParams(),
       );
 
-      if (!userModel.isEmpty()) {
+      if (userModel != UserModel.empty) {
         emit(
           state.copyWith(
             isLogged: true,
@@ -69,6 +69,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signIn(SignInEvent event, Emitter<AuthState> emit) async {
     try {
+      emit(
+        state.copyWith(
+          isLoading: true,
+        ),
+      );
       final UserModel userModel = await _signInUseCase.execute(
         {
           'email': event.email,
@@ -80,6 +85,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           isLogged: true,
           userModel: userModel,
           formState: SuccessFormState(),
+          isLoading: false,
         ),
       );
       _router.replace(const EntryPointRoute());
@@ -120,6 +126,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
     try {
+      emit(
+        state.copyWith(
+          isLoading: true,
+        ),
+      );
       final UserModel userModel = await _signUpUseCase.execute(
         {
           'email': event.email,
@@ -132,6 +143,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           isLogged: true,
           userModel: userModel,
           formState: SuccessFormState(),
+          isLoading: false,
         ),
       );
 

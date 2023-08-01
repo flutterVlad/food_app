@@ -15,8 +15,15 @@ part 'app_router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
-    AutoRoute(path: '/signIn', page: SignInScreen, initial: true),
-    AutoRoute(path: '/signUp', page: SignUpScreen),
+    CustomRoute(
+        path: '/signIn',
+        page: SignInScreen,
+        initial: true,
+        transitionsBuilder: TransitionsBuilders.slideRight),
+    CustomRoute(
+        path: '/signUp',
+        page: SignUpScreen,
+        transitionsBuilder: TransitionsBuilders.slideLeft),
     AutoRoute(
       path: '',
       page: EntryPointScreen,

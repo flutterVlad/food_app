@@ -16,4 +16,23 @@ class UserModel {
       );
 
   bool isEmpty() => this == UserModel.empty;
+
+  @override
+  bool operator ==(Object other) {
+    return other is UserModel &&
+        uid == other.uid &&
+        userName == other.userName &&
+        email == other.email;
+  }
+
+  @override
+  int get hashCode {
+    return Object.hash(
+      runtimeType,
+      uid,
+      userName,
+      email,
+    );
+  }
+
 }

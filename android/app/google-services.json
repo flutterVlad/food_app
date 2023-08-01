@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "415019838765",
-    "firebase_url": "https://products-cfc8b-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "products-cfc8b",
-    "storage_bucket": "products-cfc8b.appspot.com"
+    "project_number": "185212814532",
+    "firebase_url": "https://yumhub-b2f74-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "yumhub-b2f74",
+    "storage_bucket": "yumhub-b2f74.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:415019838765:android:14c71107a33b0d204077a4",
+        "mobilesdk_app_id": "1:185212814532:android:052fe3de058e56d61f7591",
         "android_client_info": {
           "package_name": "com.example.food_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "415019838765-rjs3nc7eqcuh5o1at0h4th69a8rskb0i.apps.googleusercontent.com",
+          "client_id": "185212814532-hpk82aurjbm97mloc4t3hq1ok2562lev.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.food_app",
@@ -23,35 +23,27 @@
           }
         },
         {
-          "client_id": "415019838765-rp0b59urmfou9pegbig4bb9m857aua5r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.food_app",
-            "certificate_hash": "2c31f3981d8e2555967aad2d19c2b522c6be7c99"
-          }
-        },
-        {
-          "client_id": "415019838765-2qmfrbi83bisklsas03407dkulsvcbg7.apps.googleusercontent.com",
+          "client_id": "185212814532-jgbmpfdrg3v8is93lqmb2jkonocj70jo.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAjutjKRWKoiZzI8U-PSztV5W5Z7xfAoWQ"
+          "current_key": "AIzaSyCaaFQjJy2Y-YyqHNCGLkDj6qd77UszW8A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "415019838765-1ocabgib476l0hsght585tsu0kk05h7t.apps.googleusercontent.com",
+              "client_id": "185212814532-jgbmpfdrg3v8is93lqmb2jkonocj70jo.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "415019838765-dqudm8g6svhrg914g9oo0abpsh7piicd.apps.googleusercontent.com",
+              "client_id": "185212814532-til4ggh195gus1om1h4uabd273nkarl1.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.architecture"
+                "bundle_id": "com.example.foodApp"
               }
             }
           ]

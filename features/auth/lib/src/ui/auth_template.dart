@@ -33,7 +33,9 @@ class AuthTemplate extends StatelessWidget {
         }
       },
       builder: (BuildContext context, AuthState state) {
-        if (!state.isLogged) {
+        if (state.isLoading) {
+          return const Scaffold(body: AppCenterLoader());
+        } else if (!state.isLogged) {
           return Scaffold(
             body: SingleChildScrollView(
               child: Center(
@@ -59,8 +61,7 @@ class AuthTemplate extends StatelessWidget {
               ),
             ),
           );
-        }
-        else {
+        } else {
           return const AppCenterLoader();
         }
       },

@@ -20,17 +20,23 @@ class _$AppRouter extends RootStackRouter {
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>(
           orElse: () => const SignInRouteArgs());
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: SignInScreen(key: args.key),
+        transitionsBuilder: TransitionsBuilders.slideRight,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     SignUpRoute.name: (routeData) {
       final args = routeData.argsAs<SignUpRouteArgs>(
           orElse: () => const SignUpRouteArgs());
-      return MaterialPageX<dynamic>(
+      return CustomPage<dynamic>(
         routeData: routeData,
         child: SignUpScreen(key: args.key),
+        transitionsBuilder: TransitionsBuilders.slideLeft,
+        opaque: true,
+        barrierDismissible: false,
       );
     },
     EntryPointRoute.name: (routeData) {
