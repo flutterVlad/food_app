@@ -17,26 +17,10 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    SignInRoute.name: (routeData) {
-      final args = routeData.argsAs<SignInRouteArgs>(
-          orElse: () => const SignInRouteArgs());
-      return CustomPage<dynamic>(
+    StartAuthRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: SignInScreen(key: args.key),
-        transitionsBuilder: TransitionsBuilders.slideRight,
-        opaque: true,
-        barrierDismissible: false,
-      );
-    },
-    SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>(
-          orElse: () => const SignUpRouteArgs());
-      return CustomPage<dynamic>(
-        routeData: routeData,
-        child: SignUpScreen(key: args.key),
-        transitionsBuilder: TransitionsBuilders.slideLeft,
-        opaque: true,
-        barrierDismissible: false,
+        child: const StartAuthScreen(),
       );
     },
     EntryPointRoute.name: (routeData) {
@@ -107,22 +91,12 @@ class _$AppRouter extends RootStackRouter {
   @override
   List<RouteConfig> get routes => [
         RouteConfig(
-          '/#redirect',
+          StartAuthRoute.name,
           path: '/',
-          redirectTo: '/signIn',
-          fullMatch: true,
-        ),
-        RouteConfig(
-          SignInRoute.name,
-          path: '/signIn',
-        ),
-        RouteConfig(
-          SignUpRoute.name,
-          path: '/signUp',
         ),
         RouteConfig(
           EntryPointRoute.name,
-          path: '',
+          path: '/entry-point-screen',
           children: [
             RouteConfig(
               ProductsRoute.name,
@@ -174,51 +148,15 @@ class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [SignInScreen]
-class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
-  SignInRoute({Key? key})
+/// [StartAuthScreen]
+class StartAuthRoute extends PageRouteInfo<void> {
+  const StartAuthRoute()
       : super(
-          SignInRoute.name,
-          path: '/signIn',
-          args: SignInRouteArgs(key: key),
+          StartAuthRoute.name,
+          path: '/',
         );
 
-  static const String name = 'SignInRoute';
-}
-
-class SignInRouteArgs {
-  const SignInRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'SignInRouteArgs{key: $key}';
-  }
-}
-
-/// generated route for
-/// [SignUpScreen]
-class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({Key? key})
-      : super(
-          SignUpRoute.name,
-          path: '/signUp',
-          args: SignUpRouteArgs(key: key),
-        );
-
-  static const String name = 'SignUpRoute';
-}
-
-class SignUpRouteArgs {
-  const SignUpRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'SignUpRouteArgs{key: $key}';
-  }
+  static const String name = 'StartAuthRoute';
 }
 
 /// generated route for
@@ -227,7 +165,7 @@ class EntryPointRoute extends PageRouteInfo<void> {
   const EntryPointRoute({List<PageRouteInfo>? children})
       : super(
           EntryPointRoute.name,
-          path: '',
+          path: '/entry-point-screen',
           initialChildren: children,
         );
 

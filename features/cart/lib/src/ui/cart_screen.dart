@@ -42,7 +42,6 @@ class CartScreen extends StatelessWidget {
                         onTap: () {
                           productBloc.add(
                             RouteToDetailPageEvent(
-                              context: context,
                               model: state.products[index],
                             ),
                           );

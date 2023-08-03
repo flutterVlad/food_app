@@ -119,8 +119,8 @@ class DataDI {
       ),
     );
 
-    appLocator.registerLazySingleton<CheckAuthenticationUseCase>(
-      () => CheckAuthenticationUseCase(
+    appLocator.registerLazySingleton<CheckAuthenticationStatusUseCase>(
+      () => CheckAuthenticationStatusUseCase(
         userRepository: appLocator.get<UserRepositoryImpl>(),
       ),
     );

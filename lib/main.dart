@@ -33,11 +33,14 @@ class MyApp extends StatelessWidget {
           )..add(InitialAllThemeSettingsEvent()),
         ),
         BlocProvider<CartBloc>(
-          create: (BuildContext context) => CartBloc(),
+          create: (BuildContext context) => CartBloc(
+            appRouter: appLocator.get<AppRouter>(),
+          ),
         ),
         BlocProvider<ProductBloc>(
           create: (BuildContext context) => ProductBloc(
             getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
+            appRouter: appLocator.get<AppRouter>(),
           ),
         ),
         BlocProvider<AuthBloc>(
@@ -48,7 +51,7 @@ class MyApp extends StatelessWidget {
             signOutUseCase: appLocator.get<SignOutUseCase>(),
             appRouter: appLocator.get<AppRouter>(),
             checkAuthenticationUseCase:
-                appLocator.get<CheckAuthenticationUseCase>(),
+                appLocator.get<CheckAuthenticationStatusUseCase>(),
           ),
         )
       ],

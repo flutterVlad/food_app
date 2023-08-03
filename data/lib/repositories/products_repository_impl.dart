@@ -20,7 +20,8 @@ class ProductRepositoryImpl implements ProductRepository {
   @override
   Future<List<ProductModel>> fetchAllProducts() async {
     final List<ProductEntity> result;
-    if (await dataDI.checkInternet()) {
+    final bool isInternetAvailable = await dataDI.checkInternet();
+    if (isInternetAvailable) {
       result = await _firebaseProvider.getProductData('products/');
       _hiveProvider.putProductsInBox(result);
     } else {

@@ -34,30 +34,28 @@ class AuthTemplate extends StatelessWidget {
       },
       builder: (BuildContext context, AuthState state) {
         if (state.isLoading) {
-          return const Scaffold(body: AppCenterLoader());
+          return const AppCenterLoader();
         } else if (!state.isLogged) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const SizedBox(height: 50),
-                    GradientBlock(
-                      gradient: themeState.gradient,
-                      child: Image.asset(
-                        'core_ui/assets/logo/logo_white_trans.png',
-                        width: 300,
-                      ),
+          return SingleChildScrollView(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 50),
+                  GradientBlock(
+                    gradient: themeState.gradient,
+                    child: Image.asset(
+                      'core_ui/assets/logo/logo_white_trans.png',
+                      width: 300,
                     ),
-                    const SizedBox(height: 50),
-                    inputBloc,
-                    const SizedBox(height: 30),
-                    continueWithBloc ?? Container(),
-                    const SizedBox(height: 50),
-                    navigateBloc,
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 50),
+                  inputBloc,
+                  const SizedBox(height: 30),
+                  continueWithBloc ?? Container(),
+                  const SizedBox(height: 50),
+                  navigateBloc,
+                ],
               ),
             ),
           );

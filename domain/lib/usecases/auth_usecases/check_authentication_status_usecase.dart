@@ -2,10 +2,10 @@ import 'package:domain/repositories/users_repository.dart';
 import 'package:domain/usecases/usecase.dart';
 import 'package:domain/models/user/user_model.dart';
 
-class CheckAuthenticationUseCase extends FutureUseCase<NoParams, UserModel> {
+class CheckAuthenticationStatusUseCase extends FutureUseCase<NoParams, UserModel> {
   final UserRepository _userRepository;
 
-  CheckAuthenticationUseCase({
+  CheckAuthenticationStatusUseCase({
     required UserRepository userRepository,
   }) : _userRepository = userRepository;
 

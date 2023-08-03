@@ -75,7 +75,6 @@ class HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             bloc.add(
                               NavigateToDetailPageEvent(
-                                context: context,
                                 model: state.products[index],
                               ),
                             );

@@ -1,10 +1,10 @@
 import 'package:domain/usecases/usecase.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:domain/usecases/export_usecases.dart';
 import 'package:domain/models/user/user_model.dart';
 import 'package:navigation/navigation.dart';
+import 'package:core/core.dart';
 
 part 'auth_event.dart';
 
@@ -18,7 +18,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignUpUseCase _signUpUseCase;
   final SignOutUseCase _signOutUseCase;
   final AppRouter _router;
-  final CheckAuthenticationUseCase _checkAuthenticationUseCase;
+  final CheckAuthenticationStatusUseCase _checkAuthenticationUseCase;
 
   AuthBloc({
     required SignInUseCase signInUseCase,
@@ -26,7 +26,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     required SignUpUseCase signUpUseCase,
     required SignOutUseCase signOutUseCase,
     required AppRouter appRouter,
-    required CheckAuthenticationUseCase checkAuthenticationUseCase,
+    required CheckAuthenticationStatusUseCase checkAuthenticationUseCase,
   })  : _signInUseCase = signInUseCase,
         _signInWithGoogleUseCase = signInWithGoogleUseCase,
         _signUpUseCase = signUpUseCase,
@@ -46,7 +46,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     add(InitAuthEvent());
   }
 
-  Future<void> _initAuth(InitAuthEvent event, Emitter<AuthState> emit) async {
+  Future<void> _initAuth(
+    InitAuthEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     try {
       final UserModel userModel = await _checkAuthenticationUseCase.execute(
         const NoParams(),
@@ -57,10 +60,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           state.copyWith(
             isLogged: true,
             userModel: userModel,
+            authScreen: AuthScreen.home,
           ),
         );
 
         _router.replace(const EntryPointRoute());
+      } else {
+        emit(
+          state.copyWith(
+            authScreen: AuthScreen.signIn,
+          ),
+        );
       }
     } on FirebaseAuthException catch (error) {
       emit(
@@ -73,7 +83,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signIn(SignInEvent event, Emitter<AuthState> emit) async {
+  Future<void> _signIn(
+    SignInEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     try {
       emit(
         state.copyWith(
@@ -92,6 +105,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           userModel: userModel,
           formState: SuccessFormState(),
           isLoading: false,
+          authScreen: AuthScreen.home,
         ),
       );
       _router.replace(const EntryPointRoute());
@@ -117,6 +131,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           isLogged: true,
           formState: SuccessFormState(),
           userModel: userModel,
+          authScreen: AuthScreen.home,
         ),
       );
 
@@ -130,7 +145,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signUp(SignUpEvent event, Emitter<AuthState> emit) async {
+  Future<void> _signUp(
+    SignUpEvent event,
+    Emitter<AuthState> emit,
+  ) async {
     try {
       emit(
         state.copyWith(
@@ -150,6 +168,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           userModel: userModel,
           formState: SuccessFormState(),
           isLoading: false,
+          authScreen: AuthScreen.home,
         ),
       );
 
@@ -163,28 +182,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<void> _signOut(SignOutEvent event, Emitter<AuthState> emit) async {
+  Future<void> _signOut(
+    _,
+    Emitter<AuthState> emit,
+  ) async {
     await _signOutUseCase.execute(const NoParams());
     emit(
       state.copyWith(
         isLogged: false,
         formState: InitFormState(),
         userModel: UserModel.empty,
+        authScreen: AuthScreen.signIn,
       ),
     );
 
-    _router.replace(SignInRoute());
+    _router.replace(const StartAuthRoute());
   }
 
-  void _navigateToHomePage(NavigateToHomePageEvent event, _) {
-    event.context.router.replace(const EntryPointRoute());
+  void _navigateToHomePage(_, __) {
+    _router.replace(const EntryPointRoute());
   }
 
-  void _navigateToSignInPage(NavigateToSignInEvent event, _) {
-    event.context.router.replace(SignInRoute());
+  Future<void> _navigateToSignInPage(
+    _,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        authScreen: AuthScreen.signIn,
+      ),
+    );
   }
 
-  void _navigateToSignUpPage(NavigateToSignUpEvent event, _) {
-    event.context.router.replace(SignUpRoute());
+  Future<void> _navigateToSignUpPage(
+    _,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        authScreen: AuthScreen.signUp,
+      ),
+    );
   }
 }

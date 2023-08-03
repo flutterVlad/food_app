@@ -24,7 +24,7 @@ abstract class AppGradients {
   static const LinearGradient errorGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
+    colors: <Color>[
       Color.fromRGBO(200, 0, 0, 1),
       Color.fromRGBO(150, 0, 0, 1),
       Color.fromRGBO(100, 0, 0, 1),
@@ -33,7 +33,7 @@ abstract class AppGradients {
   static const LinearGradient successGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
-    colors: [
+    colors: <Color>[
       Color.fromRGBO(0, 200, 0, 1),
       Color.fromRGBO(0, 150, 0, 1),
       Color.fromRGBO(0, 100, 0, 1),

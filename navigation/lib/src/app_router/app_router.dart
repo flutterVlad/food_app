@@ -7,7 +7,6 @@ import 'package:navigation/src/entry_point/entry_point.dart';
 import 'package:order_history/order_history.dart';
 import 'package:settings/settings.dart';
 import 'package:product_detailed_view/product_detailed_view.dart';
-import 'package:auth/src/ui/sign_in_screen.dart';
 import 'package:auth/auth.dart';
 
 part 'app_router.gr.dart';
@@ -15,17 +14,11 @@ part 'app_router.gr.dart';
 @MaterialAutoRouter(
   replaceInRouteName: 'Screen,Route',
   routes: <AutoRoute>[
-    CustomRoute(
-        path: '/signIn',
-        page: SignInScreen,
-        initial: true,
-        transitionsBuilder: TransitionsBuilders.slideRight),
-    CustomRoute(
-        path: '/signUp',
-        page: SignUpScreen,
-        transitionsBuilder: TransitionsBuilders.slideLeft),
     AutoRoute(
-      path: '',
+      page: StartAuthScreen,
+      initial: true,
+    ),
+    AutoRoute(
       page: EntryPointScreen,
       children: <AutoRoute>[
         CustomRoute(

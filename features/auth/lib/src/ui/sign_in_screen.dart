@@ -1,5 +1,5 @@
 import 'package:auth/src/bloc/auth_bloc.dart';
-import 'package:auth/src/ui/auth_template.dart';
+import 'package:auth/src/ui/auth_screen_template.dart';
 import 'package:auth/src/widgets/sign_in_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -79,7 +79,7 @@ class SignInScreen extends StatelessWidget {
           const SizedBox(width: 5),
           GestureDetector(
             onTap: () {
-              authBloc.add(NavigateToSignUpEvent(context));
+              authBloc.add(NavigateToSignUpEvent());
             },
             child: Text(
               'Register now',

@@ -30,21 +30,8 @@ class SignOutEvent extends AuthEvent {}
 
 class InitAuthEvent extends AuthEvent {}
 
-class NavigateToHomePageEvent extends AuthEvent {
-  final BuildContext context;
+class NavigateToHomePageEvent extends AuthEvent {}
 
-  NavigateToHomePageEvent(this.context);
-}
+class NavigateToSignUpEvent extends AuthEvent {}
 
-class NavigateToSignUpEvent extends AuthEvent {
-  final BuildContext context;
-
-  NavigateToSignUpEvent(this.context);
-}
-
-class NavigateToSignInEvent extends AuthEvent {
-  final BuildContext context;
-
-  NavigateToSignInEvent(this.context);
-
-}
+class NavigateToSignInEvent extends AuthEvent {}

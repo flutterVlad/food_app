@@ -28,15 +28,13 @@ class AuthProvider {
     );
 
     final UserEntity userEntity = UserEntity(
-      uid: credential.user!.uid,
+      uid: credential.user?.uid ?? '',
       email: email,
       userName: userName,
     );
 
     await saveUserInDatabase(
-      uid: credential.user!.uid,
-      userName: userName,
-      email: email,
+      userEntity: userEntity,
     );
 
     return userEntity;
@@ -53,7 +51,7 @@ class AuthProvider {
     );
 
     final UserEntity userEntity =
-        await getUserFromDatabase(uid: credential.user!.uid);
+        await getUserFromDatabase(uid: credential.user?.uid ?? '');
 
     return userEntity;
   }
@@ -75,50 +73,35 @@ class AuthProvider {
     final UserCredential userCredential =
         await _firebaseAuth.signInWithCredential(credential);
 
-    await saveUserInDatabase(
-      uid: userCredential.user!.uid,
-      userName: userCredential.user!.displayName ?? '',
-      email: userCredential.user!.email ?? '',
+    final UserEntity userEntity = UserEntity(
+      uid: userCredential.user?.uid ?? '',
+      email: userCredential.user?.email ?? '',
+      userName: userCredential.user?.displayName ?? '',
     );
 
-    final UserEntity userEntity = UserEntity(
-      uid: userCredential.user!.uid,
-      email: userCredential.user!.email ?? '',
-      userName: userCredential.user!.displayName ?? '',
+    await saveUserInDatabase(
+      userEntity: userEntity,
     );
 
     return userEntity;
   }
 
   Future<void> saveUserInDatabase({
-    required String uid,
-    required String userName,
-    required String email,
+    required UserEntity userEntity,
   }) async {
     final DatabaseReference databaseReference = _database.ref('users');
-    final Map<String, String> userData = {
-      'uid': uid,
-      'userName': userName,
-      'email': email,
-    };
 
-    await databaseReference.child(uid).set(userData);
+    await databaseReference.child(userEntity.uid).set(userEntity.toMap());
   }
 
-  Future<UserEntity> getUserFromDatabase({required String uid}) async {
+  Future<UserEntity> getUserFromDatabase({
+    required String uid,
+  }) async {
     final DataSnapshot snapshot = await _database.ref('users').child(uid).get();
     print(snapshot.value);
     if (snapshot.exists) {
-      final Map<dynamic, dynamic> userData =
-          snapshot.value as Map<dynamic, dynamic>;
-      
-      return UserEntity(
-        uid: uid,
-        email: userData['email'],
-        userName: userData['userName'],
-      );
+      return UserEntity.fromJson(snapshot.value as Map<dynamic, dynamic>);
     } else {
-
       return UserEntity.empty;
     }
   }

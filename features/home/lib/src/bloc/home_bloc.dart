@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:domain/usecases/export_usecases.dart';
 import 'package:domain/usecases/usecase.dart';
-import 'package:flutter/material.dart';
 import 'package:navigation/navigation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -13,10 +12,13 @@ part 'home_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final FetchAllProductsUseCase _getAllProductsUseCase;
+  final AppRouter _router;
 
   ProductBloc({
     required FetchAllProductsUseCase getAllProductsUseCase,
+    required AppRouter appRouter,
   })  : _getAllProductsUseCase = getAllProductsUseCase,
+        _router = appRouter,
         super(ProductState.empty) {
     on<InitEvent>(_init);
     on<NavigateToDetailPageEvent>(_navigateToDetailPage);
@@ -29,7 +31,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     add(InitEvent());
   }
 
-  void _init(InitEvent event, Emitter<ProductState> emit) {
+  void _init(
+    InitEvent event,
+    Emitter<ProductState> emit,
+  ) {
     _loadProductList();
   }
 
@@ -49,7 +54,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     NavigateToDetailPageEvent event,
     Emitter<ProductState> emit,
   ) {
-    event.context.navigateTo(
+    _router.navigate(
       ProductDetailRoute(model: event.model),
     );
   }
