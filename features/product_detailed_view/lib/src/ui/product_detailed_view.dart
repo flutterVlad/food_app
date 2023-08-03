@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/models/product/product_model.dart';
@@ -10,12 +9,13 @@ class ProductDetailsScreen extends StatelessWidget {
 
   const ProductDetailsScreen({
     Key? key,
-    @PathParam('model') required this.model,
+    required this.model,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<String> ingredients = model.ingredients;
+
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (context, state) {
         return SingleChildScrollView(
@@ -36,7 +36,12 @@ class ProductDetailsScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Image.network(model.imageUrl),
+                  child: Hero(
+                    tag: model.imageUrl,
+                    child: CachedImage(
+                      imageUrl: model.imageUrl,
+                    ),
+                  ),
                 ),
                 Text(
                   model.name,

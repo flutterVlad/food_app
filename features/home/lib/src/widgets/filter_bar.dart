@@ -1,4 +1,3 @@
-import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 class FilterBar extends StatelessWidget {
@@ -6,13 +5,15 @@ class FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        const Text(
+        Text(
           'Popular Items',
           style: TextStyle(
-            fontSize: 30,
+            fontSize: theme.textTheme.titleLarge!.fontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -21,10 +22,9 @@ class FilterBar extends StatelessWidget {
           child: Text(
             'View all',
             style: TextStyle(
-              color: Theme.of(context).secondaryHeaderColor,
-              fontSize: 25,
+              color: theme.secondaryHeaderColor,
+              fontSize: theme.textTheme.titleMedium!.fontSize,
             ),
-
           ),
         )
       ],

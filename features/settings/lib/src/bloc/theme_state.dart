@@ -1,8 +1,10 @@
 part of 'theme_bloc.dart';
 
-abstract class ThemeState {
-  late final ThemeData appTheme;
-  late final LinearGradient gradient;
+class ThemeState {
+  final bool switchState;
+  final String sizeData;
+  final ThemeData appTheme;
+  final LinearGradient gradient;
   static const Map<String, String> appBarTitle = {
     'HomeRoute': 'Products',
     'OrderHistoryRoute': 'Order History',
@@ -10,18 +12,38 @@ abstract class ThemeState {
     'SettingsRoute': 'Settings',
     'ProductDetailRoute': 'Details'
   };
-}
+  static const Map<String, double> cardSize = {
+    'little' : 0.74,
+    'medium': 0.72,
+    'large': 0.69,
+  };
+  static LinearGradient errorGradient = AppGradients.errorGradient;
+  static LinearGradient successGradient = AppGradients.successGradient;
 
-class DarkThemeState implements ThemeState {
-  @override
-  ThemeData appTheme = AppTheme.getDarkThemeData();
-  @override
-  LinearGradient gradient = AppDarkThemeColors.gradient;
-}
+  ThemeState({
+    required this.sizeData,
+    required this.appTheme,
+    required this.gradient,
+    required this.switchState,
+  });
 
-class LightThemeState implements ThemeState {
-  @override
-  ThemeData appTheme = AppTheme.getLightThemeData();
-  @override
-  LinearGradient gradient = AppLightThemeColors.gradient;
+  ThemeState copyWith({
+    String? sizeData,
+    ThemeData? appTheme,
+    LinearGradient? gradient,
+    bool? switchState,
+  }) {
+    return ThemeState(
+      sizeData: sizeData ?? this.sizeData,
+      appTheme: appTheme ?? this.appTheme,
+      gradient: gradient ?? this.gradient,
+      switchState: switchState ?? this.switchState,
+    );
+  }
+
+  ThemeData updateThemeFontSize(String sizeData) {
+    return switchState
+        ? AppTheme.getLightThemeData(sizeData)
+        : AppTheme.getDarkThemeData(sizeData);
+  }
 }

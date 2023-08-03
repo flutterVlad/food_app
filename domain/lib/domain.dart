@@ -1,3 +1,3 @@
 library domain;
 
-export 'package:domain/repositories/products_repositories.dart';
+export 'package:domain/repositories/products_repository.dart';

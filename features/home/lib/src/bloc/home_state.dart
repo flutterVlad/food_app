@@ -1,25 +1,25 @@
 part of 'home_bloc.dart';
 
-abstract class ProductState extends Equatable {
-
-  @override
-  List<Object> get props => [];
-
-  List<ProductModel> get getProducts => [];
-}
-
-class LoadingState extends ProductState {}
-
-class EmptyState extends ProductState {}
-
-class LoadedState extends ProductState {
+class ProductState {
   final List<ProductModel> products;
+  final bool internetConnection;
 
-  LoadedState({required this.products});
+  ProductState({
+    required this.products,
+    required this.internetConnection,
+  });
 
-  @override
-  List<Object> get props => [products];
+  ProductState copyWith({
+    List<ProductModel>? products,
+    bool? internetConnection,
+  }) =>
+      ProductState(
+        products: products ?? this.products,
+        internetConnection: internetConnection ?? this.internetConnection,
+      );
 
-  @override
-  List<ProductModel> get getProducts => products;
+  static ProductState get empty => ProductState(
+        products: [],
+        internetConnection: false,
+      );
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:domain/usecases/export_usecases.dart';
 import 'package:home/src/widgets/widgets.dart';
 import 'package:home/src/bloc/home_bloc.dart';
-import 'package:core/di/app_di.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:settings/settings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,21 +15,39 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ProductBloc>(
-      create: (BuildContext context) => ProductBloc(
-        getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
-      )..add(
-          InitEvent(),
-        ),
-      child: BlocBuilder<ProductBloc, ProductState>(
+    final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
+    final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+
+    return RefreshIndicator(
+      color: Theme.of(context).secondaryHeaderColor,
+      onRefresh: () async {
+        bloc.add(InitEvent());
+      },
+      child: BlocConsumer<ProductBloc, ProductState>(
+        listener: (BuildContext context, ProductState state) {
+          if (!state.internetConnection) {
+            FlushBar.showFlushBar(
+              context: context,
+              icon: Icons.error,
+              message: 'No internet connection',
+              gradient: ThemeState.errorGradient,
+              textColor: Colors.white,
+            );
+          } else {
+            FlushBar.showFlushBar(
+              context: context,
+              icon: Icons.done,
+              message: 'Internet connection success',
+              gradient: ThemeState.successGradient,
+              textColor: Colors.black,
+            );
+          }
+        },
+        listenWhen: (ProductState previous, ProductState current) {
+          return current.internetConnection != previous.internetConnection;
+        },
         builder: (BuildContext context, ProductState state) {
-          if (state is EmptyState) {
-            BlocProvider.of<ProductBloc>(context).add(InitEvent());
-          }
-          if (state is LoadingState) {
-            return const AppCenterLoader();
-          }
-          if (state is LoadedState) {
+          if (state.products.isNotEmpty) {
             return SingleChildScrollView(
               child: Container(
                 margin: const EdgeInsets.all(15),
@@ -41,25 +58,24 @@ class HomeScreenState extends State<HomeScreen> {
                     const FilterBar(),
                     const SizedBox(height: 15),
                     GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 15,
                         mainAxisSpacing: 15,
-                        childAspectRatio: 0.73,
+                        childAspectRatio:
+                            ThemeState.cardSize[themeState.sizeData]!,
                       ),
                       clipBehavior: Clip.none,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.getProducts.length,
+                      itemCount: state.products.length,
                       itemBuilder: (BuildContext context, int index) {
                         return HomeCard(
-                          model: state.getProducts[index],
+                          model: state.products[index],
                           onTap: () {
-                            BlocProvider.of<ProductBloc>(context).add(
+                            bloc.add(
                               NavigateToDetailPageEvent(
-                                context: context,
-                                model: state.getProducts[index],
+                                model: state.products[index],
                               ),
                             );
                           },
@@ -71,7 +87,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
             );
           } else {
-            return const Text('Error');
+            return const AppCenterLoader();
           }
         },
       ),

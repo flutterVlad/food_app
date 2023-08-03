@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:core_ui/src/colors/app_colors.dart';
+import 'package:core_ui/src/size_presets/app_sizes.dart';
 
 class AppTheme {
-  static ThemeData getDarkThemeData() {
+  static ThemeData getDarkThemeData(String sizeData) {
     return ThemeData(
       brightness: Brightness.dark,
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 30,
-        ),
-        titleMedium: TextStyle(
-          fontSize: 25,
-        ),
-        titleSmall: TextStyle(
-          fontSize: 15,
-        ),
-      ),
+      textTheme: AppSizes.textTheme[sizeData],
       scaffoldBackgroundColor: AppDarkThemeColors.backgroundColor,
       secondaryHeaderColor: AppDarkThemeColors.secondaryColor,
       primaryColor: AppDarkThemeColors.primaryColor,
@@ -41,20 +32,10 @@ class AppTheme {
     );
   }
 
-  static ThemeData getLightThemeData() {
+  static ThemeData getLightThemeData(String sizeData) {
     return ThemeData(
       brightness: Brightness.light,
-      textTheme: const TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 30,
-        ),
-        titleMedium: TextStyle(
-          fontSize: 25,
-        ),
-        titleSmall: TextStyle(
-          fontSize: 15,
-        ),
-      ),
+      textTheme: AppSizes.textTheme[sizeData],
       scaffoldBackgroundColor: AppLightThemeColors.backgroundColor,
       secondaryHeaderColor: AppLightThemeColors.secondaryColor,
       primaryColor: AppLightThemeColors.primaryColor,

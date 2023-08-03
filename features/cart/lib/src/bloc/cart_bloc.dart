@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:navigation/navigation.dart';
@@ -8,8 +7,12 @@ part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  CartBloc()
-      : super(
+  final AppRouter _router;
+
+  CartBloc({
+    required AppRouter appRouter,
+  })  : _router = appRouter,
+        super(
           CartState(
             countCartProducts: 0,
             productsMap: {},
@@ -58,7 +61,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _routeToDetailPage(RouteToDetailPageEvent event, Emitter emit) {
-    event.context.router.push(
+    _router.navigate(
       ProductDetailRoute(model: event.model),
     );
   }

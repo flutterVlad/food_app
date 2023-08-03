@@ -17,4 +17,14 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
   void setTheme(bool isDark) {
     _preferencesProvider.setTheme(isDark);
   }
+
+  @override
+  String getFontSize() {
+    return _preferencesProvider.getFontSize();
+  }
+
+  @override
+  void setFontSize(String fontSize) {
+    _preferencesProvider.setFontSize(fontSize);
+  }
 }

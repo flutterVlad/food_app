@@ -15,11 +15,9 @@ class RemoveProductEvent extends CartEvent {
 }
 
 class RouteToDetailPageEvent extends CartEvent {
-  final BuildContext context;
   final ProductModel model;
 
   RouteToDetailPageEvent({
-    required this.context,
     required this.model,
   });
 }

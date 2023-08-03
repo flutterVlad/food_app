@@ -20,6 +20,7 @@ class ListTileElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
+
     return GestureDetector(
       onTap: onTap,
       child: ListTile(
@@ -70,7 +71,12 @@ class ListTileElement extends StatelessWidget {
             ),
           ],
         ),
-        leading: Image.network(model.imageUrl),
+        leading: Hero(
+          tag: model.imageUrl,
+          child: CachedImage(
+            imageUrl: model.imageUrl,
+          ),
+        ),
         trailing: GradientBlock(
           gradient: themeState.gradient,
           child: Text(

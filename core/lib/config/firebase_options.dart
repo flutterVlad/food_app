@@ -50,22 +50,23 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAjutjKRWKoiZzI8U-PSztV5W5Z7xfAoWQ',
-    appId: '1:415019838765:android:14c71107a33b0d204077a4',
-    messagingSenderId: '415019838765',
-    projectId: 'products-cfc8b',
-    databaseURL: 'https://products-cfc8b-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'products-cfc8b.appspot.com',
+    apiKey: 'AIzaSyCaaFQjJy2Y-YyqHNCGLkDj6qd77UszW8A',
+    appId: '1:185212814532:android:052fe3de058e56d61f7591',
+    messagingSenderId: '185212814532',
+    projectId: 'yumhub-b2f74',
+    databaseURL: 'https://yumhub-b2f74-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'yumhub-b2f74.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAXI4iaj6vehAmnb6NosseLdpLTBnkirlg',
-    appId: '1:415019838765:ios:6148e1d9633b9c454077a4',
-    messagingSenderId: '415019838765',
-    projectId: 'products-cfc8b',
-    databaseURL: 'https://products-cfc8b-default-rtdb.europe-west1.firebasedatabase.app',
-    storageBucket: 'products-cfc8b.appspot.com',
-    iosClientId: '415019838765-qgjulg3l0r9me7bfte0ggjkkk0mofg0u.apps.googleusercontent.com',
+    apiKey: 'AIzaSyCW7ZMbqFP6qjvhZnpc9NV8YXQtaKr__Vs',
+    appId: '1:185212814532:ios:3047c763e665b6d01f7591',
+    messagingSenderId: '185212814532',
+    projectId: 'yumhub-b2f74',
+    databaseURL: 'https://yumhub-b2f74-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'yumhub-b2f74.appspot.com',
+    androidClientId: '185212814532-hpk82aurjbm97mloc4t3hq1ok2562lev.apps.googleusercontent.com',
+    iosClientId: '185212814532-til4ggh195gus1om1h4uabd273nkarl1.apps.googleusercontent.com',
     iosBundleId: 'com.example.foodApp',
   );
 }

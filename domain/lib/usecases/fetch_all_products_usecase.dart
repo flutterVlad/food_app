@@ -1,5 +1,5 @@
 import 'package:domain/models/product/product_model.dart';
-import 'package:domain/repositories/products_repositories.dart';
+import 'package:domain/repositories/products_repository.dart';
 import 'package:domain/usecases/usecase.dart';
 
 class FetchAllProductsUseCase implements FutureUseCase<NoParams, List<ProductModel>> {
