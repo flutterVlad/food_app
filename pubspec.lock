@@ -34,7 +34,7 @@ packages:
     source: hosted
     version: "2.11.0"
   auth:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "features/auth"
       relative: true

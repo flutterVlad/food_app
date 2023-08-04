@@ -7,6 +7,7 @@ import 'package:navigation/navigation.dart';
 import 'package:cart/cart.dart';
 import 'package:auth/auth.dart';
 import 'package:home/home.dart';
+import 'package:order_history/order_history.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
             getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
             appRouter: appLocator.get<AppRouter>(),
           ),
+        ),
+        BlocProvider<HistoryBloc>(
+          create: (BuildContext context) => HistoryBloc(),
         ),
         BlocProvider<AuthBloc>(
           create: (BuildContext context) => AuthBloc(

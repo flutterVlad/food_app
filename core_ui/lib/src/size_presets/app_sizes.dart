@@ -32,7 +32,7 @@ class AppSizes {
         fontSize: 27,
       ),
       titleSmall: TextStyle(
-        fontSize: 22,
+        fontSize: 18,
       ),
     ),
   };

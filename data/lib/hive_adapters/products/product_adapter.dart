@@ -13,20 +13,22 @@ class ProductAdapter extends TypeAdapter<ProductEntity> {
       final String key = reader.readString();
       final dynamic value = reader.read();
       fields[key] = value;
-    } return ProductEntity(
+    }
+    return ProductEntity(
       id: fields['id'] ?? '',
       name: fields['name'] ?? '',
       description: fields['description'] ?? '',
       price: fields['price'] ?? '',
       imageUrl: fields['imageUrl'] ?? '',
       ingredients: List<String>.from(fields['ingredients'] ?? []),
+      category: fields['category'],
     );
   }
 
   @override
   void write(BinaryWriter writer, ProductEntity obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeString('id')
       ..write(obj.id)
       ..writeString('name')
@@ -38,7 +40,9 @@ class ProductAdapter extends TypeAdapter<ProductEntity> {
       ..writeString('imageUrl')
       ..write(obj.imageUrl)
       ..writeString('ingredients')
-      ..write(obj.ingredients);
+      ..write(obj.ingredients)
+      ..writeString('category')
+      ..write(obj.category);
   }
 
   @override

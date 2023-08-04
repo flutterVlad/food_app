@@ -9,6 +9,7 @@ abstract class ProductMapper {
         imageUrl: model.imageUrl,
         description: model.description,
         ingredients: model.ingredients,
+        category: model.category,
       );
 
   static ProductModel toModel(ProductEntity entity) => ProductModel(
@@ -18,5 +19,6 @@ abstract class ProductMapper {
         imageUrl: entity.imageUrl,
         description: entity.description,
         ingredients: entity.ingredients,
+        category: entity.category,
       );
 }

@@ -19,6 +19,8 @@ dependencies:
     path: ./core_ui
   navigation:
     path: ./navigation
+  auth:
+    path: ./features/auth
   home:
     path: ./features/home
   cart:

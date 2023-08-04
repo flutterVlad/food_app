@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _checkAuthenticationUseCase = checkAuthenticationUseCase,
         _router = appRouter,
         super(AuthState.init) {
-    on<InitAuthEvent>(_initAuth);
+    on<InitEvent>(_initAuth);
     on<SignInEvent>(_signIn);
     on<SignInWithGoogleEvent>(_signInWithGoogle);
     on<SignUpEvent>(_signUp);
@@ -43,11 +43,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<NavigateToSignUpEvent>(_navigateToSignUpPage);
     on<NavigateToSignInEvent>(_navigateToSignInPage);
 
-    add(InitAuthEvent());
+    add(InitEvent());
   }
 
   Future<void> _initAuth(
-    InitAuthEvent event,
+    InitEvent event,
     Emitter<AuthState> emit,
   ) async {
     try {

@@ -30,4 +30,6 @@ class CartState {
     }
     return sum;
   }
+
+  double getAmountOfOneProduct(double price, int count) => price * count;
 }

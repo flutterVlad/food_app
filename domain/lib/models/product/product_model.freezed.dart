@@ -22,6 +22,7 @@ mixin _$ProductModel {
   String get imageUrl => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
   List<String> get ingredients => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductModelCopyWith<ProductModel> get copyWith =>
@@ -40,7 +41,8 @@ abstract class $ProductModelCopyWith<$Res> {
       String price,
       String imageUrl,
       String description,
-      List<String> ingredients});
+      List<String> ingredients,
+      String category});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? imageUrl = null,
     Object? description = null,
     Object? ingredients = null,
+    Object? category = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -88,6 +91,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -106,7 +113,8 @@ abstract class _$$_ProductModelCopyWith<$Res>
       String price,
       String imageUrl,
       String description,
-      List<String> ingredients});
+      List<String> ingredients,
+      String category});
 }
 
 /// @nodoc
@@ -126,6 +134,7 @@ class __$$_ProductModelCopyWithImpl<$Res>
     Object? imageUrl = null,
     Object? description = null,
     Object? ingredients = null,
+    Object? category = null,
   }) {
     return _then(_$_ProductModel(
       id: null == id
@@ -152,6 +161,10 @@ class __$$_ProductModelCopyWithImpl<$Res>
           ? _value._ingredients
           : ingredients // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -165,7 +178,8 @@ class _$_ProductModel implements _ProductModel {
       required this.price,
       required this.imageUrl,
       required this.description,
-      required final List<String> ingredients})
+      required final List<String> ingredients,
+      required this.category})
       : _ingredients = ingredients;
 
   @override
@@ -187,8 +201,11 @@ class _$_ProductModel implements _ProductModel {
   }
 
   @override
+  final String category;
+
+  @override
   String toString() {
-    return 'ProductModel(id: $id, name: $name, price: $price, imageUrl: $imageUrl, description: $description, ingredients: $ingredients)';
+    return 'ProductModel(id: $id, name: $name, price: $price, imageUrl: $imageUrl, description: $description, ingredients: $ingredients, category: $category)';
   }
 
   @override
@@ -204,12 +221,14 @@ class _$_ProductModel implements _ProductModel {
             (identical(other.description, description) ||
                 other.description == description) &&
             const DeepCollectionEquality()
-                .equals(other._ingredients, _ingredients));
+                .equals(other._ingredients, _ingredients) &&
+            (identical(other.category, category) ||
+                other.category == category));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, id, name, price, imageUrl,
-      description, const DeepCollectionEquality().hash(_ingredients));
+      description, const DeepCollectionEquality().hash(_ingredients), category);
 
   @JsonKey(ignore: true)
   @override
@@ -225,7 +244,8 @@ abstract class _ProductModel implements ProductModel {
       required final String price,
       required final String imageUrl,
       required final String description,
-      required final List<String> ingredients}) = _$_ProductModel;
+      required final List<String> ingredients,
+      required final String category}) = _$_ProductModel;
 
   @override
   int get id;
@@ -239,6 +259,8 @@ abstract class _ProductModel implements ProductModel {
   String get description;
   @override
   List<String> get ingredients;
+  @override
+  String get category;
   @override
   @JsonKey(ignore: true)
   _$$_ProductModelCopyWith<_$_ProductModel> get copyWith =>
