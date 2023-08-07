@@ -1,5 +1,5 @@
 import 'package:domain/repositories/preferences_repository.dart';
-import 'usecase.dart';
+import '../usecase.dart';
 
 class GetFontSizeUseCase implements FutureUseCase<NoParams, String> {
   final PreferencesRepository _preferencesRepository;

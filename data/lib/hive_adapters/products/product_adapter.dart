@@ -21,7 +21,7 @@ class ProductAdapter extends TypeAdapter<ProductEntity> {
       price: fields['price'] ?? '',
       imageUrl: fields['imageUrl'] ?? '',
       ingredients: List<String>.from(fields['ingredients'] ?? []),
-      category: fields['category'],
+      category: fields['category'] ?? '',
     );
   }
 

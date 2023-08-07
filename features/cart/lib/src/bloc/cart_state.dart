@@ -2,33 +2,21 @@ part of 'cart_bloc.dart';
 
 class CartState {
   final int countCartProducts;
-  final Map<ProductModel, int> productsMap;
+  final CartModel cart;
 
   CartState({
     required this.countCartProducts,
-    required this.productsMap,
+    required this.cart,
   });
 
   CartState copyWith({
     int? countCartProducts,
-    Map<ProductModel, int>? productsMap,
+    CartModel? cart,
   }) {
     return CartState(
       countCartProducts: countCartProducts ?? this.countCartProducts,
-      productsMap: productsMap ?? this.productsMap,
+      cart: cart ?? this.cart,
     );
-  }
-
-  List<ProductModel> get products => productsMap.keys.toList();
-
-  List<int> get quantity => productsMap.values.toList();
-
-  double getTotalAmount() {
-    double sum = 0;
-    for (final element in productsMap.entries) {
-      sum += double.parse(element.key.price) * element.value;
-    }
-    return sum;
   }
 
   double getAmountOfOneProduct(double price, int count) => price * count;

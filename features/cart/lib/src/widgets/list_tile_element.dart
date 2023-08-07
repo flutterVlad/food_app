@@ -1,4 +1,4 @@
-import 'package:domain/models/product/product_model.dart';
+import 'package:domain/models/cart/cart_product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
@@ -6,14 +6,12 @@ import 'package:core_ui/core_ui.dart';
 import 'package:cart/src/bloc/cart_bloc.dart';
 
 class ListTileElement extends StatefulWidget {
-  final ProductModel model;
-  final int quantity;
+  final CartProductModel model;
   final VoidCallback onTap;
 
   const ListTileElement({
     Key? key,
     required this.model,
-    required this.quantity,
     required this.onTap,
   }) : super(key: key);
 
@@ -57,7 +55,7 @@ class _ListTileElementState extends State<ListTileElement>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              widget.model.name,
+              widget.model.product.name,
               style: themeState.appTheme.textTheme.titleMedium,
             ),
             Row(
@@ -69,7 +67,9 @@ class _ListTileElementState extends State<ListTileElement>
                         _controller.reset();
                         _controller.forward();
                         context.read<CartBloc>().add(
-                              RemoveProductEvent(model: widget.model),
+                              RemoveProductEvent(
+                                productModel: widget.model,
+                              ),
                             );
                       },
                       icon: const Icon(Icons.remove)),
@@ -84,7 +84,7 @@ class _ListTileElementState extends State<ListTileElement>
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
-                    '${widget.quantity}',
+                    '${widget.model.quantity}',
                     style: themeState.appTheme.textTheme.titleSmall,
                   ),
                 ),
@@ -95,7 +95,9 @@ class _ListTileElementState extends State<ListTileElement>
                         _controller.reset();
                         _controller.forward();
                         context.read<CartBloc>().add(
-                              AddProductEvent(model: widget.model),
+                              AddProductEvent(
+                                productModel: widget.model.product,
+                              ),
                             );
                       },
                       icon: const Icon(Icons.add)),
@@ -105,9 +107,9 @@ class _ListTileElementState extends State<ListTileElement>
           ],
         ),
         leading: Hero(
-          tag: widget.model.imageUrl,
+          tag: widget.model.product.imageUrl,
           child: CachedImage(
-            imageUrl: widget.model.imageUrl,
+            imageUrl: widget.model.product.imageUrl,
           ),
         ),
         trailing: GradientBlock(
@@ -119,19 +121,19 @@ class _ListTileElementState extends State<ListTileElement>
               Expanded(
                 flex: 10,
                 child: Text(
-                  '\$${widget.model.price}',
+                  '\$${widget.model.product.price}',
                   style: themeState.appTheme.textTheme.titleMedium,
                 ),
               ),
-              if (widget.quantity != 1)
+              if (widget.model.quantity != 1)
                 Expanded(
                   flex: 8,
                   child: ScaleTransition(
                     scale: _animation,
                     child: Text(
                       '\$${cartState.getAmountOfOneProduct(
-                        double.parse(widget.model.price),
-                        widget.quantity,
+                        double.parse(widget.model.product.price),
+                        widget.model.quantity,
                       )}',
                       style: themeState.appTheme.textTheme.titleSmall,
                     ),

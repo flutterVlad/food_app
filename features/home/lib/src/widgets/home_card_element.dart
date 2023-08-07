@@ -73,7 +73,7 @@ class HomeCard extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           BlocProvider.of<CartBloc>(context).add(
-                            AddProductEvent(model: model),
+                            AddProductEvent(productModel: model),
                           );
                         },
                         icon: const Icon(

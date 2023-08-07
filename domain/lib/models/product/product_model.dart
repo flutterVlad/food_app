@@ -1,16 +1,64 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class ProductModel {
+  final int id;
+  final String name;
+  final String price;
+  final String imageUrl;
+  final String description;
+  final List<String> ingredients;
+  final String category;
 
-part 'product_model.freezed.dart';
+  ProductModel({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.imageUrl,
+    required this.description,
+    required this.ingredients,
+    required this.category,
+  });
 
-@freezed
-class ProductModel with _$ProductModel {
-  factory ProductModel({
-    required int id,
-    required String name,
-    required String price,
-    required String imageUrl,
-    required String description,
-    required List<String> ingredients,
-    required String category,
-  }) = _ProductModel;
+  ProductModel copyWith({
+    int? id,
+    String? name,
+    String? price,
+    String? imageUrl,
+    String? description,
+    List<String>? ingredients,
+    String? category,
+  }) =>
+      ProductModel(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        price: price ?? this.price,
+        imageUrl: imageUrl ?? this.imageUrl,
+        description: description ?? this.description,
+        ingredients: ingredients ?? this.ingredients,
+        category: category ?? this.category,
+      );
+
+  static ProductModel get empty => ProductModel(
+        id: 0,
+        name: '',
+        price: '',
+        imageUrl: '',
+        description: '',
+        ingredients: [],
+        category: '',
+      );
+
+  bool isEmpty() => this == ProductModel.empty;
+
+  @override
+  int get hashCode => name.hashCode + price.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      other is ProductModel &&
+      id == other.id &&
+      name == other.name &&
+      price == other.price &&
+      imageUrl == other.imageUrl &&
+      description == other.description &&
+      ingredients == other.ingredients &&
+      category == other.category;
 }

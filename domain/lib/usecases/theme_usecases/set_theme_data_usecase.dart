@@ -1,5 +1,5 @@
 import 'package:domain/repositories/preferences_repository.dart';
-import 'usecase.dart';
+import '../usecase.dart';
 
 class SetThemeDataUseCase implements FutureUseCase<bool, void> {
   final PreferencesRepository _preferencesRepository;

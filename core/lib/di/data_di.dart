@@ -1,11 +1,3 @@
-import 'package:data/hive_adapters/products/product_adapter.dart';
-import 'package:data/providers/firebase_provider.dart';
-import 'package:data/providers/hive_provider.dart';
-import 'package:data/providers/preferences_provider.dart';
-import 'package:data/repositories/preferences_repository_impl.dart';
-import 'package:data/repositories/products_repository_impl.dart';
-import 'package:domain/domain.dart';
-import 'package:domain/usecases/export_usecases.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:core/config/firebase_options.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -14,14 +6,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:data/providers/auth_provider.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:data/repositories/users_repository_impl.dart';
-import 'package:domain/usecases/auth_usecases/sign_up_usecase.dart';
-import 'package:domain/usecases/auth_usecases/sign_in_usecase.dart';
-import 'package:domain/usecases/auth_usecases/sign_out_usecase.dart';
-import 'package:domain/usecases/auth_usecases/sign_in_with_google.dart';
 
+import 'package:domain/usecases/export_usecases.dart';
+import 'package:domain/domain.dart';
+import 'package:data/data.dart';
 import 'app_di.dart';
 
 final DataDI dataDI = DataDI();
@@ -40,6 +29,7 @@ class DataDI {
     _storage = _initStorage();
     _firebaseAuth = _initFirebaseAuth();
     _initLocalDatabase();
+    _initOrders();
     _initAuthResources();
     _initProducts();
     _initTheme();
@@ -133,6 +123,9 @@ class DataDI {
   Future<void> _initHive() async {
     await Hive.initFlutter();
     Hive.registerAdapter(ProductAdapter());
+    Hive.registerAdapter(CartAdapter());
+    Hive.registerAdapter(CartProductAdapter());
+    Hive.registerAdapter(OrderAdapter());
   }
 
   // -----------------------------------------------------------
@@ -175,6 +168,60 @@ class DataDI {
   void _initLocalDatabase() {
     appLocator.registerLazySingleton<HiveProvider>(
       () => HiveProvider(),
+    );
+
+    appLocator.registerLazySingleton<CartRepository>(
+      () => CartRepositoryImpl(
+        hiveProvider: appLocator.get<HiveProvider>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<GetAllCartUseCase>(
+      () => GetAllCartUseCase(
+        cartRepository: appLocator.get<CartRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<PutProductInCartUseCase>(
+      () => PutProductInCartUseCase(
+        cartRepository: appLocator.get<CartRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<DeleteProductFromCartUseCase>(
+      () => DeleteProductFromCartUseCase(
+        cartRepository: appLocator.get<CartRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<ClearCartUseCase>(
+      () => ClearCartUseCase(
+        cartRepository: appLocator.get<CartRepository>(),
+      ),
+    );
+  }
+
+  // -----------------------------------------------------------
+
+  // initialization order resources
+  // -----------------------------------------------------------
+  void _initOrders() {
+    appLocator.registerLazySingleton<OrderRepositoryImpl>(
+      () => OrderRepositoryImpl(
+        firebaseProvider: appLocator.get<FirebaseProvider>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<GetOrderUseCase>(
+      () => GetOrderUseCase(
+        orderRepository: appLocator.get<OrderRepositoryImpl>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<AddOrderUseCase>(
+      () => AddOrderUseCase(
+        orderRepository: appLocator.get<OrderRepositoryImpl>(),
+      ),
     );
   }
 
