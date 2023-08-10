@@ -49,9 +49,6 @@ class MyApp extends StatelessWidget {
             appRouter: appLocator.get<AppRouter>(),
           ),
         ),
-        BlocProvider<HistoryBloc>(
-          create: (BuildContext context) => HistoryBloc(),
-        ),
         BlocProvider<AuthBloc>(
           create: (BuildContext context) => AuthBloc(
             signUpUseCase: appLocator.get<SignUpUseCase>(),
@@ -62,7 +59,13 @@ class MyApp extends StatelessWidget {
             checkAuthenticationUseCase:
                 appLocator.get<CheckAuthenticationStatusUseCase>(),
           ),
-        )
+        ),
+        BlocProvider<HistoryBloc>(
+          create: (BuildContext context) => HistoryBloc(
+            getOrdersUseCase: appLocator.get<GetOrdersUseCase>(),
+            addOrderUseCase: appLocator.get<AddOrderUseCase>(),
+          ),
+        ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {

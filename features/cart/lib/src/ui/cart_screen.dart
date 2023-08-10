@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cart/src/bloc/cart_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:auth/auth.dart';
+import 'package:order_history/order_history.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -18,10 +19,7 @@ class CartScreen extends StatelessWidget {
           return Center(
             child: Text(
               'Cart is empty.',
-              style: Theme
-                  .of(context)
-                  .textTheme
-                  .titleLarge,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
           );
         }
@@ -37,10 +35,7 @@ class CartScreen extends StatelessWidget {
                     return Container(
                       margin: const EdgeInsets.fromLTRB(15, 15, 15, 0),
                       decoration: BoxDecoration(
-                        color: Theme
-                            .of(context)
-                            .primaryColor
-                            .withOpacity(0.5),
+                        color: Theme.of(context).primaryColor.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: ListTileElement(
@@ -66,17 +61,11 @@ class CartScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         'Total amount',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
                         '\$${state.cart.amount}',
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .titleMedium,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
                   ),
@@ -85,11 +74,15 @@ class CartScreen extends StatelessWidget {
                   onTap: () {
                     BlocProvider.of<CartBloc>(context).add(
                       CreateOrderEvent(
-                        uid: BlocProvider
-                            .of<AuthBloc>(context)
+                        uid: BlocProvider.of<AuthBloc>(context)
                             .state
                             .userModel
                             .uid,
+                      ),
+                    );
+                    BlocProvider.of<HistoryBloc>(context).add(
+                      AddOrderEvent(
+                        cartModel: state.cart,
                       ),
                     );
                   },
@@ -99,10 +92,7 @@ class CartScreen extends StatelessWidget {
                     width: double.infinity,
                     decoration: BoxDecoration(
                       gradient:
-                      BlocProvider
-                          .of<ThemeBloc>(context)
-                          .state
-                          .gradient,
+                          BlocProvider.of<ThemeBloc>(context).state.gradient,
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Center(
@@ -110,11 +100,7 @@ class CartScreen extends StatelessWidget {
                         'Confirm',
                         style: TextStyle(
                           fontSize:
-                          Theme
-                              .of(context)
-                              .textTheme
-                              .titleLarge!
-                              .fontSize,
+                              Theme.of(context).textTheme.titleLarge!.fontSize,
                           color: Colors.black,
                         ),
                       ),

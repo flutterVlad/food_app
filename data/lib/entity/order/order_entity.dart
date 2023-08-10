@@ -1,5 +1,4 @@
 import 'package:data/entity/cart/cart_entity.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OrderEntity {
   final String id;
@@ -15,12 +14,23 @@ class OrderEntity {
   factory OrderEntity.fromJson(Map<dynamic, dynamic> json) => OrderEntity(
         id: json['id'],
         cart: CartEntity.fromJson(json['cart']),
-        dateTime: (json['datetime'] as Timestamp).toDate(),
+        dateTime: DateTime.parse(json['datetime'] as String),
       );
 
   Map<String, dynamic> toMap() => {
         'id': id,
         'cart': cart.toMap(),
-        'datetime': dateTime,
+        'datetime': dateTime.toString(),
       };
+
+  OrderEntity copyWith({
+    String? id,
+    CartEntity? cart,
+    DateTime? dateTime,
+  }) =>
+      OrderEntity(
+        id: id ?? this.id,
+        cart: cart ?? this.cart,
+        dateTime: dateTime ?? this.dateTime,
+      );
 }

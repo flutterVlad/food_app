@@ -98,7 +98,6 @@ class AuthProvider {
     required String uid,
   }) async {
     final DataSnapshot snapshot = await _database.ref('users').child(uid).get();
-    print(snapshot.value);
     if (snapshot.exists) {
       return UserEntity.fromJson(snapshot.value as Map<dynamic, dynamic>);
     } else {

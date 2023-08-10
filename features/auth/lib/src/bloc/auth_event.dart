@@ -28,7 +28,7 @@ class SignInWithGoogleEvent extends AuthEvent {}
 
 class SignOutEvent extends AuthEvent {}
 
-class InitEvent extends AuthEvent {}
+class InitAuthEvent extends AuthEvent {}
 
 class NavigateToHomePageEvent extends AuthEvent {}
 

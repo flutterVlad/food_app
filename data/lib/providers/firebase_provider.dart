@@ -40,20 +40,23 @@ class FirebaseProvider {
     required OrderEntity order,
     required String uid,
   }) async {
-    final DatabaseReference reference = _database.ref('users');
-    final String orderKey = reference.child(uid).child('orders').push().key!;
-    await reference.child(uid).child(orderKey).set(order.toMap());
+    final DatabaseReference reference = _database.ref('users/$uid/orders');
+    final DatabaseReference orderKeyRef = reference.push();
+    order = order.copyWith(id: orderKeyRef.key);
+    await orderKeyRef.set(order.toMap());
   }
 
   Future<List<OrderEntity>> getOrderData(String uid) async {
     List<OrderEntity> orders = [];
-    final DatabaseReference reference = _database.ref();
-    final DataSnapshot snapshot =
-        await reference.child('users').child(uid).child('orders').get();
-    final List<dynamic> data = snapshot.value as List<dynamic>;
-    for (Map<dynamic, dynamic> order in data) {
-      orders.add(OrderEntity.fromJson(order));
-    }
+    try {
+      final DatabaseReference reference = _database.ref('users/$uid/orders');
+      final DataSnapshot snapshot = await reference.get();
+      final Map<dynamic, dynamic> data =
+          snapshot.value as Map<dynamic, dynamic>;
+      for (final dynamic order in data.values) {
+        orders.add(OrderEntity.fromJson(order));
+      }
+    } catch (error) {}
 
     return orders;
   }

@@ -212,8 +212,8 @@ class DataDI {
       ),
     );
 
-    appLocator.registerLazySingleton<GetOrderUseCase>(
-      () => GetOrderUseCase(
+    appLocator.registerLazySingleton<GetOrdersUseCase>(
+      () => GetOrdersUseCase(
         orderRepository: appLocator.get<OrderRepositoryImpl>(),
       ),
     );

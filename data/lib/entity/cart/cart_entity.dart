@@ -11,9 +11,9 @@ class CartEntity {
 
   factory CartEntity.fromJson(Map<dynamic, dynamic> json) => CartEntity(
         products: (json['products'] as List<dynamic>)
-            .map((product) => CartProductEntity.fromJson(json[product]))
+            .map((product) => CartProductEntity.fromJson(product))
             .toList(),
-        amount: json['quantity'],
+        amount: (json['amount'] as int).toDouble(),
       );
 
   Map<String, dynamic> toMap() => {

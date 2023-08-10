@@ -34,7 +34,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _checkAuthenticationUseCase = checkAuthenticationUseCase,
         _router = appRouter,
         super(AuthState.init) {
-    on<InitEvent>(_initAuth);
+    on<InitAuthEvent>(_initAuth);
     on<SignInEvent>(_signIn);
     on<SignInWithGoogleEvent>(_signInWithGoogle);
     on<SignUpEvent>(_signUp);
@@ -43,11 +43,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<NavigateToSignUpEvent>(_navigateToSignUpPage);
     on<NavigateToSignInEvent>(_navigateToSignInPage);
 
-    add(InitEvent());
+    add(InitAuthEvent());
   }
 
   Future<void> _initAuth(
-    InitEvent event,
+    InitAuthEvent event,
     Emitter<AuthState> emit,
   ) async {
     try {
@@ -113,6 +113,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(
           formState: FailureFormState(error.message),
+          isLoading: false,
         ),
       );
     }
@@ -177,6 +178,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(
           formState: FailureFormState(error.message),
+          isLoading: false,
         ),
       );
     }

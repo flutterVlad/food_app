@@ -4,6 +4,8 @@ import 'package:home/src/bloc/home_bloc.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
+import 'package:order_history/order_history.dart';
+import 'package:auth/auth.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +19,11 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
     final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
+    BlocProvider.of<HistoryBloc>(context).add(
+      InitHistoryEvent(
+        uid: BlocProvider.of<AuthBloc>(context).state.userModel.uid,
+      ),
+    );
 
     return RefreshIndicator(
       color: Theme.of(context).secondaryHeaderColor,
