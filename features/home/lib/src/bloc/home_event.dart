@@ -13,3 +13,13 @@ class NavigateToDetailPageEvent extends ProductEvent {
 }
 
 class CheckInternetEvent extends ProductEvent {}
+
+class FilterByCategoryEvent extends ProductEvent {
+  final String category;
+
+  FilterByCategoryEvent({
+    required this.category,
+  });
+}
+
+class ShowAllProductsEvent extends ProductEvent {}

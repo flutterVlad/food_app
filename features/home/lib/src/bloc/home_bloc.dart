@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:domain/usecases/export_usecases.dart';
@@ -23,6 +24,8 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<InitEvent>(_init);
     on<NavigateToDetailPageEvent>(_navigateToDetailPage);
     on<CheckInternetEvent>(_checkInternet);
+    on<FilterByCategoryEvent>(_filteringByCategory);
+    on<ShowAllProductsEvent>(_showAllProducts);
 
     Connectivity().onConnectivityChanged.listen((_) {
       add(CheckInternetEvent());
@@ -46,6 +49,33 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(
       state.copyWith(
         products: products,
+        categories: products.map((product) => product.category).toSet().toList(),
+        allProducts: products,
+      ),
+    );
+  }
+
+  Future<void> _filteringByCategory(
+    FilterByCategoryEvent event,
+    Emitter<ProductState> emit,
+  ) async {
+    final List<ProductModel> filteredProducts = state.allProducts
+        .where((product) => product.category == event.category)
+        .toList();
+    emit(
+      state.copyWith(
+        products: filteredProducts,
+      ),
+    );
+  }
+
+  Future<void> _showAllProducts(
+    _,
+    Emitter<ProductState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        products: state.allProducts,
       ),
     );
   }
