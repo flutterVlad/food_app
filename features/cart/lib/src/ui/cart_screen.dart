@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cart/src/bloc/cart_bloc.dart';
 import 'package:settings/settings.dart';
+import 'package:auth/auth.dart';
+import 'package:order_history/order_history.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -27,7 +29,7 @@ class CartScreen extends StatelessWidget {
               children: <Widget>[
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: state.products.length,
+                  itemCount: state.cart.products.length,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
@@ -37,12 +39,11 @@ class CartScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: ListTileElement(
-                        model: state.products[index],
-                        quantity: state.quantity[index],
+                        model: state.cart.products[index],
                         onTap: () {
                           productBloc.add(
                             RouteToDetailPageEvent(
-                              model: state.products[index],
+                              model: state.cart.products[index].product,
                             ),
                           );
                         },
@@ -63,14 +64,28 @@ class CartScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
-                        '\$${state.getTotalAmount()}',
+                        '\$${state.cart.totalPrice}',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    BlocProvider.of<CartBloc>(context).add(
+                      CreateOrderEvent(
+                        uid: BlocProvider.of<AuthBloc>(context)
+                            .state
+                            .userModel
+                            .uid,
+                      ),
+                    );
+                    BlocProvider.of<HistoryBloc>(context).add(
+                      AddOrderEvent(
+                        cartModel: state.cart,
+                      ),
+                    );
+                  },
                   child: Container(
                     margin: const EdgeInsets.fromLTRB(15, 0, 15, 15),
                     padding: const EdgeInsets.symmetric(vertical: 10),
@@ -84,7 +99,8 @@ class CartScreen extends StatelessWidget {
                       child: Text(
                         'Confirm',
                         style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+                          fontSize:
+                              Theme.of(context).textTheme.titleLarge!.fontSize,
                           color: Colors.black,
                         ),
                       ),

@@ -3,29 +3,31 @@ class UserEntity {
   final String email;
   final String userName;
 
-  UserEntity({
+  const UserEntity({
     required this.uid,
     required this.email,
     required this.userName,
   });
 
-  factory UserEntity.fromJson(Map<dynamic, dynamic> json) {
+  factory UserEntity.fromJson(Map<dynamic, dynamic> json) => UserEntity(
+        uid: json['uid'],
+        email: json['email'],
+        userName: json['userName'],
+      );
+
+  static UserEntity get empty {
     return UserEntity(
-      uid: json['uid'],
-      email: json['email'],
-      userName: json['userName'],
+      uid: '',
+      email: '',
+      userName: '',
     );
   }
 
-  static UserEntity get empty => UserEntity(
-        uid: '',
-        email: '',
-        userName: '',
-      );
-
-  Map<String, String> toMap() => <String, String>{
-        'uid': uid,
-        'email': email,
-        'userName': userName,
-      };
+  Map<String, String> toMap() {
+    return <String, String>{
+      'uid': uid,
+      'email': email,
+      'userName': userName,
+    };
+  }
 }

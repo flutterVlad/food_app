@@ -7,6 +7,7 @@ import 'package:navigation/navigation.dart';
 import 'package:cart/cart.dart';
 import 'package:auth/auth.dart';
 import 'package:home/home.dart';
+import 'package:order_history/order_history.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +36,11 @@ class MyApp extends StatelessWidget {
         BlocProvider<CartBloc>(
           create: (BuildContext context) => CartBloc(
             appRouter: appLocator.get<AppRouter>(),
+            clearCartUseCase: appLocator.get<ClearCartUseCase>(),
+            putProductInCartUseCase: appLocator.get<AddProductInCartUseCase>(),
+            deleteProductFromCartUseCase:
+                appLocator.get<DeleteProductFromCartUseCase>(),
+            getAllCartUseCase: appLocator.get<GetAllCartUseCase>(),
           ),
         ),
         BlocProvider<ProductBloc>(
@@ -53,7 +59,13 @@ class MyApp extends StatelessWidget {
             checkAuthenticationUseCase:
                 appLocator.get<CheckAuthenticationStatusUseCase>(),
           ),
-        )
+        ),
+        BlocProvider<HistoryBloc>(
+          create: (BuildContext context) => HistoryBloc(
+            getOrdersUseCase: appLocator.get<GetOrdersUseCase>(),
+            addOrderUseCase: appLocator.get<AddOrderUseCase>(),
+          ),
+        ),
       ],
       child: BlocBuilder<ThemeBloc, ThemeState>(
         builder: (BuildContext context, ThemeState state) {

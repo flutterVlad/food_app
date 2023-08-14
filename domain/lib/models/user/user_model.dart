@@ -3,17 +3,19 @@ class UserModel {
   final String email;
   final String uid;
 
-  UserModel({
+  const UserModel({
     required this.userName,
     required this.email,
     required this.uid,
   });
 
-  static UserModel get empty => UserModel(
-        userName: '',
-        email: '',
-        uid: '',
-      );
+  static UserModel get empty {
+    return const UserModel(
+      userName: '',
+      email: '',
+      uid: '',
+    );
+  }
 
   bool isEmpty() => this == UserModel.empty;
 
@@ -34,5 +36,4 @@ class UserModel {
       email,
     );
   }
-
 }

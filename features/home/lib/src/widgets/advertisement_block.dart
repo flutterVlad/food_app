@@ -25,7 +25,7 @@ class _AdvertisementBlockState extends State<AdvertisementBlock> {
           ),
           child: Center(
             child: Text(
-              'Version: PT-4/local-storage-and-settings',
+              'Version: PT-6/filtering and order history',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,

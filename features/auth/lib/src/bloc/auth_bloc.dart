@@ -113,6 +113,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(
           formState: FailureFormState(error.message),
+          isLoading: false,
         ),
       );
     }
@@ -177,6 +178,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(
         state.copyWith(
           formState: FailureFormState(error.message),
+          isLoading: false,
         ),
       );
     }

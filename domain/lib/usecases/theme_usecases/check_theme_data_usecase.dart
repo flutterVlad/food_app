@@ -1,15 +1,15 @@
 import 'package:domain/repositories/preferences_repository.dart';
-import 'usecase.dart';
+import '../usecase.dart';
 
-class SetFontSizeUseCase implements FutureUseCase<String, void> {
+class CheckThemeDataUseCase implements FutureUseCase<NoParams, bool> {
   final PreferencesRepository _preferencesRepository;
 
-  SetFontSizeUseCase({
+  CheckThemeDataUseCase({
     required PreferencesRepository preferencesRepository,
   }) : _preferencesRepository = preferencesRepository;
 
   @override
-  Future<void> execute(String input) async {
-    _preferencesRepository.setFontSize(input);
+  Future<bool> execute(NoParams input) async {
+    return _preferencesRepository.isDarkTheme();
   }
 }
