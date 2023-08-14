@@ -7,7 +7,7 @@ class ProductModel {
   final List<String> ingredients;
   final String category;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.name,
     required this.price,
@@ -25,26 +25,29 @@ class ProductModel {
     String? description,
     List<String>? ingredients,
     String? category,
-  }) =>
-      ProductModel(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        price: price ?? this.price,
-        imageUrl: imageUrl ?? this.imageUrl,
-        description: description ?? this.description,
-        ingredients: ingredients ?? this.ingredients,
-        category: category ?? this.category,
-      );
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      imageUrl: imageUrl ?? this.imageUrl,
+      description: description ?? this.description,
+      ingredients: ingredients ?? this.ingredients,
+      category: category ?? this.category,
+    );
+  }
 
-  static ProductModel get empty => ProductModel(
-        id: 0,
-        name: '',
-        price: '',
-        imageUrl: '',
-        description: '',
-        ingredients: [],
-        category: '',
-      );
+  static ProductModel get empty {
+    return const ProductModel(
+      id: 0,
+      name: '',
+      price: '',
+      imageUrl: '',
+      description: '',
+      ingredients: [],
+      category: '',
+    );
+  }
 
   bool isEmpty() => this == ProductModel.empty;
 
@@ -52,13 +55,14 @@ class ProductModel {
   int get hashCode => name.hashCode + price.hashCode;
 
   @override
-  bool operator ==(Object other) =>
-      other is ProductModel &&
-      id == other.id &&
-      name == other.name &&
-      price == other.price &&
-      imageUrl == other.imageUrl &&
-      description == other.description &&
-      ingredients == other.ingredients &&
-      category == other.category;
+  bool operator ==(Object other) {
+    return other is ProductModel &&
+        id == other.id &&
+        name == other.name &&
+        price == other.price &&
+        imageUrl == other.imageUrl &&
+        description == other.description &&
+        ingredients == other.ingredients &&
+        category == other.category;
+  }
 }

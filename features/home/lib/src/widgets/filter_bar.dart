@@ -19,7 +19,7 @@ class FilterBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              'Popular Items',
+              'Products',
               style: TextStyle(
                 fontSize: theme.textTheme.titleLarge!.fontSize,
                 fontWeight: FontWeight.bold,
@@ -41,31 +41,35 @@ class FilterBar extends StatelessWidget {
             )
           ],
         ),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: categories.map(
-              (category) {
-                return Expanded(
-                  flex: 0,
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    child: FilterItem(
-                      title: category,
-                      onTap: () {
-                        productBloc.add(
-                          FilterByCategoryEvent(
-                            category: category,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            ).toList(),
-          ),
+        BlocBuilder<ProductBloc, ProductState>(
+          builder: (_, __) {
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: List.generate(
+                  categories.length,
+                  (int index) {
+                    return Container(
+                      margin: const EdgeInsets.all(10),
+                      child: FilterItem(
+                        title: categories[index],
+                        isActive: productBloc.state.activatedFilterList[index],
+                        onTap: () {
+                          productBloc.add(
+                            FilterByCategoryEvent(
+                              category: categories[index],
+                              index: index,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ).toList(),
+              ),
+            );
+          },
         ),
       ],
     );

@@ -10,14 +10,14 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final AppRouter _router;
-  final PutProductInCartUseCase _putProductInCartUseCase;
+  final AddProductInCartUseCase _putProductInCartUseCase;
   final GetAllCartUseCase _getAllCartUseCase;
   final DeleteProductFromCartUseCase _deleteProductFromCartUseCase;
   final ClearCartUseCase _clearCartUseCase;
 
   CartBloc({
     required AppRouter appRouter,
-    required PutProductInCartUseCase putProductInCartUseCase,
+    required AddProductInCartUseCase putProductInCartUseCase,
     required GetAllCartUseCase getAllCartUseCase,
     required DeleteProductFromCartUseCase deleteProductFromCartUseCase,
     required ClearCartUseCase clearCartUseCase,
@@ -48,17 +48,20 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     final List<CartProductModel> cartProducts =
         await _getAllCartUseCase.execute(const NoParams());
     int countProducts = 0;
-    double amount = 0;
+    double totalPrice = 0;
     for (final CartProductModel model in cartProducts) {
       countProducts += model.quantity;
-      amount += model.quantity * double.parse(model.product.price);
+      totalPrice += model.quantity * double.parse(model.product.price);
     }
-    emit(state.copyWith(
+    emit(
+      state.copyWith(
         countCartProducts: countProducts,
         cart: state.cart.copyWith(
           products: cartProducts,
-          amount: amount,
-        )));
+          totalPrice: totalPrice,
+        ),
+      ),
+    );
   }
 
   Future<void> _addProduct(
@@ -72,8 +75,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       state.copyWith(
         countCartProducts: state.countCartProducts + 1,
         cart: state.cart.copyWith(
-            products: cartProducts,
-            amount: state.cart.amount + double.parse(event.productModel.price)),
+          products: cartProducts,
+          totalPrice:
+              state.cart.totalPrice + double.parse(event.productModel.price),
+        ),
       ),
     );
   }
@@ -90,7 +95,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         countCartProducts: state.countCartProducts - 1,
         cart: state.cart.copyWith(
           products: cartProducts,
-          amount: state.cart.amount -
+          totalPrice: state.cart.totalPrice -
               double.parse(event.productModel.product.price),
         ),
       ),
@@ -102,10 +107,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     await _clearCartUseCase.execute(const NoParams());
-    emit(state.copyWith(
-      countCartProducts: 0,
-      cart: CartModel.empty,
-    ));
+    emit(
+      state.copyWith(
+        countCartProducts: 0,
+        cart: CartModel.empty,
+      ),
+    );
   }
 
   void _routeToDetailPage(RouteToDetailPageEvent event, Emitter emit) {

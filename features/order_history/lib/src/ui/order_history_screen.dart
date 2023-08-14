@@ -18,7 +18,7 @@ class OrderHistoryScreen extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return OrderTile(order: state.orders[index]);
+                return OrderTile(order: state.orders[index], index: index);
               },
             ),
           ),

@@ -182,8 +182,8 @@ class DataDI {
       ),
     );
 
-    appLocator.registerLazySingleton<PutProductInCartUseCase>(
-      () => PutProductInCartUseCase(
+    appLocator.registerLazySingleton<AddProductInCartUseCase>(
+      () => AddProductInCartUseCase(
         cartRepository: appLocator.get<CartRepository>(),
       ),
     );

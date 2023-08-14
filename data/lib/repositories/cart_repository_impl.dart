@@ -21,11 +21,11 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<void> putProductInCart(
+  Future<void> addProductInCart(
     ProductModel product,
   ) async {
     final ProductEntity productEntity = ProductMapper.toEntity(product);
-    await _hiveProvider.putCartProductInBox(productEntity);
+    await _hiveProvider.addCartProductInBox(productEntity);
   }
 
   @override

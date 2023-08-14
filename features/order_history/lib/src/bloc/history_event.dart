@@ -17,3 +17,11 @@ class AddOrderEvent extends HistoryEvent {
     required this.cartModel,
   });
 }
+
+class OpenTileEvent extends HistoryEvent {
+  final int index;
+
+  OpenTileEvent({
+    required this.index,
+  });
+}

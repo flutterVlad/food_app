@@ -21,10 +21,11 @@ class OrderModel {
     String? id,
     CartModel? cart,
     DateTime? dateTime,
-  }) =>
-      OrderModel(
-        id: id ?? this.id,
-        cart: cart ?? this.cart,
-        dateTime: dateTime ?? this.dateTime,
-      );
+  }) {
+    return OrderModel(
+      id: id ?? this.id,
+      cart: cart ?? this.cart,
+      dateTime: dateTime ?? this.dateTime,
+    );
+  }
 }

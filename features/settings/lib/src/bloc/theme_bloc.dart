@@ -70,21 +70,21 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
     ThemeSwitchEvent event,
     Emitter<ThemeState> emit,
   ) async {
-    final bool isDark = !state.switchState;
+    final bool isLight = state.switchState;
     emit(
-      isDark
+      isLight
           ? state.copyWith(
-              appTheme: AppTheme.getLightThemeData(state.sizeData),
-              gradient: AppLightThemeColors.gradient,
-              switchState: true,
-            )
-          : state.copyWith(
               appTheme: AppTheme.getDarkThemeData(state.sizeData),
               gradient: AppDarkThemeColors.gradient,
               switchState: false,
+            )
+          : state.copyWith(
+              appTheme: AppTheme.getLightThemeData(state.sizeData),
+              gradient: AppLightThemeColors.gradient,
+              switchState: true,
             ),
     );
-    await _setThemeDataUseCase.execute(isDark);
+    await _setThemeDataUseCase.execute(!isLight);
   }
 
   Future<void> _switchFontSize(

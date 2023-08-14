@@ -19,5 +19,5 @@ class CartState {
     );
   }
 
-  double getAmountOfOneProduct(double price, int count) => price * count;
+  double getPriceOfOneProduct(double price, int count) => price * count;
 }

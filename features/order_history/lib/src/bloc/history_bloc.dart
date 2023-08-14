@@ -18,6 +18,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
         super(HistoryState.empty()) {
     on<InitHistoryEvent>(_initHistory);
     on<AddOrderEvent>(_addOrder);
+    on<OpenTileEvent>(_openTile);
   }
 
   Future<void> _initHistory(
@@ -29,6 +30,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
       state.copyWith(
         orders: orders,
         uid: event.uid,
+        isTileOpenList: List.filled(orders.length, false),
       ),
     );
   }
@@ -51,6 +53,20 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     emit(
       state.copyWith(
         orders: orders,
+        isTileOpenList: List.filled(orders.length, false),
+      ),
+    );
+  }
+
+  Future<void> _openTile(
+    OpenTileEvent event,
+    Emitter<HistoryState> emit,
+  ) async {
+    final List<bool> updatedList = state.isTileOpenList;
+    updatedList[event.index] = !updatedList[event.index];
+    emit(
+      state.copyWith(
+        isTileOpenList: updatedList,
       ),
     );
   }

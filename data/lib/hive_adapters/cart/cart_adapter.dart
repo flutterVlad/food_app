@@ -14,11 +14,11 @@ class CartAdapter extends TypeAdapter<CartEntity> {
       final CartProductEntity product = reader.read() as CartProductEntity;
       products.add(product);
     }
-    final double amount = reader.read() as double;
+    final double totalPrice = reader.read() as double;
 
     return CartEntity(
       products: products,
-      amount: amount,
+      totalPrice: totalPrice,
     );
   }
 
@@ -28,16 +28,17 @@ class CartAdapter extends TypeAdapter<CartEntity> {
     for (final CartProductEntity product in obj.products) {
       writer.write(product);
     }
-    writer.write(obj.amount);
+    writer.write(obj.totalPrice);
   }
 
   @override
   int get hashCode => typeId.hashCode;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is CartAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is CartAdapter &&
+            runtimeType == other.runtimeType &&
+            typeId == other.typeId;
+  }
 }

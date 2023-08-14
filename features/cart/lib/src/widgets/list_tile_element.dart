@@ -26,15 +26,16 @@ class _ListTileElementState extends State<ListTileElement>
 
   @override
   void initState() {
+    super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 200),
     );
     _animation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeInOutSine,
     );
-    super.initState();
+    _controller.forward();
   }
 
   @override
@@ -119,7 +120,7 @@ class _ListTileElementState extends State<ListTileElement>
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Expanded(
-                flex: 10,
+                flex: 5,
                 child: Text(
                   '\$${widget.model.product.price}',
                   style: themeState.appTheme.textTheme.titleMedium,
@@ -127,11 +128,11 @@ class _ListTileElementState extends State<ListTileElement>
               ),
               if (widget.model.quantity != 1)
                 Expanded(
-                  flex: 8,
+                  flex: 4,
                   child: ScaleTransition(
                     scale: _animation,
                     child: Text(
-                      '\$${cartState.getAmountOfOneProduct(
+                      '\$${cartState.getPriceOfOneProduct(
                         double.parse(widget.model.product.price),
                         widget.model.quantity,
                       )}',

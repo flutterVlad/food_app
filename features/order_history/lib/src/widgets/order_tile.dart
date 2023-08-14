@@ -4,13 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
+import 'package:order_history/order_history.dart';
 
 class OrderTile extends StatefulWidget {
   final OrderModel order;
+  final int index;
 
   const OrderTile({
     super.key,
     required this.order,
+    required this.index,
   });
 
   @override
@@ -18,10 +21,10 @@ class OrderTile extends StatefulWidget {
 }
 
 class _OrderTileState extends State<OrderTile> {
-  bool isTileOpen = true;
-
   @override
   Widget build(BuildContext context) {
+    final HistoryBloc historyBloc = BlocProvider.of<HistoryBloc>(context);
+
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (BuildContext context, ThemeState state) {
         return AnimatedContainer(
@@ -32,19 +35,22 @@ class _OrderTileState extends State<OrderTile> {
             color: state.appTheme.primaryColor.withOpacity(1),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: isTileOpen
-                    ? state.appTheme.primaryColor.withOpacity(0.5)
-                    : state.appTheme.secondaryHeaderColor.withOpacity(0.5),
+                color: historyBloc.state.isTileOpenList[widget.index]
+                    ? state.appTheme.secondaryHeaderColor.withOpacity(0.5)
+                    : state.appTheme.primaryColor.withOpacity(0.5),
                 blurRadius: 10,
-                spreadRadius: isTileOpen ? 0 : 5,
+                spreadRadius:
+                    historyBloc.state.isTileOpenList[widget.index] ? 5 : 0,
               ),
             ],
           ),
           child: ExpansionTile(
             onExpansionChanged: (bool isOpen) {
-              setState(() {
-                isTileOpen = !isOpen;
-              });
+              historyBloc.add(
+                OpenTileEvent(
+                  index: widget.index,
+                ),
+              );
             },
             shape: const Border(),
             iconColor: state.appTheme.secondaryHeaderColor,
@@ -68,12 +74,9 @@ class _OrderTileState extends State<OrderTile> {
                           : null,
                     ),
                     child: ListTile(
-                      leading: GradientBlock(
-                        gradient: state.gradient,
-                        child: Text(
-                          '${index + 1}',
-                          style: state.appTheme.textTheme.titleSmall,
-                        ),
+                      leading: Text(
+                        '${index + 1}',
+                        style: state.appTheme.textTheme.titleSmall,
                       ),
                       title: Text(
                         widget.order.cart.products[index].product.name,
@@ -110,7 +113,7 @@ class _OrderTileState extends State<OrderTile> {
                 trailing: GradientBlock(
                   gradient: state.gradient,
                   child: Text(
-                    '${widget.order.cart.amount}',
+                    '${widget.order.cart.totalPrice}',
                     style: state.appTheme.textTheme.titleMedium,
                   ),
                 ),

@@ -23,14 +23,15 @@ class HiveProvider {
     return result;
   }
 
-  Future<void> putCartProductInBox(
+  Future<void> addCartProductInBox(
     ProductEntity product,
   ) async {
     final Box<CartProductEntity> cartBox = await Hive.openBox('cart');
     final List<CartProductEntity> cartProducts = cartBox.values.toList();
+    bool isProductInCart = false;
 
     for (int i = 0; i < cartProducts.length; i++) {
-      if (cartProducts[i].product.name == product.name) {
+      if (cartProducts[i].product.name == product.name && !isProductInCart) {
         cartBox.put(
           product.name,
           CartProductEntity(
@@ -38,13 +39,16 @@ class HiveProvider {
             quantity: cartProducts[i].quantity + 1,
           ),
         );
-        return;
+        isProductInCart = true;
+        break;
       }
     }
-    cartBox.put(
-      product.name,
-      CartProductEntity(product: product, quantity: 1),
-    );
+    if (!isProductInCart) {
+      cartBox.put(
+        product.name,
+        CartProductEntity(product: product, quantity: 1),
+      );
+    }
   }
 
   Future<void> deleteCartProductFromBox(

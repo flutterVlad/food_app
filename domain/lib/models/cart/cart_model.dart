@@ -2,24 +2,27 @@ import 'package:domain/models/cart/cart_product_model.dart';
 
 class CartModel {
   final List<CartProductModel> products;
-  final double amount;
+  final double totalPrice;
 
-  CartModel({
+  const CartModel({
     required this.products,
-    required this.amount,
+    required this.totalPrice,
   });
 
   CartModel copyWith({
     List<CartProductModel>? products,
-    double? amount,
-  }) =>
-      CartModel(
-        products: products ?? this.products,
-        amount: amount ?? this.amount,
-      );
+    double? totalPrice,
+  }) {
+    return CartModel(
+      products: products ?? this.products,
+      totalPrice: totalPrice ?? this.totalPrice,
+    );
+  }
 
-  static CartModel get empty => CartModel(
-        products: [],
-        amount: 0,
-      );
+  static CartModel get empty {
+    return const CartModel(
+      products: [],
+      totalPrice: 0,
+    );
+  }
 }

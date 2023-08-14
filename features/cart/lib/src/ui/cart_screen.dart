@@ -64,7 +64,7 @@ class CartScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       Text(
-                        '\$${state.cart.amount}',
+                        '\$${state.cart.totalPrice}',
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                     ],

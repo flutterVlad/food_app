@@ -19,11 +19,6 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final ThemeState themeState = BlocProvider.of<ThemeBloc>(context).state;
     final ProductBloc bloc = BlocProvider.of<ProductBloc>(context);
-    BlocProvider.of<HistoryBloc>(context).add(
-      InitHistoryEvent(
-        uid: BlocProvider.of<AuthBloc>(context).state.userModel.uid,
-      ),
-    );
 
     return RefreshIndicator(
       color: Theme.of(context).secondaryHeaderColor,
@@ -54,6 +49,11 @@ class HomeScreenState extends State<HomeScreen> {
           return current.internetConnection != previous.internetConnection;
         },
         builder: (BuildContext context, ProductState state) {
+          BlocProvider.of<HistoryBloc>(context).add(
+            InitHistoryEvent(
+              uid: BlocProvider.of<AuthBloc>(context).state.userModel.uid,
+            ),
+          );
           if (state.products.isNotEmpty) {
             return SingleChildScrollView(
               child: Container(

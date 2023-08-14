@@ -42,12 +42,11 @@ class FirebaseProvider {
   }) async {
     final DatabaseReference reference = _database.ref('users/$uid/orders');
     final DatabaseReference orderKeyRef = reference.push();
-    order = order.copyWith(id: orderKeyRef.key);
-    await orderKeyRef.set(order.toMap());
+    await orderKeyRef.set(order.copyWith(id: orderKeyRef.key).toMap());
   }
 
   Future<List<OrderEntity>> getOrderData(String uid) async {
-    List<OrderEntity> orders = [];
+    final List<OrderEntity> orders = [];
     try {
       final DatabaseReference reference = _database.ref('users/$uid/orders');
       final DataSnapshot snapshot = await reference.get();

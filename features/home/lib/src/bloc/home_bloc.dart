@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:domain/usecases/export_usecases.dart';
@@ -46,11 +45,14 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final List<ProductModel> products = await _getAllProductsUseCase.execute(
       const NoParams(),
     );
+    final List<String> categories =
+        products.map((product) => product.category).toSet().toList();
     emit(
       state.copyWith(
         products: products,
-        categories: products.map((product) => product.category).toSet().toList(),
+        categories: categories,
         allProducts: products,
+        activatedFilterList: List.filled(categories.length, false),
       ),
     );
   }
@@ -62,9 +64,12 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final List<ProductModel> filteredProducts = state.allProducts
         .where((product) => product.category == event.category)
         .toList();
+    final List<bool> updatedFilterList = List.generate(state.allProducts.length,
+        (int index) => event.index == index ? true : false);
     emit(
       state.copyWith(
         products: filteredProducts,
+        activatedFilterList: updatedFilterList,
       ),
     );
   }
@@ -76,6 +81,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     emit(
       state.copyWith(
         products: state.allProducts,
+        activatedFilterList: List.filled(state.allProducts.length, false),
       ),
     );
   }

@@ -16,9 +16,11 @@ class CheckInternetEvent extends ProductEvent {}
 
 class FilterByCategoryEvent extends ProductEvent {
   final String category;
+  final int index;
 
   FilterByCategoryEvent({
     required this.category,
+    required this.index,
   });
 }
 

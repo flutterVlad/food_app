@@ -25,9 +25,10 @@ class CartProductAdapter extends TypeAdapter<CartProductEntity> {
   int get hashCode => typeId.hashCode;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-          other is CartProductAdapter &&
-              runtimeType == other.runtimeType &&
-              typeId == other.typeId;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is CartProductAdapter &&
+            runtimeType == other.runtimeType &&
+            typeId == other.typeId;
+  }
 }
