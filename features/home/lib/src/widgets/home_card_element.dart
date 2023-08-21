@@ -1,8 +1,6 @@
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:settings/settings.dart';
-import 'package:cart/cart.dart';
+import 'package:home/src/widgets/card_button.dart';
 import 'package:core_ui/core_ui.dart';
 
 class HomeCard extends StatefulWidget {
@@ -17,8 +15,7 @@ class HomeCard extends StatefulWidget {
   State<HomeCard> createState() => _HomeCardState();
 }
 
-class _HomeCardState extends State<HomeCard>
-    with SingleTickerProviderStateMixin {
+class _HomeCardState extends State<HomeCard> with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
 
@@ -29,7 +26,7 @@ class _HomeCardState extends State<HomeCard>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _animation = Tween(
+    _animation = Tween<double>(
       begin: 0.0,
       end: 1.0,
     ).animate(_controller);
@@ -39,8 +36,7 @@ class _HomeCardState extends State<HomeCard>
   @override
   void didUpdateWidget(HomeCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _controller.reset();
-    _controller.forward();
+    _controller.forward(from: 0.0);
   }
 
   @override
@@ -51,7 +47,6 @@ class _HomeCardState extends State<HomeCard>
 
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData media = MediaQuery.of(context);
     return FadeTransition(
       opacity: _animation,
       child: Container(
@@ -80,30 +75,8 @@ class _HomeCardState extends State<HomeCard>
                     fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
                   ),
                 ),
-                BlocBuilder<ThemeBloc, ThemeState>(
-                  builder: (context, state) {
-                    return Container(
-                      width: media.size.width * 0.08,
-                      height: media.size.width * 0.08,
-                      decoration: BoxDecoration(
-                        gradient: state.gradient,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        onPressed: () {
-                          BlocProvider.of<CartBloc>(context).add(
-                            AddProductEvent(productModel: widget.model),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                          size: 18,
-                          color: Colors.black,
-                        ),
-                      ),
-                    );
-                  },
+                CardButton(
+                  model: widget.model,
                 ),
               ],
             ),

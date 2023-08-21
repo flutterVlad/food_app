@@ -61,8 +61,7 @@ class _ListTileElementState extends State<ListTileElement>
                 gradient: themeState.gradient,
                 child: IconButton(
                   onPressed: () {
-                    _controller.reset();
-                    _controller.forward();
+                    _controller.forward(from: 0.0);
                     context.read<CartBloc>().add(
                           RemoveProductEvent(
                             productModel: widget.model,
@@ -78,7 +77,9 @@ class _ListTileElementState extends State<ListTileElement>
                   vertical: 5,
                 ),
                 decoration: BoxDecoration(
-                  color: themeState.appTheme.brightness == Brightness.light ? Colors.white.withOpacity(0.4) : Colors.white.withOpacity(0.1),
+                  color: themeState.appTheme.brightness == Brightness.light
+                      ? Colors.white.withOpacity(0.4)
+                      : Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
@@ -90,8 +91,7 @@ class _ListTileElementState extends State<ListTileElement>
                 gradient: themeState.gradient,
                 child: IconButton(
                   onPressed: () {
-                    _controller.reset();
-                    _controller.forward();
+                    _controller.forward(from: 0.0);
                     context.read<CartBloc>().add(
                           AddProductEvent(
                             productModel: widget.model.product,

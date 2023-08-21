@@ -100,7 +100,7 @@ class _CartScreenState extends State<CartScreen>
                   Container(
                     margin: const EdgeInsets.symmetric(
                       vertical: 15,
-                      horizontal: 25,
+                      horizontal: 20,
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
