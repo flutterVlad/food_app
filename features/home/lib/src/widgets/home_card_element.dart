@@ -5,45 +5,65 @@ import 'package:settings/settings.dart';
 import 'package:cart/cart.dart';
 import 'package:core_ui/core_ui.dart';
 
-class HomeCard extends StatelessWidget {
+class HomeCard extends StatefulWidget {
   final ProductModel model;
-  final VoidCallback onTap;
 
   const HomeCard({
     Key? key,
     required this.model,
-    required this.onTap,
   }) : super(key: key);
+
+  @override
+  State<HomeCard> createState() => _HomeCardState();
+}
+
+class _HomeCardState extends State<HomeCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+    _controller.forward();
+  }
+
+  @override
+  void didUpdateWidget(HomeCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _controller.reset();
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final MediaQueryData media = MediaQuery.of(context);
-    return GestureDetector(
-      onTap: onTap,
+    return FadeTransition(
+      opacity: _animation,
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Theme.of(context).primaryColor,
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Theme.of(context).primaryColor.withOpacity(0.5),
-              blurRadius: 5,
-              spreadRadius: 5,
-            ),
-          ],
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Hero(
-              tag: model.imageUrl,
-              child: CachedImage(
-                imageUrl: model.imageUrl,
-              ),
+            CachedImage(
+              imageUrl: widget.model.imageUrl,
             ),
             Text(
-              model.name,
+              widget.model.name,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: Theme.of(context).textTheme.titleMedium!.fontSize,
@@ -53,7 +73,7 @@ class HomeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text(
-                  '\$${model.price}',
+                  '\$${widget.model.price}',
                   style: TextStyle(
                     color: Theme.of(context).secondaryHeaderColor,
                     fontWeight: FontWeight.bold,
@@ -73,7 +93,7 @@ class HomeCard extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         onPressed: () {
                           BlocProvider.of<CartBloc>(context).add(
-                            AddProductEvent(productModel: model),
+                            AddProductEvent(productModel: widget.model),
                           );
                         },
                         icon: const Icon(

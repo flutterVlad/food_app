@@ -5,11 +5,17 @@ import 'package:settings/settings.dart';
 import 'package:auth/auth.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final bool leadingRequire;
+
   @override
   final Size preferredSize;
 
-  const HomeAppBar({Key? key})
-      : preferredSize = const Size.fromHeight(kToolbarHeight),
+  const HomeAppBar({
+    Key? key,
+    required this.title,
+    this.leadingRequire = false,
+  })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
   @override
@@ -18,14 +24,14 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (BuildContext context, ThemeState state) {
         return AppBar(
           title: Text(
-            ThemeState.appBarTitle[context.topRoute.name] ?? '',
+            title,
             style: TextStyle(
-              fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
+              fontSize: state.appTheme.textTheme.titleLarge!.fontSize,
             ),
           ),
           centerTitle: true,
-          leading: context.router.topRoute.name == 'ProductDetailRoute'
-              ? AutoLeadingButton(color: Theme.of(context).secondaryHeaderColor)
+          leading: leadingRequire
+              ? AutoLeadingButton(color: state.appTheme.secondaryHeaderColor)
               : null,
           actions: <Widget>[
             GestureDetector(

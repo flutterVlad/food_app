@@ -1,85 +1,108 @@
 import 'package:cart/cart.dart';
 import 'package:flutter/material.dart';
 import '../../navigation.dart';
-import 'package:core_ui/core_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:settings/settings.dart';
+import 'package:badges/badges.dart' as badges;
 
 class EntryPointScreen extends StatelessWidget {
   const EntryPointScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AutoTabsScaffold(
-      routes: const [
-        ProductsRoute(),
-        OrderHistoryRoute(),
-        EmptyCartRoute(),
-        SettingsRoute(),
-      ],
-      appBarBuilder: (_, tabsRouter) {
-        return const HomeAppBar();
-      },
-      bottomNavigationBuilder: (_, tabsRouter) {
-        return BlocBuilder<CartBloc, CartState>(
-          builder: (BuildContext context, CartState state) {
-            return BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              items: <BottomNavigationBarItem>[
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Home',
+    return BlocBuilder<ThemeBloc, ThemeState>(
+      builder: (_, ThemeState themeState) {
+        return AutoTabsScaffold(
+          animationDuration: const Duration(milliseconds: 300),
+          animationCurve: Curves.linear,
+          builder: (_, Widget? child, Animation<double> animation) {
+            return FadeTransition(
+              opacity: animation.drive(
+                Tween<double>(
+                  begin: 0,
+                  end: 1,
                 ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.history),
-                  label: 'Order history',
-                ),
-                BottomNavigationBarItem(
-                  icon: Stack(
-                    children: <Widget>[
-                      const Icon(Icons.shopping_cart_rounded),
-                      if (state.countCartProducts != 0)
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.03,
-                            height: MediaQuery.of(context).size.width * 0.03,
-                            padding: const EdgeInsets.all(2),
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).secondaryHeaderColor,
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                  color: Theme.of(context)
-                                      .primaryColor
-                                      .withOpacity(1),
-                                  spreadRadius: 2,
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                state.countCartProducts.toString(),
+              ),
+              child: child,
+            );
+          },
+          routes: const [
+            ProductsRoute(),
+            OrderHistoryRoute(),
+            EmptyCartRoute(),
+            SettingsRoute(),
+          ],
+          bottomNavigationBuilder: (_, tabsRouter) {
+            return BlocBuilder<CartBloc, CartState>(
+              builder: (_, CartState cartState) {
+                return GNav(
+                  duration: const Duration(milliseconds: 400),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  backgroundColor: themeState.appTheme.primaryColor,
+                  selectedIndex: tabsRouter.activeIndex,
+                  onTabChange: tabsRouter.setActiveIndex,
+                  tabMargin: const EdgeInsets.all(8),
+                  tabActiveBorder: Border.all(
+                    color: themeState.appTheme.secondaryHeaderColor,
+                  ),
+                  textStyle: themeState.appTheme.textTheme.titleSmall,
+                  gap: 8,
+                  tabs: <GButton>[
+                    const GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    const GButton(
+                      icon: Icons.history,
+                      text: 'Order history',
+                    ),
+                    GButton(
+                      icon: Icons.shopping_cart_rounded,
+                      text: 'Cart',
+                      leading: cartState.countCartProducts != 0
+                          ? badges.Badge(
+                              position: badges.BadgePosition.topEnd(
+                                top: -8,
+                                end: -8,
+                              ),
+                              showBadge: true,
+                              ignorePointer: false,
+                              onTap: () {},
+                              badgeContent: Text(
+                                cartState.countCartProducts.toString(),
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 7,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 10,
                                 ),
                               ),
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                  label: 'Cart',
-                ),
-                const BottomNavigationBarItem(
-                  icon: Icon(Icons.settings),
-                  label: 'Settings',
-                ),
-              ],
-              currentIndex: tabsRouter.activeIndex,
-              onTap: tabsRouter.setActiveIndex,
+                              badgeAnimation:
+                                  const badges.BadgeAnimation.rotation(
+                                animationDuration: Duration(milliseconds: 500),
+                                loopAnimation: false,
+                                curve: Curves.fastOutSlowIn,
+                              ),
+                              badgeStyle: badges.BadgeStyle(
+                                shape: badges.BadgeShape.circle,
+                                badgeColor:
+                                    themeState.appTheme.secondaryHeaderColor,
+                                padding: const EdgeInsets.all(5),
+                                elevation: 0,
+                              ),
+                              child: const Icon(
+                                Icons.shopping_cart_rounded,
+                              ),
+                            )
+                          : null,
+                    ),
+                    const GButton(
+                      icon: Icons.settings,
+                      text: 'Settings',
+                    ),
+                  ],
+                );
+              },
             );
           },
         );
