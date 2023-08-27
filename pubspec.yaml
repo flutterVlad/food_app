@@ -1,4 +1,4 @@
-name: food_app
+name: YumHub
 description: A Food App project.
 publish_to: 'none'
 
@@ -38,13 +38,21 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^2.0.0
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "core_ui/assets/logo/launch_icon.png"
+  min_sdk_android: 21
 
 flutter:
   uses-material-design: true
 
   assets:
     - core_ui/assets/logo/
+    - core_ui/assets/lottie_animations/
 
   fonts:
     - family: Dosis

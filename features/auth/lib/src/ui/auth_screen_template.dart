@@ -4,7 +4,7 @@ import 'package:settings/settings.dart';
 import 'package:core_ui/core_ui.dart';
 import '../../auth.dart';
 
-class AuthTemplate extends StatelessWidget {
+class AuthTemplate extends StatefulWidget {
   final Widget inputBloc;
   final Widget? continueWithBloc;
   final Widget navigateBloc;
@@ -15,6 +15,34 @@ class AuthTemplate extends StatelessWidget {
     required this.navigateBloc,
     this.continueWithBloc,
   });
+
+  @override
+  State<AuthTemplate> createState() => _AuthTemplateState();
+}
+
+class _AuthTemplateState extends State<AuthTemplate>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+    _animation = Tween(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +61,7 @@ class AuthTemplate extends StatelessWidget {
         }
       },
       builder: (BuildContext context, AuthState state) {
+        _controller.forward();
         if (state.isLoading) {
           return const AppCenterLoader();
         } else if (!state.isLogged) {
@@ -49,12 +78,19 @@ class AuthTemplate extends StatelessWidget {
                       width: 300,
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  inputBloc,
-                  const SizedBox(height: 30),
-                  continueWithBloc ?? Container(),
-                  const SizedBox(height: 50),
-                  navigateBloc,
+                  FadeTransition(
+                    opacity: _animation,
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(height: 50),
+                        widget.inputBloc,
+                        const SizedBox(height: 30),
+                        widget.continueWithBloc ?? Container(),
+                        const SizedBox(height: 50),
+                        widget.navigateBloc,
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),

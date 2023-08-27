@@ -5,13 +5,6 @@ class ThemeState {
   final String sizeData;
   final ThemeData appTheme;
   final LinearGradient gradient;
-  static const Map<String, String> appBarTitle = {
-    'HomeRoute': 'Products',
-    'OrderHistoryRoute': 'Order History',
-    'CartRoute': 'Your Cart',
-    'SettingsRoute': 'Settings',
-    'ProductDetailRoute': 'Details'
-  };
   static const Map<String, double> cardSize = {
     'little' : 0.74,
     'medium': 0.72,

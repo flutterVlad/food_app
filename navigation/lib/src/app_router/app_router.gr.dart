@@ -30,11 +30,9 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     ProductsRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HeroEmptyRouterPage(),
-        opaque: true,
-        barrierDismissible: false,
       );
     },
     OrderHistoryRoute.name: (routeData) {
@@ -44,11 +42,9 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     EmptyCartRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HeroEmptyRouterPage(),
-        opaque: true,
-        barrierDismissible: false,
       );
     },
     SettingsRoute.name: (routeData) {
@@ -58,32 +54,25 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     HomeRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const HomeScreen(),
-        opaque: true,
-        barrierDismissible: false,
       );
     },
     ProductDetailRoute.name: (routeData) {
       final args = routeData.argsAs<ProductDetailRouteArgs>();
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: ProductDetailsScreen(
           key: args.key,
           model: args.model,
         ),
-        transitionsBuilder: TransitionsBuilders.slideRightWithFade,
-        opaque: true,
-        barrierDismissible: false,
       );
     },
     CartRoute.name: (routeData) {
-      return CustomPage<dynamic>(
+      return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const CartScreen(),
-        opaque: true,
-        barrierDismissible: false,
       );
     },
   };

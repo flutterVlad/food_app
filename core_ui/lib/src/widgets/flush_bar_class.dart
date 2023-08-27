@@ -10,7 +10,7 @@ class FlushBar {
     required IconData icon,
   }) async {
     return Flushbar(
-      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       flushbarPosition: FlushbarPosition.TOP,
       icon: Icon(
         icon,
