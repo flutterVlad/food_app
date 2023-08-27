@@ -41,8 +41,8 @@ class OrderHistoryScreen extends StatelessWidget {
                 children: <Widget>[
                   Lottie.asset(
                     themeState.appTheme.brightness == Brightness.light
-                        ? 'core_ui/assets/lottie_animations/order_history_light_animation.json'
-                        : 'core_ui/assets/lottie_animations/order_history_dark_animation.json',
+                        ? AppTheme.orderAnimationLightTheme
+                        : AppTheme.orderAnimationDarkTheme,
                     width: 200,
                   ),
                   Text(

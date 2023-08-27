@@ -27,7 +27,7 @@ class EntryPointScreen extends StatelessWidget {
               child: child,
             );
           },
-          routes: const [
+          routes: const <PageRouteInfo>[
             ProductsRoute(),
             OrderHistoryRoute(),
             EmptyCartRoute(),

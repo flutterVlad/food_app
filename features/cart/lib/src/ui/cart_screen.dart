@@ -18,8 +18,7 @@ class CartScreen extends StatefulWidget {
   State<CartScreen> createState() => _CartScreenState();
 }
 
-class _CartScreenState extends State<CartScreen>
-    with TickerProviderStateMixin {
+class _CartScreenState extends State<CartScreen> with TickerProviderStateMixin {
   late final AnimationController _animationController;
   late final Animation<double> _animation;
   late final Animation<double> _totalPriceAnimation;
@@ -115,8 +114,7 @@ class _CartScreenState extends State<CartScreen>
                                 current.cart.totalPrice;
                           },
                           listener: (_, __) {
-                            _totalPriceController.reset();
-                            _totalPriceController.forward();
+                            _totalPriceController.forward(from: 0.0);
                           },
                           child: FadeTransition(
                             opacity: _totalPriceAnimation,
@@ -172,8 +170,7 @@ class _CartScreenState extends State<CartScreen>
               ),
             );
           } else {
-            _animationController.reset();
-            _animationController.forward();
+            _animationController.forward(from: 0.0);
             return FadeTransition(
               opacity: _animation,
               child: Center(
@@ -182,8 +179,8 @@ class _CartScreenState extends State<CartScreen>
                   children: <Widget>[
                     Lottie.asset(
                       themeState.appTheme.brightness == Brightness.light
-                          ? 'core_ui/assets/lottie_animations/cart_light_animation.json'
-                          : 'core_ui/assets/lottie_animations/cart_dark_animation.json',
+                          ? AppTheme.cartAnimationLightTheme
+                          : AppTheme.cartAnimationDarkTheme,
                       width: 200,
                     ),
                     Text(

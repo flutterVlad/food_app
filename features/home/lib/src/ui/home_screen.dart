@@ -31,7 +31,14 @@ class HomeScreenState extends State<HomeScreen> {
         },
         child: BlocConsumer<ProductBloc, ProductState>(
           listener: (BuildContext context, ProductState state) {
-            if (!state.internetConnection) {
+            if (state.internetConnection) {
+              FlushBar.showFlushBar(
+                context: context,
+                icon: Icons.done,
+                message: 'Internet connection success',
+                gradient: ThemeState.successGradient,
+                textColor: Colors.black,
+              );
               FlushBar.showFlushBar(
                 context: context,
                 icon: Icons.error,
@@ -42,10 +49,10 @@ class HomeScreenState extends State<HomeScreen> {
             } else {
               FlushBar.showFlushBar(
                 context: context,
-                icon: Icons.done,
-                message: 'Internet connection success',
-                gradient: ThemeState.successGradient,
-                textColor: Colors.black,
+                icon: Icons.error,
+                message: 'No internet connection',
+                gradient: ThemeState.errorGradient,
+                textColor: Colors.white,
               );
             }
           },
@@ -74,7 +81,7 @@ class HomeScreenState extends State<HomeScreen> {
                           crossAxisSpacing: 15,
                           mainAxisSpacing: 15,
                           childAspectRatio:
-                              ThemeState.cardSize[themeState.sizeData]!,
+                              ThemeState.cardSize[themeState.sizeData] ?? 0.72,
                         ),
                         clipBehavior: Clip.none,
                         shrinkWrap: true,

@@ -21,7 +21,7 @@ class ProductDetailsScreen extends StatelessWidget {
         return Scaffold(
           appBar: const HomeAppBar(
             title: 'Details',
-            leadingRequire: true,
+            leadingRequired: true,
           ),
           body: SingleChildScrollView(
             child: Container(

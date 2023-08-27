@@ -3,6 +3,15 @@ import 'package:core_ui/src/colors/app_colors.dart';
 import 'package:core_ui/src/size_presets/app_sizes.dart';
 
 class AppTheme {
+  static const String cartAnimationLightTheme =
+      'core_ui/assets/lottie_animations/cart_light_animation.json';
+  static const String cartAnimationDarkTheme =
+      'core_ui/assets/lottie_animations/cart_dark_animation.json';
+  static const String orderAnimationLightTheme =
+      'core_ui/assets/lottie_animations/order_history_light_animation.json';
+  static const String orderAnimationDarkTheme =
+      'core_ui/assets/lottie_animations/order_history_dark_animation.json';
+
   static ThemeData getDarkThemeData(String sizeData) {
     return ThemeData(
       brightness: Brightness.dark,

@@ -6,7 +6,7 @@ import 'package:auth/auth.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final bool leadingRequire;
+  final bool leadingRequired;
 
   @override
   final Size preferredSize;
@@ -14,7 +14,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({
     Key? key,
     required this.title,
-    this.leadingRequire = false,
+    this.leadingRequired = false,
   })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -30,7 +30,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           centerTitle: true,
-          leading: leadingRequire
+          leading: leadingRequired
               ? AutoLeadingButton(color: state.appTheme.secondaryHeaderColor)
               : null,
           actions: <Widget>[
