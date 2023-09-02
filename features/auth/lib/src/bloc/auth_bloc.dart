@@ -43,6 +43,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<NavigateToSignUpEvent>(_navigateToSignUpPage);
     on<NavigateToSignInEvent>(_navigateToSignInPage);
 
+    add(SignOutEvent());
     add(InitAuthEvent());
   }
 
@@ -58,13 +59,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (userModel != UserModel.empty) {
         emit(
           state.copyWith(
-            isLogged: true,
+            isLoaded: true,
             userModel: userModel,
             authScreen: AuthScreen.home,
           ),
         );
-
-        _router.replace(const EntryPointRoute());
+        if (userModel.role == 'admin') {
+          _router.replace(const AdminEntryPointRoute());
+        } else {
+          _router.replace(const EntryPointRoute());
+        }
       } else {
         emit(
           state.copyWith(
@@ -101,14 +105,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(
         state.copyWith(
-          isLogged: true,
+          isLoaded: true,
           userModel: userModel,
           formState: SuccessFormState(),
           isLoading: false,
           authScreen: AuthScreen.home,
         ),
       );
-      _router.replace(const EntryPointRoute());
+      if (userModel.role == 'admin') {
+        _router.replace(const AdminEntryPointRoute());
+      } else {
+        _router.replace(const EntryPointRoute());
+      }
     } on FirebaseAuthException catch (error) {
       emit(
         state.copyWith(
@@ -129,7 +137,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(
         state.copyWith(
-          isLogged: true,
+          isLoaded: true,
           formState: SuccessFormState(),
           userModel: userModel,
           authScreen: AuthScreen.home,
@@ -165,7 +173,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(
         state.copyWith(
-          isLogged: true,
+          isLoaded: true,
           userModel: userModel,
           formState: SuccessFormState(),
           isLoading: false,
@@ -191,7 +199,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     await _signOutUseCase.execute(const NoParams());
     emit(
       state.copyWith(
-        isLogged: false,
+        isLoaded: false,
         formState: InitFormState(),
         userModel: UserModel.empty,
         authScreen: AuthScreen.signIn,
@@ -202,7 +210,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _navigateToHomePage(_, __) {
-    _router.replace(const EntryPointRoute());
+    if (state.userModel.role == 'admin') {
+      _router.replace(const AdminEntryPointRoute());
+    } else {
+      _router.replace(const EntryPointRoute());
+    }
   }
 
   Future<void> _navigateToSignInPage(

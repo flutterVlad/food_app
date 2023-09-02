@@ -14,12 +14,12 @@ class StartAuthScreen extends StatelessWidget {
 
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (BuildContext context, AuthState state) {
-          if (state.isLogged) {
+        listener: (_, AuthState state) {
+          if (state.isLoaded) {
             authBloc.add(NavigateToHomePageEvent());
           }
         },
-        builder: (BuildContext context, AuthState state) {
+        builder: (_, AuthState state) {
           if (state.authScreen == AuthScreen.signIn) {
             return SignInScreen();
           }

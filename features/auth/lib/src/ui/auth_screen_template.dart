@@ -64,7 +64,7 @@ class _AuthTemplateState extends State<AuthTemplate>
         _controller.forward();
         if (state.isLoading) {
           return const AppCenterLoader();
-        } else if (!state.isLogged) {
+        } else if (!state.isLoaded) {
           return SingleChildScrollView(
             child: Center(
               child: Column(

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:home/home.dart';
 import 'package:cart/cart.dart';
 import 'package:navigation/src/entry_point/entry_point.dart';
+import 'package:navigation/src/entry_point/admin_entry_point.dart';
 import 'package:order_history/order_history.dart';
 import 'package:settings/settings.dart';
 import 'package:product_detailed_view/product_detailed_view.dart';
 import 'package:auth/auth.dart';
+import 'package:admin_panel/admin_panel.dart';
 
 part 'app_router.gr.dart';
 
@@ -17,6 +19,28 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: StartAuthScreen,
       initial: true,
+    ),
+    AutoRoute(
+      page: AdminEntryPointScreen,
+      children: <AutoRoute>[
+        AutoRoute(
+          name: 'AdminProductsRoute',
+          page: AdminProductsScreen,
+          initial: true,
+        ),
+        AutoRoute(
+          name: 'AdminOrdersRoute',
+          page: AdminOrdersScreen,
+        ),
+        AutoRoute(
+          name: 'AdminUsersRoute',
+          page: AdminUsersScreen,
+        ),
+        AutoRoute(
+          name: 'SettingsRoute',
+          page: SettingsScreen,
+        ),
+      ],
     ),
     AutoRoute(
       page: EntryPointScreen,

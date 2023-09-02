@@ -28,6 +28,8 @@ dependencies:
     path: ../features/product_detailed_view
   auth:
     path: ../features/auth
+  admin_panel:
+    path: ../features/admin_panel
 
   auto_route: ^5.0.4
 

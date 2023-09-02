@@ -1,5 +1,6 @@
 import 'package:cart/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:navigation/src/entry_point/entry_point_template.dart';
 import '../../navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -13,33 +14,22 @@ class EntryPointScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThemeBloc, ThemeState>(
       builder: (_, ThemeState themeState) {
-        return AutoTabsScaffold(
-          animationDuration: const Duration(milliseconds: 300),
-          animationCurve: Curves.linear,
-          builder: (_, Widget? child, Animation<double> animation) {
-            return FadeTransition(
-              opacity: animation.drive(
-                Tween<double>(
-                  begin: 0,
-                  end: 1,
-                ),
-              ),
-              child: child,
-            );
-          },
+        return EntryPointScreenTemplate(
           routes: const <PageRouteInfo>[
             ProductsRoute(),
             OrderHistoryRoute(),
             EmptyCartRoute(),
             SettingsRoute(),
           ],
-          bottomNavigationBuilder: (_, tabsRouter) {
+          bottomNavigationBuilder: (_, TabsRouter tabsRouter) {
             return BlocBuilder<CartBloc, CartState>(
               builder: (_, CartState cartState) {
                 return GNav(
-                  duration: const Duration(milliseconds: 400),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 10,
+                  ),
                   backgroundColor: themeState.appTheme.primaryColor,
                   selectedIndex: tabsRouter.activeIndex,
                   onTabChange: tabsRouter.setActiveIndex,
