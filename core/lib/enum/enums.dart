@@ -1,1 +1,1 @@
-enum AuthScreen {signIn, signUp, home}
+enum AuthScreen { signIn, signUp, home }

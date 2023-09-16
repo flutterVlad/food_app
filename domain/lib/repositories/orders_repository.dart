@@ -7,4 +7,8 @@ abstract class OrderRepository {
     required OrderModel order,
     required String uid,
   });
+
+  Future<List<OrderModel>> fetchAllOrders();
+
+  Future<void> approveOrders({required List<OrderModel> orders});
 }

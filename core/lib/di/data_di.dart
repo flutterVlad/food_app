@@ -79,39 +79,46 @@ class DataDI {
       ),
     );
 
-    appLocator.registerLazySingleton<UserRepositoryImpl>(
+    appLocator.registerLazySingleton<UserRepository>(
       () => UserRepositoryImpl(
         authProvider: appLocator.get<AuthProvider>(),
+        firebaseProvider: appLocator.get<FirebaseProvider>(),
       ),
     );
 
     appLocator.registerLazySingleton<SignUpUseCase>(
       () => SignUpUseCase(
-        userRepository: appLocator.get<UserRepositoryImpl>(),
+        userRepository: appLocator.get<UserRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<SignInUseCase>(
       () => SignInUseCase(
-        userRepository: appLocator.get<UserRepositoryImpl>(),
+        userRepository: appLocator.get<UserRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<SignOutUseCase>(
       () => SignOutUseCase(
-        userRepository: appLocator.get<UserRepositoryImpl>(),
+        userRepository: appLocator.get<UserRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<SignInWithGoogleUseCase>(
       () => SignInWithGoogleUseCase(
-        userRepository: appLocator.get<UserRepositoryImpl>(),
+        userRepository: appLocator.get<UserRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<CheckAuthenticationStatusUseCase>(
       () => CheckAuthenticationStatusUseCase(
-        userRepository: appLocator.get<UserRepositoryImpl>(),
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<FetchAllUsersUseCase>(
+      () => FetchAllUsersUseCase(
+        userRepository: appLocator.get<UserRepository>(),
       ),
     );
   }
@@ -156,6 +163,30 @@ class DataDI {
 
     appLocator.registerLazySingleton<FetchAllProductsUseCase>(
       () => FetchAllProductsUseCase(
+        productRepository: appLocator.get<ProductRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<AddProductUseCase>(
+      () => AddProductUseCase(
+        productRepository: appLocator.get<ProductRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<RemoveProductUseCase>(
+      () => RemoveProductUseCase(
+        productRepository: appLocator.get<ProductRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<UpdateProductUseCase>(
+      () => UpdateProductUseCase(
+        productRepository: appLocator.get<ProductRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<UploadImageUseCase>(
+      () => UploadImageUseCase(
         productRepository: appLocator.get<ProductRepository>(),
       ),
     );
@@ -206,7 +237,7 @@ class DataDI {
   // initialization order resources
   // -----------------------------------------------------------
   void _initOrders() {
-    appLocator.registerLazySingleton<OrderRepositoryImpl>(
+    appLocator.registerLazySingleton<OrderRepository>(
       () => OrderRepositoryImpl(
         firebaseProvider: appLocator.get<FirebaseProvider>(),
       ),
@@ -214,13 +245,25 @@ class DataDI {
 
     appLocator.registerLazySingleton<GetOrdersUseCase>(
       () => GetOrdersUseCase(
-        orderRepository: appLocator.get<OrderRepositoryImpl>(),
+        orderRepository: appLocator.get<OrderRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<AddOrderUseCase>(
       () => AddOrderUseCase(
-        orderRepository: appLocator.get<OrderRepositoryImpl>(),
+        orderRepository: appLocator.get<OrderRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<FetchAllOrdersUseCase>(
+      () => FetchAllOrdersUseCase(
+        orderRepository: appLocator.get<OrderRepository>(),
+      ),
+    );
+
+    appLocator.registerLazySingleton<ApproveOrdersUseCase>(
+      () => ApproveOrdersUseCase(
+        orderRepository: appLocator.get<OrderRepository>(),
       ),
     );
   }
@@ -234,7 +277,7 @@ class DataDI {
       () => PreferencesProvider(preferences: _preferences),
     );
 
-    appLocator.registerLazySingleton<PreferencesRepositoryImpl>(
+    appLocator.registerLazySingleton<PreferencesRepository>(
       () => PreferencesRepositoryImpl(
         preferencesProvider: appLocator.get<PreferencesProvider>(),
       ),
@@ -242,25 +285,25 @@ class DataDI {
 
     appLocator.registerLazySingleton<SetThemeDataUseCase>(
       () => SetThemeDataUseCase(
-        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+        preferencesRepository: appLocator.get<PreferencesRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<CheckThemeDataUseCase>(
       () => CheckThemeDataUseCase(
-        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+        preferencesRepository: appLocator.get<PreferencesRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<GetFontSizeUseCase>(
       () => GetFontSizeUseCase(
-        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+        preferencesRepository: appLocator.get<PreferencesRepository>(),
       ),
     );
 
     appLocator.registerLazySingleton<SetFontSizeUseCase>(
       () => SetFontSizeUseCase(
-        preferencesRepository: appLocator.get<PreferencesRepositoryImpl>(),
+        preferencesRepository: appLocator.get<PreferencesRepository>(),
       ),
     );
   }

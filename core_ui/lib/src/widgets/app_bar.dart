@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:navigation/navigation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:auth/auth.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final bool leadingRequired;
+  final Widget? leading;
 
   @override
   final Size preferredSize;
@@ -14,7 +13,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HomeAppBar({
     Key? key,
     required this.title,
-    this.leadingRequired = false,
+    this.leading,
   })  : preferredSize = const Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -30,9 +29,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           centerTitle: true,
-          leading: leadingRequired
-              ? AutoLeadingButton(color: state.appTheme.secondaryHeaderColor)
-              : null,
+          leading: leading,
           actions: <Widget>[
             GestureDetector(
               onTap: () {

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import '../../navigation.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:badges/badges.dart' as badges;
 
 import 'entry_point_template.dart';
 
@@ -16,7 +15,7 @@ class AdminEntryPointScreen extends StatelessWidget {
       builder: (_, ThemeState themeState) {
         return EntryPointScreenTemplate(
           routes: const <PageRouteInfo>[
-            AdminProductsRoute(),
+            EmptyAdminProductRoute(),
             AdminOrdersRoute(),
             AdminUsersRoute(),
             SettingsRoute(),

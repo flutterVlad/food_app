@@ -8,6 +8,7 @@ import 'package:cart/cart.dart';
 import 'package:auth/auth.dart';
 import 'package:home/home.dart';
 import 'package:order_history/order_history.dart';
+import 'package:admin_panel/admin_panel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -64,6 +65,19 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => HistoryBloc(
             getOrdersUseCase: appLocator.get<GetOrdersUseCase>(),
             addOrderUseCase: appLocator.get<AddOrderUseCase>(),
+          ),
+        ),
+        BlocProvider<AdminBloc>(
+          create: (BuildContext context) => AdminBloc(
+            fetchAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
+            fetchAllOrdersUseCase: appLocator.get<FetchAllOrdersUseCase>(),
+            fetchAllUsersUseCase: appLocator<FetchAllUsersUseCase>(),
+            addProductUseCase: appLocator.get<AddProductUseCase>(),
+            removeProductUseCase: appLocator.get<RemoveProductUseCase>(),
+            updateProductUseCase: appLocator.get<UpdateProductUseCase>(),
+            uploadImageUseCase: appLocator.get<UploadImageUseCase>(),
+            approveOrdersUseCase: appLocator.get<ApproveOrdersUseCase>(),
+            appRouter: appLocator.get<AppRouter>(),
           ),
         ),
       ],

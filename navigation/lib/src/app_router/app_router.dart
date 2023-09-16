@@ -24,9 +24,20 @@ part 'app_router.gr.dart';
       page: AdminEntryPointScreen,
       children: <AutoRoute>[
         AutoRoute(
-          name: 'AdminProductsRoute',
-          page: AdminProductsScreen,
+          name: 'EmptyAdminProductRoute',
           initial: true,
+          page: HeroEmptyRouterPage,
+          children: <AutoRoute>[
+            AutoRoute(
+              name: 'AdminProductsRoute',
+              initial: true,
+              page: AdminProductsScreen,
+            ),
+            AutoRoute(
+              name: 'EditRoute',
+              page: EditProductScreen,
+            ),
+          ],
         ),
         AutoRoute(
           name: 'AdminOrdersRoute',

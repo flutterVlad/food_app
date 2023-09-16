@@ -35,10 +35,10 @@ class _$AppRouter extends RootStackRouter {
         child: const EntryPointScreen(),
       );
     },
-    AdminProductsRoute.name: (routeData) {
+    EmptyAdminProductRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const AdminProductsScreen(),
+        child: const HeroEmptyRouterPage(),
       );
     },
     AdminOrdersRoute.name: (routeData) {
@@ -57,6 +57,23 @@ class _$AppRouter extends RootStackRouter {
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: const SettingsScreen(),
+      );
+    },
+    AdminProductsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const AdminProductsScreen(),
+      );
+    },
+    EditRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<EditRouteArgs>(orElse: () => const EditRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: EditProductScreen(
+          key: args.key,
+          product: args.product,
+        ),
       );
     },
     ProductsRoute.name: (routeData) {
@@ -112,9 +129,21 @@ class _$AppRouter extends RootStackRouter {
           path: '/admin-entry-point-screen',
           children: [
             RouteConfig(
-              AdminProductsRoute.name,
+              EmptyAdminProductRoute.name,
               path: '',
               parent: AdminEntryPointRoute.name,
+              children: [
+                RouteConfig(
+                  AdminProductsRoute.name,
+                  path: '',
+                  parent: EmptyAdminProductRoute.name,
+                ),
+                RouteConfig(
+                  EditRoute.name,
+                  path: 'edit-product-screen',
+                  parent: EmptyAdminProductRoute.name,
+                ),
+              ],
             ),
             RouteConfig(
               AdminOrdersRoute.name,
@@ -225,15 +254,16 @@ class EntryPointRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [AdminProductsScreen]
-class AdminProductsRoute extends PageRouteInfo<void> {
-  const AdminProductsRoute()
+/// [HeroEmptyRouterPage]
+class EmptyAdminProductRoute extends PageRouteInfo<void> {
+  const EmptyAdminProductRoute({List<PageRouteInfo>? children})
       : super(
-          AdminProductsRoute.name,
+          EmptyAdminProductRoute.name,
           path: '',
+          initialChildren: children,
         );
 
-  static const String name = 'AdminProductsRoute';
+  static const String name = 'EmptyAdminProductRoute';
 }
 
 /// generated route for
@@ -270,6 +300,52 @@ class SettingsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SettingsRoute';
+}
+
+/// generated route for
+/// [AdminProductsScreen]
+class AdminProductsRoute extends PageRouteInfo<void> {
+  const AdminProductsRoute()
+      : super(
+          AdminProductsRoute.name,
+          path: '',
+        );
+
+  static const String name = 'AdminProductsRoute';
+}
+
+/// generated route for
+/// [EditProductScreen]
+class EditRoute extends PageRouteInfo<EditRouteArgs> {
+  EditRoute({
+    Key? key,
+    ProductModel? product,
+  }) : super(
+          EditRoute.name,
+          path: 'edit-product-screen',
+          args: EditRouteArgs(
+            key: key,
+            product: product,
+          ),
+        );
+
+  static const String name = 'EditRoute';
+}
+
+class EditRouteArgs {
+  const EditRouteArgs({
+    this.key,
+    this.product,
+  });
+
+  final Key? key;
+
+  final ProductModel? product;
+
+  @override
+  String toString() {
+    return 'EditRouteArgs{key: $key, product: $product}';
+  }
 }
 
 /// generated route for

@@ -37,6 +37,24 @@ class ProductModel {
     );
   }
 
+  Map<String, String> toMap() {
+    return {
+      'Name': name,
+      'Description': description,
+      'Category': category,
+      'Price': price,
+    };
+  }
+
+  static Map<String, dynamic> get defaultFields {
+    return {
+      'Name': '',
+      'Description': '',
+      'Category': '',
+      'Price': '',
+    };
+  }
+
   static ProductModel get empty {
     return const ProductModel(
       id: 0,

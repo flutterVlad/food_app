@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:order_history/order_history.dart';
 
-class OrderTile extends StatefulWidget {
+class OrderTile extends StatelessWidget {
   final OrderModel order;
   final int index;
 
@@ -16,11 +16,6 @@ class OrderTile extends StatefulWidget {
     required this.index,
   });
 
-  @override
-  State<OrderTile> createState() => _OrderTileState();
-}
-
-class _OrderTileState extends State<OrderTile> {
   @override
   Widget build(BuildContext context) {
     final HistoryBloc historyBloc = BlocProvider.of<HistoryBloc>(context);
@@ -35,12 +30,12 @@ class _OrderTileState extends State<OrderTile> {
             color: state.appTheme.primaryColor.withOpacity(1),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: historyBloc.state.isTileOpenList[widget.index]
+                color: historyBloc.state.isTileOpenList[index]
                     ? state.appTheme.secondaryHeaderColor.withOpacity(0.5)
                     : state.appTheme.primaryColor.withOpacity(0.5),
                 blurRadius: 10,
                 spreadRadius:
-                    historyBloc.state.isTileOpenList[widget.index] ? 5 : 0,
+                    historyBloc.state.isTileOpenList[index] ? 5 : 0,
               ),
             ],
           ),
@@ -48,26 +43,26 @@ class _OrderTileState extends State<OrderTile> {
             onExpansionChanged: (bool isOpen) {
               historyBloc.add(
                 OpenTileEvent(
-                  index: widget.index,
+                  index: index,
                 ),
               );
             },
             shape: const Border(),
             iconColor: state.appTheme.secondaryHeaderColor,
             title: Text(
-              DateFormat('hh:mm a, dd MMMM yyyy').format(widget.order.dateTime),
+              DateFormat('hh:mm a, dd MMMM yyyy').format(order.dateTime),
               style: state.appTheme.textTheme.titleMedium,
             ),
             leading: const Icon(Icons.history_outlined),
             children: <Widget>[
               ListView.builder(
-                itemCount: widget.order.cart.products.length,
+                itemCount: order.cart.products.length,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (BuildContext context, int index) {
                   return Container(
                     decoration: BoxDecoration(
-                      borderRadius: index == widget.order.cart.products.length
+                      borderRadius: index == order.cart.products.length
                           ? const BorderRadius.vertical(
                               bottom: Radius.circular(15),
                             )
@@ -79,7 +74,7 @@ class _OrderTileState extends State<OrderTile> {
                         style: state.appTheme.textTheme.titleSmall,
                       ),
                       title: Text(
-                        widget.order.cart.products[index].product.name,
+                        order.cart.products[index].product.name,
                         style: state.appTheme.textTheme.titleMedium,
                       ),
                       trailing: Column(
@@ -88,14 +83,14 @@ class _OrderTileState extends State<OrderTile> {
                           GradientBlock(
                             gradient: state.gradient,
                             child: Text(
-                              '${widget.order.cart.products[index].quantity}',
+                              '${order.cart.products[index].quantity}',
                               style: state.appTheme.textTheme.titleSmall,
                             ),
                           ),
                           GradientBlock(
                             gradient: state.gradient,
                             child: Text(
-                              widget.order.cart.products[index].product.price,
+                              order.cart.products[index].product.price,
                               style: state.appTheme.textTheme.titleSmall,
                             ),
                           ),
@@ -113,7 +108,7 @@ class _OrderTileState extends State<OrderTile> {
                 trailing: GradientBlock(
                   gradient: state.gradient,
                   child: Text(
-                    '${widget.order.cart.totalPrice}',
+                    '${order.cart.totalPrice}',
                     style: state.appTheme.textTheme.titleMedium,
                   ),
                 ),

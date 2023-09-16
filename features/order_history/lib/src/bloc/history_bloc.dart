@@ -25,11 +25,11 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     InitHistoryEvent event,
     Emitter<HistoryState> emit,
   ) async {
-    final List<OrderModel> orders = await _getOrderUseCase.execute(event.uid);
+    final List<OrderModel> orders = await _getOrderUseCase.execute(event.user.uid);
     emit(
       state.copyWith(
         orders: orders,
-        uid: event.uid,
+        user: event.user,
         isTileOpenList: List.filled(orders.length, false),
       ),
     );
@@ -42,14 +42,17 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
     await _addOrderUseCase.execute(
       {
         'order': OrderModel(
-          id: '',
-          cart: event.cartModel,
-          dateTime: DateTime.now(),
-        ),
-        'uid': state.uid,
+            id: '',
+            cart: event.cartModel,
+            dateTime: DateTime.now(),
+            approved: false,
+            user: state.user),
+        'uid': state.user.uid,
       },
     );
-    final List<OrderModel> orders = await _getOrderUseCase.execute(state.uid);
+    final List<OrderModel> orders = await _getOrderUseCase.execute(
+      state.user.uid,
+    );
     emit(
       state.copyWith(
         orders: orders,

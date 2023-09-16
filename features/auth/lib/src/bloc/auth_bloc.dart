@@ -43,7 +43,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<NavigateToSignUpEvent>(_navigateToSignUpPage);
     on<NavigateToSignInEvent>(_navigateToSignInPage);
 
-    add(SignOutEvent());
     add(InitAuthEvent());
   }
 
