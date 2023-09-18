@@ -121,6 +121,12 @@ class DataDI {
         userRepository: appLocator.get<UserRepository>(),
       ),
     );
+
+    appLocator.registerLazySingleton<UpdateUserRoleUseCase>(
+      () => UpdateUserRoleUseCase(
+        userRepository: appLocator.get<UserRepository>(),
+      ),
+    );
   }
 
   // -----------------------------------------------------------

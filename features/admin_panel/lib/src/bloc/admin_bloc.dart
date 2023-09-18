@@ -24,6 +24,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   final UpdateProductUseCase _updateProductUseCase;
   final UploadImageUseCase _uploadImageUseCase;
   final ApproveOrdersUseCase _approveOrdersUseCase;
+  final UpdateUserRoleUseCase _updateUserRoleUseCase;
   final AppRouter _appRouter;
 
   AdminBloc({
@@ -35,6 +36,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     required UpdateProductUseCase updateProductUseCase,
     required UploadImageUseCase uploadImageUseCase,
     required ApproveOrdersUseCase approveOrdersUseCase,
+    required UpdateUserRoleUseCase updateUserRoleUseCase,
     required AppRouter appRouter,
   })  : _fetchAllProductsUseCase = fetchAllProductsUseCase,
         _fetchAllOrdersUseCase = fetchAllOrdersUseCase,
@@ -44,6 +46,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         _updateProductUseCase = updateProductUseCase,
         _uploadImageUseCase = uploadImageUseCase,
         _approveOrdersUseCase = approveOrdersUseCase,
+        _updateUserRoleUseCase = updateUserRoleUseCase,
         _appRouter = appRouter,
         super(AdminState.empty()) {
     on<InitProductsEvent>(_initProducts);
@@ -62,6 +65,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<AddIngredientEvent>(_addIngredient);
     on<RemoveIngredientEvent>(_removeIngredient);
     on<SelectImageEvent>(_selectImage);
+    on<UpdateUserRoleEvent>(_updateUserRole);
 
     on<NavigateBackEvent>(_navigateBack);
     on<ThrowExceptionEvent>(_throwException);
@@ -128,6 +132,14 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     );
   }
 
+  Future<void> _updateUserRole(
+    UpdateUserRoleEvent event,
+    Emitter<AdminState> emit,
+  ) async {
+    await _updateUserRoleUseCase.execute(event.user);
+    add(InitUsersEvent());
+  }
+
   Future<void> _selectOrder(
     SelectOrderEvent event,
     Emitter<AdminState> emit,
@@ -180,11 +192,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _openApprovedElement(
-      OpenApprovedOrderTileEvent event,
-      Emitter<AdminState> emit,
-      ) async {
-    final List<bool> updatedApprovedList =
-        state.isApprovedOrderTileOpenList;
+    OpenApprovedOrderTileEvent event,
+    Emitter<AdminState> emit,
+  ) async {
+    final List<bool> updatedApprovedList = state.isApprovedOrderTileOpenList;
     updatedApprovedList[event.index] = !updatedApprovedList[event.index];
     emit(
       state.copyWith(

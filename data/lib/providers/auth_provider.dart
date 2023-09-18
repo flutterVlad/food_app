@@ -120,4 +120,12 @@ class AuthProvider {
       return UserEntity.empty;
     }
   }
+
+  Future<void> updateUserRole({
+    required UserEntity user,
+  }) async {
+    final DatabaseReference reference =
+        await _database.ref('users').child(user.uid);
+    await reference.update(user.toMap());
+  }
 }

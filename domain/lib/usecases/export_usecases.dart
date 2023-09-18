@@ -21,3 +21,4 @@ export 'admin_panel_usecases/upload_image_usecase.dart';
 export 'admin_panel_usecases/fetch_all_orders_usecase.dart';
 export 'admin_panel_usecases/fetch_all_users_usecase.dart';
 export 'admin_panel_usecases/approve_orders_usecase.dart';
+export 'admin_panel_usecases/update_user_role_usecase.dart';

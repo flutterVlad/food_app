@@ -1,3 +1,4 @@
+import 'package:admin_panel/src/widgets/user_card.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +26,9 @@ class AdminUsersScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: adminState.users.length,
                     itemBuilder: (_, int index) {
-                      return Text(adminState.users[index].userName);
+                      return UserCard(
+                        user: adminState.users[index],
+                      );
                     },
                   ),
                 )

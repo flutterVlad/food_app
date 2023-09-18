@@ -30,16 +30,6 @@ class FirebaseProvider {
     return result;
   }
 
-  //
-  // Future<ProductEntity> updateImageUrl(ProductEntity entity) async {
-  //   final Reference storageReference = _storage.ref();
-  //   print(await storageReference.child(entity.imageUrl).getDownloadURL());
-  //   final ProductEntity newEntity = entity.copyWith(
-  //       imageUrl:
-  //           await storageReference.child(entity.imageUrl).getDownloadURL());
-  //   return newEntity;
-  // }
-
   Future<void> addOrderOnDatabase({
     required OrderEntity order,
     required String uid,
@@ -52,11 +42,13 @@ class FirebaseProvider {
   Future<List<OrderEntity>> getOrderData(String uid) async {
     final List<OrderEntity> orders = [];
     try {
-      final DatabaseReference reference = _database.ref('users/$uid/orders');
-      final DataSnapshot snapshot = await reference.get();
+      final DatabaseReference reference = _database.ref('users/$uid');
+      final DataSnapshot orderSnapshot = await reference.child('orders').get();
+      final DataSnapshot userSnapshot = await reference.get();
       final Map<dynamic, dynamic> data =
-          snapshot.value as Map<dynamic, dynamic>;
+          orderSnapshot.value as Map<dynamic, dynamic>;
       for (final dynamic order in data.values) {
+        order['user'] = userSnapshot.value;
         orders.add(OrderEntity.fromJson(order));
       }
     } catch (error) {}

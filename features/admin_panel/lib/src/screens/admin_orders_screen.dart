@@ -22,6 +22,7 @@ class AdminOrdersScreen extends StatelessWidget {
           builder: (_, AdminState adminState) {
             if (adminState.approvedOrders.isNotEmpty) {
               return SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[

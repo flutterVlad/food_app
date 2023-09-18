@@ -77,6 +77,7 @@ class MyApp extends StatelessWidget {
             updateProductUseCase: appLocator.get<UpdateProductUseCase>(),
             uploadImageUseCase: appLocator.get<UploadImageUseCase>(),
             approveOrdersUseCase: appLocator.get<ApproveOrdersUseCase>(),
+            updateUserRoleUseCase: appLocator.get<UpdateUserRoleUseCase>(),
             appRouter: appLocator.get<AppRouter>(),
           ),
         ),

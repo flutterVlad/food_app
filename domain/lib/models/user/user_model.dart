@@ -20,6 +20,20 @@ class UserModel {
     );
   }
 
+  UserModel copyWith({
+    String? userName,
+    String? email,
+    String? uid,
+    String? role,
+  }) {
+    return UserModel(
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      uid: uid ?? this.uid,
+      role: role ?? this.role,
+    );
+  }
+
   bool isEmpty() => this == UserModel.empty;
 
   @override

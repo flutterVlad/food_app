@@ -73,4 +73,10 @@ class UserRepositoryImpl implements UserRepository {
         .map((userEntity) => UserMapper.toModel(userEntity))
         .toList();
   }
+
+  @override
+  Future<void> updateUserRole({required UserModel userModel}) async {
+    final UserEntity userEntity = UserMapper.toEntity(userModel);
+    await _authProvider.updateUserRole(user: userEntity);
+  }
 }

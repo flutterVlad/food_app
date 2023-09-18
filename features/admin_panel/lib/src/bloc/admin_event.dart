@@ -66,14 +66,6 @@ class DeleteProductEvent extends AdminEvent {
   });
 }
 
-class NavigateToEditEvent extends AdminEvent {
-  final ProductModel product;
-
-  NavigateToEditEvent({
-    required this.product,
-  });
-}
-
 class AddIngredientEvent extends AdminEvent {
   final String ingredient;
 
@@ -90,16 +82,32 @@ class RemoveIngredientEvent extends AdminEvent {
   });
 }
 
-class NavigateToCreateProduct extends AdminEvent {}
-
 class SelectImageEvent extends AdminEvent {}
-
-class NavigateBackEvent extends AdminEvent {}
 
 class ThrowExceptionEvent extends AdminEvent {
   final String exception;
 
   ThrowExceptionEvent({
     required this.exception,
+  });
+}
+
+class UpdateUserRoleEvent extends AdminEvent {
+  final UserModel user;
+
+  UpdateUserRoleEvent({
+    required this.user,
+  });
+}
+
+class NavigateBackEvent extends AdminEvent {}
+
+class NavigateToCreateProduct extends AdminEvent {}
+
+class NavigateToEditEvent extends AdminEvent {
+  final ProductModel product;
+
+  NavigateToEditEvent({
+    required this.product,
   });
 }
