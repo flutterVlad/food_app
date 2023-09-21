@@ -81,19 +81,4 @@ class ProductModel extends Equatable {
   }
 
   bool isEmpty() => this == ProductModel.empty;
-
-  // @override
-  // int get hashCode => name.hashCode + price.hashCode;
-  //
-  // @override
-  // bool operator ==(Object other) {
-  //   return other is ProductModel &&
-  //       id == other.id &&
-  //       name == other.name &&
-  //       price == other.price &&
-  //       imageUrl == other.imageUrl &&
-  //       description == other.description &&
-  //       ingredients == other.ingredients &&
-  //       category == other.category;
-  // }
 }
