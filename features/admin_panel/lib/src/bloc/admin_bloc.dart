@@ -66,7 +66,6 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<RemoveIngredientEvent>(_removeIngredient);
     on<SelectImageEvent>(_selectImage);
     on<UpdateUserRoleEvent>(_updateUserRole);
-
     on<NavigateBackEvent>(_navigateBack);
     on<ThrowExceptionEvent>(_throwException);
 
@@ -261,6 +260,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
           imageUrl: imageUrl,
         ),
       );
+      add(InitProductsEvent());
       emit(
         state.copyWith(
           isLoading: false,
@@ -315,6 +315,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       } else {
         await _updateProductUseCase.execute(product);
       }
+      add(InitProductsEvent());
       emit(
         state.copyWith(
           isLoading: false,
@@ -353,6 +354,9 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       emit(
         state.copyWith(
           products: products,
+          exception: AdminSuccess(
+            message: 'Product ${event.product.name} has been deleted!',
+          ),
         ),
       );
     } on FirebaseException catch (error) {

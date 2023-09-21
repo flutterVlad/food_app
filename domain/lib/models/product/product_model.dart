@@ -1,4 +1,6 @@
-class ProductModel {
+import 'package:equatable/equatable.dart';
+
+class ProductModel extends Equatable {
   final int id;
   final String name;
   final String price;
@@ -16,6 +18,17 @@ class ProductModel {
     required this.ingredients,
     required this.category,
   });
+
+  @override
+  List<Object> get props => [
+        id,
+        name,
+        price,
+        imageUrl,
+        description,
+        ingredients,
+        category,
+      ];
 
   ProductModel copyWith({
     int? id,
@@ -69,18 +82,18 @@ class ProductModel {
 
   bool isEmpty() => this == ProductModel.empty;
 
-  @override
-  int get hashCode => name.hashCode + price.hashCode;
-
-  @override
-  bool operator ==(Object other) {
-    return other is ProductModel &&
-        id == other.id &&
-        name == other.name &&
-        price == other.price &&
-        imageUrl == other.imageUrl &&
-        description == other.description &&
-        ingredients == other.ingredients &&
-        category == other.category;
-  }
+  // @override
+  // int get hashCode => name.hashCode + price.hashCode;
+  //
+  // @override
+  // bool operator ==(Object other) {
+  //   return other is ProductModel &&
+  //       id == other.id &&
+  //       name == other.name &&
+  //       price == other.price &&
+  //       imageUrl == other.imageUrl &&
+  //       description == other.description &&
+  //       ingredients == other.ingredients &&
+  //       category == other.category;
+  // }
 }

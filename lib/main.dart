@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
           create: (BuildContext context) => CartBloc(
             appRouter: appLocator.get<AppRouter>(),
             clearCartUseCase: appLocator.get<ClearCartUseCase>(),
-            putProductInCartUseCase: appLocator.get<AddProductInCartUseCase>(),
+            addProductInCartUseCase: appLocator.get<AddProductInCartUseCase>(),
             deleteProductFromCartUseCase:
                 appLocator.get<DeleteProductFromCartUseCase>(),
             getAllCartUseCase: appLocator.get<GetAllCartUseCase>(),
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProductBloc>(
           create: (BuildContext context) => ProductBloc(
-            getAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
+            fetchAllProductsUseCase: appLocator.get<FetchAllProductsUseCase>(),
             appRouter: appLocator.get<AppRouter>(),
           ),
         ),

@@ -149,7 +149,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
                                 );
                               }
                               context.router.pop();
-                              adminBloc.add(InitProductsEvent());
                             }
                           },
                           content: widget.product != null
