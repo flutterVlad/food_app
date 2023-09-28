@@ -54,7 +54,6 @@ class ProductModel extends Equatable {
     return {
       'Name': name,
       'Description': description,
-      'Category': category,
       'Price': price,
     };
   }
@@ -63,7 +62,6 @@ class ProductModel extends Equatable {
     return {
       'Name': '',
       'Description': '',
-      'Category': '',
       'Price': '',
     };
   }

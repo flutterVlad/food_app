@@ -70,7 +70,7 @@ class UserRepositoryImpl implements UserRepository {
         await _firebaseProvider.fetchAllUsers();
 
     return userEntities
-        .map((userEntity) => UserMapper.toModel(userEntity))
+        .map((UserEntity userEntity) => UserMapper.toModel(userEntity))
         .toList();
   }
 

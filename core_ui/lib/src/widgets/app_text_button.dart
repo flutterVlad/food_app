@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class AppTextButton extends StatefulWidget {
-  final Widget title;
+class AppAnimatedButton extends StatefulWidget {
+  final Widget child;
   final void Function() onTap;
 
-  const AppTextButton({
+  const AppAnimatedButton({
     super.key,
-    required this.title,
+    required this.child,
     required this.onTap,
   });
 
   @override
-  State<AppTextButton> createState() => _AppTextButtonState();
+  State<AppAnimatedButton> createState() => _AppAnimatedButtonState();
 }
 
-class _AppTextButtonState extends State<AppTextButton>
+class _AppAnimatedButtonState extends State<AppAnimatedButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
@@ -44,12 +44,6 @@ class _AppTextButtonState extends State<AppTextButton>
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return ScaleTransition(
       scale: _animation,
@@ -60,8 +54,14 @@ class _AppTextButtonState extends State<AppTextButton>
             _controller.forward();
           });
         },
-        child: widget.title,
+        child: widget.child,
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

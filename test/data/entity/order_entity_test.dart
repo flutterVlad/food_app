@@ -28,7 +28,7 @@ void main() {
       totalPrice: 15.00,
     ),
     dateTime: DateTime(23),
-    approved: false,
+    isApproved: false,
     user: const UserEntity(
       uid: 'uid',
       email: 'gmail@gmail.com',

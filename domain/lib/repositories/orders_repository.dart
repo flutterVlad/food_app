@@ -10,5 +10,7 @@ abstract class OrderRepository {
 
   Future<List<OrderModel>> fetchAllOrders();
 
-  Future<void> approveOrders({required List<OrderModel> orders});
+  Future<void> approveOrders({
+    required List<OrderModel> orders,
+  });
 }

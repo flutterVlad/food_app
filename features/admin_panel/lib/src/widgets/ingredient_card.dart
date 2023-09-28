@@ -20,7 +20,7 @@ class IngredientCard extends StatelessWidget {
       trailing: IconButton(
         onPressed: onTap,
         icon: Icon(
-          Icons.remove,
+          Icons.delete,
           color: Theme.of(context).secondaryHeaderColor,
         ),
       ),

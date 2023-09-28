@@ -111,3 +111,19 @@ class NavigateToEditEvent extends AdminEvent {
     required this.product,
   });
 }
+
+class AddCategoryEvent extends AdminEvent {
+  final String categoryName;
+
+  AddCategoryEvent({
+    required this.categoryName,
+  });
+}
+
+class ChooseCategoryEvent extends AdminEvent {
+  final String category;
+
+  ChooseCategoryEvent({
+    required this.category,
+  });
+}

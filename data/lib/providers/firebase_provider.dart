@@ -18,8 +18,8 @@ class FirebaseProvider {
   Future<List<ProductEntity>> getProductData(String url) async {
     List<ProductEntity> result = [];
     final DatabaseReference reference = _database.ref();
-    final DataSnapshot snapshot = await reference.child(url).get();
-    final data = snapshot.value as List<dynamic>;
+    final DataSnapshot productsSnapshot = await reference.child(url).get();
+    final data = productsSnapshot.value as List<dynamic>;
     for (dynamic firebaseData in data) {
       if (firebaseData != null) {
         final json = firebaseData.cast<String, Object?>();
@@ -59,9 +59,9 @@ class FirebaseProvider {
   Future<void> addProduct(ProductEntity productEntity) async {
     try {
       final DatabaseReference productsReference = _database.ref('products');
-      final DataSnapshot snapshot = await productsReference.get();
-      if (snapshot.exists) {
-        final List<dynamic> data = snapshot.value as List<dynamic>;
+      final DataSnapshot productSnapshot = await productsReference.get();
+      if (productSnapshot.exists) {
+        final List<dynamic> data = productSnapshot.value as List<dynamic>;
         final int id = data.last['id'];
         final ProductEntity newProduct = productEntity.copyWith(id: id + 1);
         await productsReference.child('${id + 1}').set(newProduct.toMap());
@@ -125,7 +125,7 @@ class FirebaseProvider {
     final DataSnapshot snapshot = await reference.get();
 
     if (snapshot.exists) {
-      final dynamic snapshotValues = snapshot.value as dynamic;
+      final dynamic snapshotValues = snapshot.value;
       for (dynamic user in snapshotValues.values) {
         users.add(UserEntity.fromJson(user));
       }

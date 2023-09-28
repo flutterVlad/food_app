@@ -45,7 +45,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
             id: '',
             cart: event.cartModel,
             dateTime: DateTime.now(),
-            approved: false,
+            isApproved: false,
             user: state.user),
         'uid': state.user.uid,
       },

@@ -10,7 +10,7 @@ abstract class OrderMapper {
       id: entity.id,
       cart: CartMapper.toModel(entity.cart),
       dateTime: entity.dateTime,
-      approved: entity.approved,
+      isApproved: entity.isApproved,
       user: UserMapper.toModel(entity.user),
     );
   }
@@ -20,7 +20,7 @@ abstract class OrderMapper {
       id: model.id,
       cart: CartMapper.toEntity(model.cart),
       dateTime: model.dateTime,
-      approved: model.approved,
+      isApproved: model.isApproved,
       user: UserMapper.toEntity(model.user),
     );
   }

@@ -57,8 +57,8 @@ class AdminOrdersScreen extends StatelessWidget {
                             'Unapproved',
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          AppTextButton(
-                            title: Text(
+                          AppAnimatedButton(
+                            child: Text(
                               'Approve selected',
                               style: TextStyle(
                                 color: Theme.of(context).secondaryHeaderColor,
@@ -73,10 +73,10 @@ class AdminOrdersScreen extends StatelessWidget {
                                 context: context,
                                 title: 'Do you want to approve the orders?',
                                 onTap: () {
-                                  BlocProvider.of<AdminBloc>(context).add(
+                                  adminBloc.add(
                                     ApproveOrdersEvent(
-                                      orders:
-                                          adminState.checkedOrders.values.toList(),
+                                      orders: adminState.checkedOrders.values
+                                          .toList(),
                                     ),
                                   );
                                 },

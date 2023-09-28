@@ -13,6 +13,8 @@ class AdminState {
   final String selectedImage;
   final bool isLoading;
   final AdminException exception;
+  final List<String> categories;
+  final String? selectedCategory;
 
   AdminState({
     required this.products,
@@ -27,6 +29,8 @@ class AdminState {
     required this.selectedImage,
     required this.isLoading,
     required this.exception,
+    required this.categories,
+    this.selectedCategory,
   });
 
   AdminState.empty()
@@ -41,7 +45,9 @@ class AdminState {
         ingredients = [],
         selectedImage = '',
         isLoading = false,
-        exception = AdminSuccess();
+        exception = AdminSuccess(),
+        categories = [],
+        selectedCategory = null;
 
   AdminState copyWith({
     List<ProductModel>? products,
@@ -56,6 +62,8 @@ class AdminState {
     String? selectedImage,
     bool? isLoading,
     AdminException? exception,
+    List<String>? categories,
+    String? selectedCategory,
   }) {
     return AdminState(
       products: products ?? this.products,
@@ -72,6 +80,8 @@ class AdminState {
       selectedImage: selectedImage ?? this.selectedImage,
       isLoading: isLoading ?? this.isLoading,
       exception: exception ?? AdminSuccess(),
+      categories: categories ?? this.categories,
+      selectedCategory: selectedCategory,
     );
   }
 }

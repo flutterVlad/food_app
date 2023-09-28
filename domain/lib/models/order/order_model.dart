@@ -5,14 +5,14 @@ class OrderModel {
   final String id;
   final CartModel cart;
   final DateTime dateTime;
-  final bool approved;
+  final bool isApproved;
   final UserModel user;
 
   OrderModel({
     required this.id,
     required this.cart,
     required this.dateTime,
-    required this.approved,
+    required this.isApproved,
     required this.user,
   });
 
@@ -20,21 +20,21 @@ class OrderModel {
       : id = '',
         cart = CartModel.empty,
         dateTime = DateTime.now(),
-        approved = false,
+        isApproved = false,
         user = UserModel.empty;
 
   OrderModel copyWith({
     String? id,
     CartModel? cart,
     DateTime? dateTime,
-    bool? approved,
+    bool? isApproved,
     UserModel? user,
   }) {
     return OrderModel(
       id: id ?? this.id,
       cart: cart ?? this.cart,
       dateTime: dateTime ?? this.dateTime,
-      approved: approved ?? this.approved,
+      isApproved: isApproved ?? this.isApproved,
       user: user ?? this.user,
     );
   }

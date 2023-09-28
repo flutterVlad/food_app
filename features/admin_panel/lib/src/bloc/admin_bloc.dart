@@ -68,6 +68,8 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<UpdateUserRoleEvent>(_updateUserRole);
     on<NavigateBackEvent>(_navigateBack);
     on<ThrowExceptionEvent>(_throwException);
+    on<AddCategoryEvent>(_addCategory);
+    on<ChooseCategoryEvent>(_chooseCategory);
 
     add(InitProductsEvent());
     add(InitOrdersEvent());
@@ -78,14 +80,58 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     InitProductsEvent event,
     Emitter<AdminState> emit,
   ) async {
-    final List<ProductModel> products =
-        await _fetchAllProductsUseCase.execute(const NoParams());
+    final List<ProductModel> products = await _fetchAllProductsUseCase.execute(
+      const NoParams(),
+    );
+
+    final List<String> categories = products
+        .map(
+          (ProductModel product) => product.category,
+        )
+        .toSet()
+        .toList();
 
     emit(
       state.copyWith(
         products: products,
+        categories: categories,
       ),
     );
+  }
+
+  Future<void> _chooseCategory(
+    ChooseCategoryEvent event,
+    Emitter<AdminState> emit,
+  ) async {
+    emit(
+      state.copyWith(
+        selectedCategory: event.category,
+      ),
+    );
+  }
+
+  Future<void> _addCategory(
+    AddCategoryEvent event,
+    Emitter<AdminState> emit,
+  ) async {
+    final List<String> newCategories = state.categories;
+    if (newCategories.contains(event.categoryName)) {
+      emit(
+        state.copyWith(
+          exception: AdminError(
+            'Category ${event.categoryName} already exist!',
+          ),
+        ),
+      );
+    } else {
+      newCategories.add(event.categoryName);
+      emit(
+        state.copyWith(
+          categories: newCategories,
+          selectedCategory: event.categoryName,
+        ),
+      );
+    }
   }
 
   Future<void> _initOrders(
@@ -97,12 +143,12 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
 
     final List<OrderModel> unapprovedOrders = orders
         .where(
-          (OrderModel order) => !order.approved,
+          (OrderModel order) => !order.isApproved,
         )
         .toList();
     final List<OrderModel> approvedOrders = orders
         .where(
-          (OrderModel order) => order.approved,
+          (OrderModel order) => order.isApproved,
         )
         .toList();
 
@@ -210,7 +256,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     try {
       final List<OrderModel> approvedOrders = event.orders
           .map(
-            (OrderModel order) => order.copyWith(approved: true),
+            (OrderModel order) => order.copyWith(isApproved: true),
           )
           .toList();
       await _approveOrdersUseCase.execute(approvedOrders);
@@ -387,6 +433,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       state.copyWith(
         productControllers: textEditingControllers,
         ingredients: event.product.ingredients,
+        selectedCategory: event.product.category,
       ),
     );
 
@@ -424,6 +471,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         productControllers: textEditingControllers,
         ingredients: [],
         selectedImage: '',
+        selectedCategory: null,
       ),
     );
     _appRouter.navigate(EditRoute());
@@ -435,6 +483,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   ) async {
     final List<String> ingredients = state.ingredients;
     ingredients.add(event.ingredient);
+
     emit(
       state.copyWith(
         ingredients: ingredients,
@@ -448,6 +497,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   ) async {
     final List<String> ingredients = state.ingredients;
     ingredients.removeAt(event.index);
+
     emit(
       state.copyWith(
         ingredients: ingredients,

@@ -1,3 +1,4 @@
+import 'package:admin_panel/src/widgets/category_element.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +31,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void initState() {
     super.initState();
     _ingredientController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _ingredientController.dispose();
-    super.dispose();
   }
 
   @override
@@ -96,6 +91,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                             );
                           },
                         ),
+                        const CategoriesElement(),
                         Ingredients(
                           ingredientController: _ingredientController,
                         ),
@@ -165,5 +161,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _ingredientController.dispose();
+    super.dispose();
   }
 }

@@ -5,14 +5,14 @@ class OrderEntity {
   final String id;
   final CartEntity cart;
   final DateTime dateTime;
-  final bool approved;
+  final bool isApproved;
   final UserEntity user;
 
   const OrderEntity({
     required this.id,
     required this.cart,
     required this.dateTime,
-    required this.approved,
+    required this.isApproved,
     required this.user,
   });
 
@@ -21,7 +21,7 @@ class OrderEntity {
       id: json['id'],
       cart: CartEntity.fromJson(json['cart']),
       dateTime: DateTime.parse(json['datetime'] as String),
-      approved: json['approved'],
+      isApproved: json['approved'],
       user: UserEntity.fromJson(json['user']),
     );
   }
@@ -31,7 +31,7 @@ class OrderEntity {
       'id': id,
       'cart': cart.toMap(),
       'datetime': dateTime.toString(),
-      'approved': approved,
+      'approved': isApproved,
     };
   }
 
@@ -39,14 +39,14 @@ class OrderEntity {
     String? id,
     CartEntity? cart,
     DateTime? dateTime,
-    bool? approved,
+    bool? isApproved,
     UserEntity? user,
   }) {
     return OrderEntity(
       id: id ?? this.id,
       cart: cart ?? this.cart,
       dateTime: dateTime ?? this.dateTime,
-      approved: approved ?? this.approved,
+      isApproved: isApproved ?? this.isApproved,
       user: user ?? this.user,
     );
   }

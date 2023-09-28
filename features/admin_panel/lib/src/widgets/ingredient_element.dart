@@ -1,36 +1,60 @@
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'ingredient_card.dart';
 import 'package:admin_panel/admin_panel.dart';
 
 class Ingredients extends StatelessWidget {
-  final TextEditingController _ingredientController;
+  final TextEditingController ingredientController;
 
   const Ingredients({
     super.key,
-    required TextEditingController ingredientController,
-  }) : _ingredientController = ingredientController;
+    required this.ingredientController,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final AdminBloc adminBloc = BlocProvider.of<AdminBloc>(context);
+
     return BlocBuilder<AdminBloc, AdminState>(
       builder: (_, AdminState adminState) {
         return Column(
           children: <Widget>[
             Text(
               'Ingredients',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: theme.textTheme.titleMedium,
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                hintText: 'Add ingredient',
-              ),
-              controller: _ingredientController,
-              onFieldSubmitted: (String? value) {
-                _ingredientController.clear();
-                BlocProvider.of<AdminBloc>(context).add(
-                  AddIngredientEvent(ingredient: value ?? ''),
-                );
-              },
+            Row(
+              children: <Widget>[
+                Expanded(
+                  flex: 5,
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Add ingredient',
+                    ),
+                    controller: ingredientController,
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: AppAnimatedButton(
+                    onTap: () {
+                      if (ingredientController.text.isNotEmpty) {
+                        adminBloc.add(
+                          AddIngredientEvent(
+                            ingredient: ingredientController.text,
+                          ),
+                        );
+                      }
+                      ingredientController.clear();
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: theme.secondaryHeaderColor,
+                    ),
+                  ),
+                )
+              ],
             ),
             adminState.ingredients.isNotEmpty
                 ? Container(
@@ -38,7 +62,7 @@ class Ingredients extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
-                      color: Theme.of(context).primaryColor.withOpacity(0.5),
+                      color: theme.primaryColor.withOpacity(0.5),
                     ),
                     child: Column(
                       children: <Widget>[
@@ -48,7 +72,7 @@ class Ingredients extends StatelessWidget {
                             return IngredientCard(
                               title: adminState.ingredients[index],
                               onTap: () {
-                                BlocProvider.of<AdminBloc>(context).add(
+                                adminBloc.add(
                                   RemoveIngredientEvent(index: index),
                                 );
                               },

@@ -20,7 +20,7 @@ class OrderAdapter extends TypeAdapter<OrderEntity> {
       id: id,
       cart: cart,
       dateTime: dateTime,
-      approved: approved,
+      isApproved: approved,
       user: user,
     );
   }
@@ -31,7 +31,7 @@ class OrderAdapter extends TypeAdapter<OrderEntity> {
       ..write(obj.id)
       ..write(obj.cart)
       ..write(obj.dateTime)
-      ..write(obj.approved);
+      ..write(obj.isApproved);
   }
 
   @override
