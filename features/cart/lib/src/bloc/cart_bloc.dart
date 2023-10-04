@@ -10,19 +10,19 @@ part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
   final AppRouter _router;
-  final AddProductInCartUseCase _putProductInCartUseCase;
+  final AddProductInCartUseCase _addProductInCartUseCase;
   final GetAllCartUseCase _getAllCartUseCase;
   final DeleteProductFromCartUseCase _deleteProductFromCartUseCase;
   final ClearCartUseCase _clearCartUseCase;
 
   CartBloc({
     required AppRouter appRouter,
-    required AddProductInCartUseCase putProductInCartUseCase,
+    required AddProductInCartUseCase addProductInCartUseCase,
     required GetAllCartUseCase getAllCartUseCase,
     required DeleteProductFromCartUseCase deleteProductFromCartUseCase,
     required ClearCartUseCase clearCartUseCase,
   })  : _router = appRouter,
-        _putProductInCartUseCase = putProductInCartUseCase,
+        _addProductInCartUseCase = addProductInCartUseCase,
         _getAllCartUseCase = getAllCartUseCase,
         _deleteProductFromCartUseCase = deleteProductFromCartUseCase,
         _clearCartUseCase = clearCartUseCase,
@@ -68,7 +68,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     AddProductEvent event,
     Emitter emit,
   ) async {
-    await _putProductInCartUseCase.execute(event.productModel);
+    await _addProductInCartUseCase.execute(event.productModel);
     final List<CartProductModel> cartProducts =
         await _getAllCartUseCase.execute(const NoParams());
     emit(

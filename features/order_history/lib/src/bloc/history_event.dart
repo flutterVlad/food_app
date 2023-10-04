@@ -3,10 +3,10 @@ part of 'history_bloc.dart';
 class HistoryEvent {}
 
 class InitHistoryEvent extends HistoryEvent {
-  final String uid;
+  final UserModel user;
 
   InitHistoryEvent({
-    required this.uid,
+    required this.user,
   });
 }
 

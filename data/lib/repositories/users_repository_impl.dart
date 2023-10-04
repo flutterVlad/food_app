@@ -3,13 +3,17 @@ import 'package:data/mappers/user_mapper.dart';
 import 'package:data/providers/auth_provider.dart';
 import 'package:domain/repositories/users_repository.dart';
 import 'package:domain/models/user/user_model.dart';
+import 'package:data/providers/firebase_provider.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final AuthProvider _authProvider;
+  final FirebaseProvider _firebaseProvider;
 
   UserRepositoryImpl({
     required AuthProvider authProvider,
-  }) : _authProvider = authProvider;
+    required FirebaseProvider firebaseProvider,
+  })  : _authProvider = authProvider,
+        _firebaseProvider = firebaseProvider;
 
   @override
   Future<UserModel> signUp({
@@ -58,5 +62,21 @@ class UserRepositoryImpl implements UserRepository {
     final UserEntity userEntity = await _authProvider.checkUserAuth();
 
     return UserMapper.toModel(userEntity);
+  }
+
+  @override
+  Future<List<UserModel>> fetchAllUsers() async {
+    final List<UserEntity> userEntities =
+        await _firebaseProvider.fetchAllUsers();
+
+    return userEntities
+        .map((UserEntity userEntity) => UserMapper.toModel(userEntity))
+        .toList();
+  }
+
+  @override
+  Future<void> updateUserRole({required UserModel userModel}) async {
+    final UserEntity userEntity = UserMapper.toEntity(userModel);
+    await _authProvider.updateUserRole(user: userEntity);
   }
 }

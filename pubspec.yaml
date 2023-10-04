@@ -31,12 +31,19 @@ dependencies:
     path: ./features/product_detailed_view
   settings:
     path: ./features/settings
+  admin_panel:
+    path: ./features/admin_panel
 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  integration_test:
+    sdk: flutter
+
+  bloc_test: ^9.1.4
 
   flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^2.0.0

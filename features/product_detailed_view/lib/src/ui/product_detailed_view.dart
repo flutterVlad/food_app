@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/models/product/product_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:navigation/navigation.dart';
 import 'package:settings/settings.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
@@ -17,11 +18,13 @@ class ProductDetailsScreen extends StatelessWidget {
     final List<String> ingredients = model.ingredients;
 
     return BlocBuilder<ThemeBloc, ThemeState>(
-      builder: (context, state) {
+      builder: (_, ThemeState themeState) {
         return Scaffold(
-          appBar: const HomeAppBar(
+          appBar: HomeAppBar(
             title: 'Details',
-            leadingRequired: true,
+            leading: AutoLeadingButton(
+              color: themeState.appTheme.secondaryHeaderColor,
+            ),
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -32,10 +35,11 @@ class ProductDetailsScreen extends StatelessWidget {
                     margin: const EdgeInsets.fromLTRB(15, 25, 15, 15),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: state.appTheme.primaryColor,
+                      color: themeState.appTheme.primaryColor,
                       boxShadow: <BoxShadow>[
                         BoxShadow(
-                          color: state.appTheme.primaryColor.withOpacity(0.5),
+                          color:
+                              themeState.appTheme.primaryColor.withOpacity(0.5),
                           spreadRadius: 7,
                           blurRadius: 7,
                         ),
@@ -47,13 +51,13 @@ class ProductDetailsScreen extends StatelessWidget {
                   ),
                   Text(
                     model.name,
-                    style: state.appTheme.textTheme.titleLarge,
+                    style: themeState.appTheme.textTheme.titleLarge,
                   ),
                   GradientBlock(
-                    gradient: state.gradient,
+                    gradient: themeState.gradient,
                     child: Text(
                       '\$${model.price}',
-                      style: state.appTheme.textTheme.titleLarge,
+                      style: themeState.appTheme.textTheme.titleLarge,
                     ),
                   ),
                   const Divider(),
@@ -61,7 +65,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     decoration: const BoxDecoration(),
                     child: Text(
                       model.description,
-                      style: state.appTheme.textTheme.titleSmall,
+                      style: themeState.appTheme.textTheme.titleSmall,
                     ),
                   ),
                   const Divider(),
@@ -76,12 +80,12 @@ class ProductDetailsScreen extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         leading: GradientBlock(
-                          gradient: state.gradient,
+                          gradient: themeState.gradient,
                           child: const Icon(Icons.double_arrow_sharp),
                         ),
                         title: Text(
                           ingredients[index],
-                          style: state.appTheme.textTheme.titleSmall,
+                          style: themeState.appTheme.textTheme.titleSmall,
                         ),
                       );
                     },

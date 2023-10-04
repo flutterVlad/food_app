@@ -17,4 +17,10 @@ abstract class UserRepository {
   Future<UserModel> signInWithGoogle();
 
   Future<UserModel> checkAuthentication();
+
+  Future<List<UserModel>> fetchAllUsers();
+
+  Future<void> updateUserRole({
+    required UserModel userModel,
+  });
 }

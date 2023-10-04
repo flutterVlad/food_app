@@ -2,11 +2,13 @@ class UserModel {
   final String userName;
   final String email;
   final String uid;
+  final String role;
 
   const UserModel({
     required this.userName,
     required this.email,
     required this.uid,
+    required this.role,
   });
 
   static UserModel get empty {
@@ -14,6 +16,21 @@ class UserModel {
       userName: '',
       email: '',
       uid: '',
+      role: '',
+    );
+  }
+
+  UserModel copyWith({
+    String? userName,
+    String? email,
+    String? uid,
+    String? role,
+  }) {
+    return UserModel(
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      uid: uid ?? this.uid,
+      role: role ?? this.role,
     );
   }
 
@@ -24,7 +41,8 @@ class UserModel {
     return other is UserModel &&
         uid == other.uid &&
         userName == other.userName &&
-        email == other.email;
+        email == other.email &&
+        role == other.role;
   }
 
   @override
@@ -34,6 +52,7 @@ class UserModel {
       uid,
       userName,
       email,
+      role,
     );
   }
 }

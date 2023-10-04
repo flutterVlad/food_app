@@ -14,7 +14,9 @@ class OrderRepositoryImpl implements OrderRepository {
   Future<List<OrderModel>> getOrders(String uid) async {
     final List<OrderEntity> orders = await _firebaseProvider.getOrderData(uid);
 
-    return orders.map((order) => OrderMapper.toModel(order)).toList();
+    return orders
+        .map((OrderEntity order) => OrderMapper.toModel(order))
+        .toList();
   }
 
   @override
@@ -28,5 +30,28 @@ class OrderRepositoryImpl implements OrderRepository {
       order: orderEntity,
       uid: uid,
     );
+  }
+
+  @override
+  Future<List<OrderModel>> fetchAllOrders() async {
+    final List<OrderEntity> orderEntities =
+        await _firebaseProvider.fetchAllOrders();
+
+    return orderEntities
+        .map((OrderEntity orderEntity) => OrderMapper.toModel(orderEntity))
+        .toList();
+  }
+
+  @override
+  Future<void> approveOrders({
+    required List<OrderModel> orders,
+  }) async {
+    final List<OrderEntity> orderEntities = orders
+        .map(
+          (OrderModel order) => OrderMapper.toEntity(order),
+        )
+        .toList();
+
+    await _firebaseProvider.approveOrders(orders: orderEntities);
   }
 }

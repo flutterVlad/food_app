@@ -5,19 +5,20 @@ import 'package:domain/usecases/export_usecases.dart';
 import 'package:domain/usecases/usecase.dart';
 import 'package:navigation/navigation.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:equatable/equatable.dart';
 
 part 'home_event.dart';
 
 part 'home_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final FetchAllProductsUseCase _getAllProductsUseCase;
+  final FetchAllProductsUseCase _fetchAllProductsUseCase;
   final AppRouter _router;
 
   ProductBloc({
-    required FetchAllProductsUseCase getAllProductsUseCase,
+    required FetchAllProductsUseCase fetchAllProductsUseCase,
     required AppRouter appRouter,
-  })  : _getAllProductsUseCase = getAllProductsUseCase,
+  })  : _fetchAllProductsUseCase = fetchAllProductsUseCase,
         _router = appRouter,
         super(ProductState.empty) {
     on<InitEvent>(_init);
@@ -33,20 +34,18 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     add(InitEvent());
   }
 
-  void _init(
+  Future<void> _init(
     InitEvent event,
     Emitter<ProductState> emit,
-  ) {
-    _loadProductList();
-  }
-
-  Future<void> _loadProductList() async {
+  ) async {
     add(CheckInternetEvent());
-    final List<ProductModel> products = await _getAllProductsUseCase.execute(
+    final List<ProductModel> products = await _fetchAllProductsUseCase.execute(
       const NoParams(),
     );
-    final List<String> categories =
-        products.map((product) => product.category).toSet().toList();
+    final List<String> categories = products
+        .map((ProductModel product) => product.category)
+        .toSet()
+        .toList();
     emit(
       state.copyWith(
         products: products,
@@ -64,8 +63,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     final List<ProductModel> filteredProducts = state.allProducts
         .where((product) => product.category == event.category)
         .toList();
-    final List<bool> updatedFilterList = List.generate(state.allProducts.length,
-        (int index) => event.index == index ? true : false);
+    final List<bool> updatedFilterList = List.generate(
+      state.allProducts.length,
+      (int index) => event.index == index ? true : false,
+    );
     emit(
       state.copyWith(
         products: filteredProducts,

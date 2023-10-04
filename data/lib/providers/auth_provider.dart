@@ -31,6 +31,7 @@ class AuthProvider {
       uid: credential.user?.uid ?? '',
       email: email,
       userName: userName,
+      role: 'user',
     );
 
     await saveUserInDatabase(
@@ -77,6 +78,7 @@ class AuthProvider {
       uid: userCredential.user?.uid ?? '',
       email: userCredential.user?.email ?? '',
       userName: userCredential.user?.displayName ?? '',
+      role: 'user',
     );
 
     await saveUserInDatabase(
@@ -117,5 +119,13 @@ class AuthProvider {
     } else {
       return UserEntity.empty;
     }
+  }
+
+  Future<void> updateUserRole({
+    required UserEntity user,
+  }) async {
+    final DatabaseReference reference =
+        await _database.ref('users').child(user.uid);
+    await reference.update(user.toMap());
   }
 }

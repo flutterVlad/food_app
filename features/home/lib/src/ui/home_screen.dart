@@ -39,13 +39,6 @@ class HomeScreenState extends State<HomeScreen> {
                 gradient: ThemeState.successGradient,
                 textColor: Colors.black,
               );
-              FlushBar.showFlushBar(
-                context: context,
-                icon: Icons.error,
-                message: 'No internet connection',
-                gradient: ThemeState.errorGradient,
-                textColor: Colors.white,
-              );
             } else {
               FlushBar.showFlushBar(
                 context: context,
@@ -62,7 +55,7 @@ class HomeScreenState extends State<HomeScreen> {
           builder: (BuildContext context, ProductState state) {
             BlocProvider.of<HistoryBloc>(context).add(
               InitHistoryEvent(
-                uid: BlocProvider.of<AuthBloc>(context).state.userModel.uid,
+                user: BlocProvider.of<AuthBloc>(context).state.userModel,
               ),
             );
             if (state.products.isNotEmpty) {

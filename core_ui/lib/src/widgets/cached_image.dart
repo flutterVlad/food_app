@@ -4,17 +4,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class CachedImage extends StatelessWidget {
   final String imageUrl;
+  final double? height;
 
   const CachedImage({
     Key? key,
     required this.imageUrl,
+    this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
-      placeholder: (BuildContext context, String url) {
+      height: height,
+      placeholder: (_, __) {
         return const AppCenterLoader();
       },
     );
